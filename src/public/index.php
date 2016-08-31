@@ -23,9 +23,9 @@ $container['logger'] = function($c) {
     $logger->pushHandler($file_handler);
     return $logger;
 };
-/*
-$container['view'] = new \Slim\Views\PhpRenderer("../templates/");
 
+$container['view'] = new \Slim\Views\PhpRenderer("../templates/");
+/*
 $container['db'] = function ($c) {
     $db = $c['settings']['db'];
     $pdo = new PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['dbname'],
