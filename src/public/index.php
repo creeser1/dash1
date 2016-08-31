@@ -17,14 +17,14 @@ $config['db']['dbname'] = "exampleapp";
 $app = new \Slim\App(["settings" => $config]);
 $container = $app->getContainer();
 
-$container['view'] = new \Slim\Views\PhpRenderer("../templates/");
-
 $container['logger'] = function($c) {
     $logger = new \Monolog\Logger('my_logger');
     $file_handler = new \Monolog\Handler\StreamHandler("../logs/app.log");
     $logger->pushHandler($file_handler);
     return $logger;
 };
+/*
+$container['view'] = new \Slim\Views\PhpRenderer("../templates/");
 
 $container['db'] = function ($c) {
     $db = $c['settings']['db'];
@@ -34,7 +34,7 @@ $container['db'] = function ($c) {
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $pdo;
 };
-/*
+
 $app->get('/tickets', function (Request $request, Response $response) {
     $this->logger->addInfo("Ticket list");
     $mapper = new TicketMapper($this->db);
