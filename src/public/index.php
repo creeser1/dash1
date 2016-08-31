@@ -23,7 +23,6 @@ $container['logger'] = function($c) {
     $logger->pushHandler($file_handler);
     return $logger;
 };
-$this->logger->addInfo("Something interesting happened");
 /*
 $container['view'] = new \Slim\Views\PhpRenderer("../templates/");
 
@@ -84,6 +83,7 @@ $app->get('/ticket/{id}', function (Request $request, Response $response, $args)
 $app->get('/hello/{name}', function (Request $request, Response $response) {
     $name = $request->getAttribute('name');
     $response->getBody()->write("Hello, $name");
+	$this->logger->addInfo("Something interesting happened");
 
     return $response;
 });
