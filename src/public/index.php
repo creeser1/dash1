@@ -79,12 +79,12 @@ $app->get('/ticket/{id}', function (Request $request, Response $response, $args)
     $response = $this->view->render($response, "ticketdetail.phtml", ["ticket" => $ticket]);
     return $response;
 })->setName('ticket-detail');
-/**/
-$app->get('/hello/{name}', function (Request $request, Response $response) {
-    $name = $request->getAttribute('name');
-    $response->getBody()->write("Hello, $name");
-	$this->logger->addInfo("Something interesting happened");
+
+$app->get('/', function (Request $request, Response $response) {
+    $response->getBody()->write("Hello");
+	/*$this->logger->addInfo("Something interesting happened");*/
 
     return $response;
 });
+
 $app->run();
