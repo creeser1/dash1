@@ -24,6 +24,18 @@ $container['logger'] = function($c) {
     return $logger;
 };
 
+$container['data'] = function ($container) {
+    $view = new \Slim\Views\Twig('../data', [
+        'cache' => false /*'../cache'*/
+    ]);
+    $view->addExtension(new \Slim\Views\TwigExtension(
+        $container['router'],
+        $container['request']->getUri()
+    ));
+
+    return $view;
+};
+
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig('../templates', [
         'cache' => false /*'../cache'*/
@@ -42,11 +54,19 @@ $app->get('/hello/{name}', function ($request, $response, $args) {
     ]);
 })->setName('profile');
 
+
 $app->get('/bublin', function ($request, $response, $args) {
     return $this->view->render($response, 'bublin-template.html', [
         'name' => $args['name']
     ]);
 })->setName('profile');
+
+$app->get('/data/{dataset}', function ($request, $response, $args) {
+	$newResponse = $response->withHeader('Content-type', 'application/json');
+    return $this->data->render($newResponse, $args['dataset'], [
+        'name' => $args['dataset']
+    ]);
+})->setName('dataset');
 
 /*$container['view'] = new \Slim\Views\PhpRenderer("../templates/");*/
 
