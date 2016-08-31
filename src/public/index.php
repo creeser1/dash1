@@ -23,6 +23,7 @@ $container['logger'] = function($c) {
     $logger->pushHandler($file_handler);
     return $logger;
 };
+$this->logger->addInfo("Something interesting happened");
 /*
 $container['view'] = new \Slim\Views\PhpRenderer("../templates/");
 
