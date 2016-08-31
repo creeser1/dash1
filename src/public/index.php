@@ -23,6 +23,7 @@ $container['logger'] = function($c) {
     $logger->pushHandler($file_handler);
     return $logger;
 };
+
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig('../templates', [
         'cache' => '../cache'
@@ -34,6 +35,7 @@ $container['view'] = function ($container) {
 
     return $view;
 };
+
 $app->get('/hello/{name}', function ($request, $response, $args) {
     return $this->view->render($response, 'profile.html', [
         'name' => $args['name']
