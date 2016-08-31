@@ -26,7 +26,7 @@ $container['logger'] = function($c) {
 
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig('../templates', [
-        'cache' => '../cache'
+        'cache' => false /*'../cache'*/
     ]);
     $view->addExtension(new \Slim\Views\TwigExtension(
         $container['router'],
