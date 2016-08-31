@@ -1,0 +1,311 @@
+
+* {
+	margin:0;
+	padding:0;
+}
+
+body {
+	font-size:16px;
+}
+
+.chart-title {
+	font-family: sans-serif;
+	color: #777;
+	position:relative;
+	top:-600px;
+	text-align:center;
+	z-index: -1;
+}
+
+.chart-title h1 {
+	font-weight: 600;
+	font-size: 20px;
+	line-height: 1.5em;
+	margin:5px;
+}
+
+.chart-title h2 {
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 1.5em;
+	margin:5px;
+}
+
+#chart1-plotarea .floater ::selection { background: transparent; }
+#chart1-plotarea .floater ::-moz-selection { background: transparent; }
+
+#chart1-plotarea .floater {
+	position:absolute;
+	z-index: 9;
+	background-color: rgba(255,255,255,0.4);
+	padding: 3px 5px;
+	color: #333;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.5em;
+	visibility: hidden;
+	border: 2px solid rgba(128,128,128,0.4);
+	border-radius: 6px;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: -moz-none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+#chart1 button {
+	background-color: rgb(53, 135, 212);
+	padding: 3px 9px;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.5;
+	float: left;
+	vertical-align: middle;
+	cursor: pointer;
+	display: inline-block;
+	color: #fff;
+	background: #337ab7;
+	border: 1px solid #2e6da4;
+	border-radius: 4px;
+	visibility:hidden;
+}
+
+#chart1 .controls {
+	width: 90%;
+	min-width: 360px;
+	display: block;
+	margin:-60px auto 0;
+	height: 25px;
+	clear:both;
+	background:transparent;
+	position:relative;
+}
+
+#chart1 .controls div {
+	display: inline-block;
+	float: left;
+	margin:0 0 0 10px;
+	width: 78%;
+	padding: 0 0 5px 0;
+	height: 20px;
+	visibility:hidden;
+}
+
+#chart1 .label{
+	font: 12pt sans-serif;
+}
+
+#chart1 text {
+	font: 11px sans-serif;
+}
+
+#chart1 .dot {
+	fill-opacity: .85;
+	transition: opacity 0.2s;
+}
+
+#chart1 .dot:hover {
+	fill-opacity: 1;
+	transition: opacity 0.2s;
+}
+
+#chart1 .active {
+	fill-opacity: 1;
+	stroke-width: 1;
+	stroke-opacity: 1;
+}
+
+#chart1 .legend {
+	opacity: .85;
+}
+
+#chart1 .axis path {
+	display: none;
+}
+
+#chart1 .axis line {
+	stroke-width:1px;
+	stroke: #bbb;
+	stroke-dasharray: 2px 2px;
+}
+
+#chart1 .label {
+	fill: #555;
+}
+
+#chart1 .year.label {
+	font: 500 100px "Helvetica Neue"; 
+	fill: #ccc;
+}
+
+#chart1 .year.label.active {
+	fill: #aaa;
+}
+
+#chart1 .overlay {
+	fill: none;
+	pointer-events: all;
+	cursor: ew-resize;
+}
+
+#chart1 input[type=range] {
+	-webkit-appearance: none;
+	margin: 10px 0;
+	width: 100%;
+	position:relative;
+}
+
+#chart1 input[type=range]:focus {
+	outline: none;
+}
+
+#chart1 input[type=range]::-webkit-slider-runnable-track {
+	width: 100%;
+	height: 10px;
+	cursor: pointer;
+	animate: 0.2s;
+	box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+	background: #ddd;
+	border-radius: 25px;
+	border: 0px solid #000101;
+}
+
+#chart1 input[type=range]::-webkit-slider-thumb {
+	box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+	border: 0px solid #000000;
+	height: 20px;
+	width: 20px;
+	border-radius: 7px;
+	background: #337ab7;
+	cursor: pointer;
+	-webkit-appearance: none;
+	margin-top: -4.6px;
+}
+
+#chart1 input[type=range]:focus::-webkit-slider-runnable-track {
+	background: #ddd;
+}
+
+#chart1  input[type=range]::-moz-range-track {
+	width: 100%;
+	height: 10px;
+	cursor: pointer;
+	animate: 0.2s;
+	box-shadow: 0px 0px 0px #ccc, 0px 0px 0px #ccc;
+	background: #ddd;
+	border-radius: 25px;
+	border: 1px solid #ccc;
+}
+
+#chart1 input[type=range]::-moz-range-thumb {
+	box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+	border: 0px solid #2e6da4;
+	height: 20px;
+	width: 20px;
+	border-radius: 7px;
+	background: #337ab7;
+	cursor: pointer;
+}
+
+#chart1 input[type=range]::-ms-track {
+	width: 100%;
+	height: 10px;
+	cursor: pointer;
+	animate: 0.2s;
+	background: transparent;
+	border-color: transparent;
+	border-width: 10px 0;
+	color: transparent;
+	float: right;
+}
+
+#chart1 input[type=range]::-ms-fill-lower {
+	background: #ddd;
+	border: 0px solid #000101;
+	border-radius: 50px;
+	box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+
+#chart1 input[type=range]::-ms-fill-upper {
+	background: #ddd;
+	border: 0px solid #000101;
+	border-radius: 50px;
+	box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+
+#chart1 input[type=range]::-ms-thumb {
+	box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+	border: 0px solid #000000;
+	height: 20px;
+	width: 20px;
+	border-radius: 7px;
+	background: #337ab7;
+	cursor: pointer;
+}
+
+#chart1 input[type=range]:focus::-ms-fill-lower {
+	background: #ddd;
+}
+
+#chart1 input[type=range]:focus::-ms-fill-upper {
+	background: #ddd;
+}
+#chart1-plotarea {
+	position: relative;
+}
+#chart1 .controls {
+	position:relative;
+	top:-50px;
+}
+
+.tooltipx {
+	position: absolute;
+	top:400px;
+	left:100px;
+	z-index: 10;
+	font-family: sans-serif;
+	padding:0 5px;
+	margin:0;
+	height:120px;
+	width:175px;
+	background-color: rgba(255,255,255,0.7);
+	border: 1px solid #bbbbbb;
+	border-radius: 5px;
+	box-shadow: 1px 1px 4px #bbbbbb;
+	visibility:hidden;
+}
+
+.tcampusx {
+	color:#fff;
+	font-weight:600;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 16px;
+}
+
+.tooltip_bodyx {
+	position: relative; 
+	font-weight: normal;
+	text-align: left;
+	font-size:13px;
+}
+.tooltip_titlex {
+	text-align:center;
+	line-height:20px;
+}
+
+.ttitle {
+	background-color: rgba(0,0,0,0.1); /*darker for higher contrast to white lettering*/
+	display:inline-block;
+	width:100%;
+	height:20px;
+}
+
+.highlighted {
+	stroke: #000;
+	stroke-width:0.71;
+	fill: #000;
+}
+.legendrectx {
+	stroke: #fff;
+	stroke-width:1;
+}
