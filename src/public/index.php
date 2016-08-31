@@ -34,7 +34,7 @@ $container['db'] = function ($c) {
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $pdo;
 };
-
+/*
 $app->get('/tickets', function (Request $request, Response $response) {
     $this->logger->addInfo("Ticket list");
     $mapper = new TicketMapper($this->db);
@@ -79,5 +79,11 @@ $app->get('/ticket/{id}', function (Request $request, Response $response, $args)
     $response = $this->view->render($response, "ticketdetail.phtml", ["ticket" => $ticket]);
     return $response;
 })->setName('ticket-detail');
+/**/
+$app->get('/hello/{name}', function (Request $request, Response $response) {
+    $name = $request->getAttribute('name');
+    $response->getBody()->write("Hello, $name");
 
+    return $response;
+});
 $app->run();
