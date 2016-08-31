@@ -23,8 +23,24 @@ $container['logger'] = function($c) {
     $logger->pushHandler($file_handler);
     return $logger;
 };
+$container['view'] = function ($container) {
+    $view = new \Slim\Views\Twig('../templates', [
+        'cache' => '../cache'
+    ]);
+    $view->addExtension(new \Slim\Views\TwigExtension(
+        $container['router'],
+        $container['request']->getUri()
+    ));
 
-$container['view'] = new \Slim\Views\PhpRenderer("../templates/");
+    return $view;
+};
+$app->get('/hello/{name}', function ($request, $response, $args) {
+    return $this->view->render($response, 'profile.html', [
+        'name' => $args['name']
+    ]);
+})->setName('profile');
+
+/*$container['view'] = new \Slim\Views\PhpRenderer("../templates/");*/
 
 $container['db'] = function ($c) {
     $db = $c['settings']['db'];
@@ -35,6 +51,13 @@ $container['db'] = function ($c) {
     return $pdo;
 };
 /**/
+$app->get('/', function (Request $request, Response $response) {
+    $response->getBody()->write("Hello");
+	/*$this->logger->addInfo("Something interesting happened");*/
+
+    return $response;
+});
+
 $app->get('/tickets', function (Request $request, Response $response) {
     $this->logger->addInfo("Ticket list");
     $mapper = new TicketMapper($this->db);
@@ -80,11 +103,5 @@ $app->get('/ticket/{id}', function (Request $request, Response $response, $args)
     return $response;
 })->setName('ticket-detail');
 
-$app->get('/', function (Request $request, Response $response) {
-    $response->getBody()->write("Hello");
-	/*$this->logger->addInfo("Something interesting happened");*/
-
-    return $response;
-});
 
 $app->run();
