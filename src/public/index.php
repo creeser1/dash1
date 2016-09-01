@@ -54,6 +54,12 @@ $app->get('/hello/{name}', function ($request, $response, $args) {
     ]);
 })->setName('profile');
 
+$app->get('/index.html', function ($request, $response, $args) {
+    return $this->view->render($response, 'profile.html', [
+        'name' => 'test'
+    ]);
+})->setName('profile');
+
 
 $app->get('/bublin', function ($request, $response, $args) {
     return $this->view->render($response, 'bublin-template.html', [
