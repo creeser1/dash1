@@ -52,20 +52,26 @@ $app->get('/hello/{name}', function ($request, $response, $args) {
     return $this->view->render($response, 'profile.html', [
         'name' => $args['name']
     ]);
-})->setName('profile');
+})->setName('hello');
 
 $app->get('/index.html', function ($request, $response, $args) {
     return $this->view->render($response, 'profile.html', [
         'name' => 'test'
     ]);
-})->setName('profile');
+})->setName('index');
+
+$app->get('/favicon.ico', function ($request, $response, $args) {
+    return $this->view->render($response, 'favicon.ico', [
+        'name' => 'favicon'
+    ]);
+})->setName('favicon');
 
 
 $app->get('/bublin', function ($request, $response, $args) {
     return $this->view->render($response, 'bublin-template.html', [
         'name' => $args['name']
     ]);
-})->setName('profile');
+})->setName('bublin');
 
 $app->get('/data/{dataset}', function ($request, $response, $args) {
 	$newResponse = $response->withHeader('Content-type', 'application/json');
