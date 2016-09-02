@@ -85,14 +85,14 @@ $app->get('/data/{dataset}', function ($request, $response, $args) {
         'name' => $args['dataset']
     ]);
 })->setName('dataset');
-
+/*
 $app->get('/', function (Request $request, Response $response) {
     $response->getBody()->write("Hello");
-	/*$this->logger->addInfo("Something interesting happened");*/
+	//$this->logger->addInfo("Something interesting happened");
 
     return $response;
 });
-
+*/
 /*$container['view'] = new \Slim\Views\PhpRenderer("../templates/");*/
 /*
 $container['db'] = function ($c) {
