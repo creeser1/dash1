@@ -55,13 +55,19 @@ $app->get('/hello/{name}', function ($request, $response, $args) {
 })->setName('hello');
 
 $app->get('/index.html', function ($request, $response, $args) {
-    return $this->view->render($response, 'profile.html', [
+    return $this->view->render($response, 'root.html', [
         'name' => 'test'
     ]);
 })->setName('index');
 
+$app->get('/', function ($request, $response, $args) {
+    return $this->view->render($response, 'root.html', [
+        'name' => 'root'
+    ]);
+})->setName('root');
+
 $app->get('/favicon.ico', function ($request, $response, $args) {
-    return $this->view->render($response, 'favicon.ico', [
+    return $this->view->render($response, 'csyoufavicon.ico', [
         'name' => 'favicon'
     ]);
 })->setName('favicon');
@@ -80,8 +86,15 @@ $app->get('/data/{dataset}', function ($request, $response, $args) {
     ]);
 })->setName('dataset');
 
-/*$container['view'] = new \Slim\Views\PhpRenderer("../templates/");*/
+$app->get('/', function (Request $request, Response $response) {
+    $response->getBody()->write("Hello");
+	/*$this->logger->addInfo("Something interesting happened");*/
 
+    return $response;
+});
+
+/*$container['view'] = new \Slim\Views\PhpRenderer("../templates/");*/
+/*
 $container['db'] = function ($c) {
     $db = $c['settings']['db'];
     $pdo = new PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['dbname'],
@@ -91,13 +104,7 @@ $container['db'] = function ($c) {
     return $pdo;
 };
 /**/
-$app->get('/', function (Request $request, Response $response) {
-    $response->getBody()->write("Hello");
-	/*$this->logger->addInfo("Something interesting happened");*/
-
-    return $response;
-});
-
+/*
 $app->get('/tickets', function (Request $request, Response $response) {
     $this->logger->addInfo("Ticket list");
     $mapper = new TicketMapper($this->db);
@@ -142,6 +149,6 @@ $app->get('/ticket/{id}', function (Request $request, Response $response, $args)
     $response = $this->view->render($response, "ticketdetail.phtml", ["ticket" => $ticket]);
     return $response;
 })->setName('ticket-detail');
-
+/**/
 
 $app->run();
