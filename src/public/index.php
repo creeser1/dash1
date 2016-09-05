@@ -79,6 +79,18 @@ $app->get('/bublin', function ($request, $response, $args) {
     ]);
 })->setName('bublin');
 
+$app->get('/bublin2', function ($request, $response, $args) {
+    return $this->view->render($response, 'bublin-template2.html', [
+        'name' => $args['name']
+    ]);
+})->setName('bublin2');
+
+$app->get('/bublin3', function ($request, $response, $args) {
+    return $this->view->render($response, 'bublin-template3.html', [
+        'name' => $args['name']
+    ]);
+})->setName('bublin3');
+
 $app->get('/data/{dataset}', function ($request, $response, $args) {
 	$newResponse = $response->withHeader('Content-type', 'application/json');
     return $this->data->render($newResponse, $args['dataset'], [
