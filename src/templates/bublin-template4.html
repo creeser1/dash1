@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CSU Comparisons</title>
+<link href="assets/csyoufavicon.ico" rel="icon" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="static/page/bublin/all_bublin.css" />
+<script src="static/page/bublin/all_pcore.js"></script>
+<script src="static/page/bublin/all_gcore.js"></script>
+</head><body>
+
+<header id="top" class="banner" role="banner">
+	<a class="offscreen" href="#maincontent">skip to content</a>
+	<img src="static/global/img/branding.png" width="803" height="108" alt=""/> 
+ </header>
+ 
+<section id="maincontent" class="container" role="main">
+
+<div class="title-bar"><h1>CSU Comparisons</h1></div>
+
+<form class="page-controls"><fieldset class="controls"><legend class="offscreen">For accessibility devices</legend>
+	<select id="dataset_filter1">
+	<option value="ftf_6yr" selected>FTF 6yr Grad</option>
+	<option value="ftf_4yr">FTF 4yr Grad</option>
+	<option value="tr_4yr">TR 4yr Grad</option>
+	<option value="tr_2yr">TR 2yr Grad</option>
+	</select>
+</fieldset></form>
+
+<ul class="nav nav-tabs tabtab" role="tablist">
+	<li class="active"><a href="#chart" role="tab" tabindex="0">CSU Comparisons</a></li>
+	<li><a href="#trends" role="tab" tabindex="0">Historical Trends</a></li>
+	<li><a href="#explanations" role="tab" tabindex="0">Chart Explanations</a></li>
+	<li><a href="#table" role="tab" tabindex="0">Data Tables</a></li>
+	<li><a href="#method" role="tab" tabindex="0">Methodology</a></li>
+</ul>
+
+<div class="tab-content"> <!-- wraps major tabbed area -->
+
+<div id="chart" class="tab-pane fade in active">
+<div id="chart1">
+	<div id="chart1-plotarea"></div>
+	<div class="chart-title"><h1>Title</h1><h2>Subtitle</h2></div>
+	<div class="controls">
+		<button name="play" id="play">Play</button>  
+		<div><input autocomplete="off" id="slider" type="range" min="2000" max="2009" value="2000" step="1"></div>
+	</div>
+</div>
+</div><!--./chart-->
+
+
+<div id="trends" class="tab-pane fade">
+<div class="chart-controls"><form><fieldset style=""><legend class="offscreen">For accessibility devices</legend>
+	<select id="yvalue_selector">
+	<option value="gradrate">6-Year Grad Rate</option>
+	<option value="gap" selected>Acheivement Gap</option>
+	<option value="pell">Pell Eligible Enrollment</option>
+	</select>
+</fieldset></form></div>
+
+<div id="chart0"></div>
+</div><!--./trends-->
+
+
+<div id="explanations" class="tab-pane fade">
+<h1>CSU/National Peers Chart Explanations</h1>
+<h2>What is the purpose of this chart?</h2>
+<p>The inclination to make comparisons between campuses is natural, but as an activity it is fraught with the potential for misinterpretation. Campuses differ in many ways that can render comparisons of student outcomes such as graduation rates moot. Differences in student body size, rural/urban setting, population characteristics including academic preparation at entry, along with many other factors, may significantly affect outcomes regardless of academic practices or policies employed at the campus. However, most CSU campuses can point to one or a few other campuses that they regard as their closest peers. When selected carefully, observations of CSU peer changes in outcomes such as graduation rates and achievement gaps may help identify peer campuses that are having greater success, or, if peer campuses see the same changes over time, may help identify changes that are the result of influences external to campus practices or policies.</p>
+<h2>What data am I looking at?</h2>
+<p>The data used to create these charts were taken from data originally sent by each campus' Institutional Research department to the Chancellor's Office in order to meet the campus' Federal and State data reporting requirements. This page tracks selected student outcome (Graduation Rates, Achievement Gaps) and enrollment measures (Pell recipients) for all of the CSU campuses.</p>
+<h2>How do I interact with this page?</h2>
+<p>Both Charts</p>
+<ul>
+<li>Use the drop-down menu at the top of the page to choose to view data for 4-year or 6-year First-Time Full-Time Freshmen or 2-year or 4 year Transfer students. </li>
+<li>The campus to which you are primarily affiliated should be selected by default. To select or deselect any campus, click on its name in the figure legend.</li>
+<li>Hover over any data point to see the institution's specific values for an individual year.</li>
+</ul>
+<p>CSU Comparisons chart:</p>
+<p>This chart provides an animated view of changes in Achievement Gaps and Graduation rates over time.</p>
+<ul>
+<li>Click the play button to see changes in motion for the selected student group. Click on the timeline tool if you want to see these values for a particular year. </li>
+</ul>
+<p>Historical Trends line chart:</p>
+<p>This chart provides static views of individual measures (Graduation rates, Achievement Gaps, Pell recipient enrollment, etc.) over time. </p>
+<ul>
+<li>Use the drop-down menu at the top of the chart space to select a specific measure.</li>
+</ul>
+</div><!--./explanations-->
+
+
+<div id="table" class="tab-pane fade">
+	<h2>Data Tables</h2>
+	<p>Some data tables would follow.</p>
+</div><!--./table> -->
+
+
+<div id="method" class="tab-pane fade">
+	<h2>Methodology</h2>
+	<p>Some methodology text would follow.</p>
+</div><!--./method> -->
+
+</div><!--./tab-content-->
+</section><!-- ./container #maincontent -->
+
+<script type="text/javascript" src="assets/bublin5.js"></script>
+</body></html>
