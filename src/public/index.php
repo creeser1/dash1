@@ -79,11 +79,11 @@ $app->get('/bublin', function ($request, $response, $args) {
     ]);
 })->setName('bublin');
 
-$app->get('/bublin2', function ($request, $response, $args) {
-    return $this->view->render($response, 'bublin-template2.html', [
+$app->get('/bublin5', function ($request, $response, $args) {
+    return $this->view->render($response, 'bublin-template5.html', [
         'name' => $args['name']
     ]);
-})->setName('bublin2');
+})->setName('bublin5');
 
 $app->get('/bublin4', function ($request, $response, $args) {
     return $this->view->render($response, 'bublin-template4.html', [
