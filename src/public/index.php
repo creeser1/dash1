@@ -130,6 +130,11 @@ $app->get('/test1', function ($request, $response, $args) {
 				'embed' => 'static/page/bublin/explanations.html'
 				],
 				[
+				'label' => 'Data Tables',
+				'anchor' => 'table',
+				'embed' => 'static/page/bublin/table.html'
+				],
+				[
 				'label' => 'Methodology',
 				'anchor' => 'method',
 				'embed' => 'static/page/bublin/method.html'
