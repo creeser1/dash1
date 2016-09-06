@@ -1,12 +1,18 @@
 {% extends "base1.html" %}
 
 {% block control %}
+{% if page.controls|length > 0 %}
 <form class="page-controls"><fieldset class="controls"><legend class="offscreen">For accessibility devices</legend>
-	<select id="dataset_filter1">
-	<option value="ftf_6yr" selected>FTF 6yr Grad</option>
-	<option value="ftf_4yr">FTF 4yr Grad</option>
-	<option value="tr_4yr">TR 4yr Grad</option>
-	<option value="tr_2yr">TR 2yr Grad</option>
+	{% for control in page.controls %}
+		{% if control.type is constant('select') %}
+	<select id="{{ control.id }}">
+		{% for detail in control.details %}
+			<option value="{{ detail.option_value }}" {{detail.isselected ? 'selected'}}>{{ detail.option_text }}</option>
+			{% endfor %}
 	</select>
+		{% endif %}
+	{% endfor %}
+
 </fieldset></form>
+{% endif %}
 {% endblock %}
