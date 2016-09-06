@@ -87,14 +87,7 @@ $app->get('/test1', function ($request, $response, $args) {
 			'htmltitle' => 'Test Title',
 			'title' => 'CSU Something',
 			'style' => 'static/page/bublin/all_style.css',
-			'tabs' => [
-				0 => ['label' => 'CSU Comparisons',
-				'anchor' => 'chart',
-				'isactive' => true],
-				1 => ['label' => 'Historical Trends',
-				'anchor' => 'trends',
-				'isactive' => false]
-			]
+			'tabs' => array(0,1,2)
 		]
     ]);
 })->setName('test1');
