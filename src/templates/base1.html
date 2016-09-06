@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% if page.tabs|length > 0 %}
-<ul class="nav nav-tabs tabtab" role="tablist">
+	<ul class="nav nav-tabs tabtab" role="tablist">
 	{% for tab in page.tabs %}
 	<li {{ tab.isactive ? 'class="active"' }}><a href="#{{ tab.anchor }}" role="tab" tabindex="0">{{ tab.label }}</a></li>
 	{% endfor %}
@@ -29,7 +29,7 @@
 
 <div class="tab-content"> <!-- wraps major tabbed area -->
 	{% for tab in page.tabs %}
-	<div id="{{ tab.anchor }}" class="tab-pane fade {{ tab.isactive ? 'in active'}}">
+<div id="{{ tab.anchor }}" class="tab-pane fade {{ tab.isactive ? 'in active'}}">
 
 		<!-- content of tab goes here  -->
 		<h2>{{ tab.label }}</h2>
