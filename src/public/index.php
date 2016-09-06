@@ -95,23 +95,19 @@ $app->get('/test1', function ($request, $response, $args) {
 				],
 				[
 				'label' => 'Historical Trends',
-				'anchor' => 'trends',
-				'isactive' => false
+				'anchor' => 'trends'
 				],
 				[
 				'label' => 'Chart Explanations',
-				'anchor' => 'explanations',
-				'isactive' => false
+				'anchor' => 'explanations'
 				],
 				[
 				'label' => 'Data Tables',
-				'anchor' => 'table',
-				'isactive' => false
+				'anchor' => 'table'
 				],
 				[
 				'label' => 'Methodology',
-				'anchor' => 'method',
-				'isactive' => false
+				'anchor' => 'method'
 				]
 			]
 		]
