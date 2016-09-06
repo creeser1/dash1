@@ -7,7 +7,7 @@
 {% if control.type == 'select' %}
 	<select id="{{ control.id }}">
 {% for detail in control.details %}
-		<option value="{{ detail.option_value }}" {{detail.isselected ? 'selected'}}>{{ detail.option_text }}</option>
+		<option value="{{ detail.option_value }}"{{detail.isselected ? ' selected'}}>{{ detail.option_text }}</option>
 {% endfor %}
 	</select>
 {% endif %}
