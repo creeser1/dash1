@@ -5,6 +5,7 @@
 <title>{{ page.htmltitle }}</title>
 <link href="assets/csyoufavicon.ico" rel="icon" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="{{ page.style }}" />
+<script src="static/global/js/all_pcore.js"></script>
 </head><body>
 
 <header id="top" class="banner" role="banner">
@@ -48,8 +49,14 @@
 
 {% block footer %}
 {% endblock %}
+<script type="application/javascript">
+	$('.nav-tabs a').click(function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+		$(this).tab('show');
+	});
 
-<script src="static/global/js/all_pcore.js"></script>
+</script>
 <script src="static/global/js/all_gcore.js"></script>
 {% block pagescripts %}
 {% endblock %}
