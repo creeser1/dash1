@@ -5,7 +5,7 @@
 <form class="page-controls"><fieldset class="controls"><legend class="offscreen">For accessibility devices</legend>
 	{% for control in page.controls %}
 		<span>{{ control.id }}</span>
-		{% if control.type is constant('select') %}
+		{% if control.type == 'select' %}
 	<select id="{{ control.id }}">
 		{% for detail in control.details %}
 			<option value="{{ detail.option_value }}" {{detail.isselected ? 'selected'}}>{{ detail.option_text }}</option>
