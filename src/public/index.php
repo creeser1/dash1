@@ -88,12 +88,31 @@ $app->get('/test1', function ($request, $response, $args) {
 			'title' => 'CSU Something',
 			'style' => 'static/page/bublin/all_style.css',
 			'tabs' => [
-				0 => ['label' => 'CSU Comparisons',
+				[
+				'label' => 'CSU Comparisons',
 				'anchor' => 'chart',
-				'isactive' => true],
-				1 => ['label' => 'Historical Trends',
+				'isactive' => true
+				],
+				[
+				'label' => 'Historical Trends',
 				'anchor' => 'trends',
-				'isactive' => false]
+				'isactive' => false
+				],
+				[
+				'label' => 'Chart Explanations',
+				'anchor' => 'explanations',
+				'isactive' => false
+				],
+				[
+				'label' => 'Data Tables',
+				'anchor' => 'table',
+				'isactive' => false
+				],
+				[
+				'label' => 'Methodology',
+				'anchor' => 'method',
+				'isactive' => false
+				]
 			]
 		]
     ]);
