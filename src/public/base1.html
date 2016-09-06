@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{{ page.htmltitle }}</title>
+<link href="assets/csyoufavicon.ico" rel="icon" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="{{ page.style }}" />
+<script src="static/global/all_pcore.js"></script>
+<script src="static/global/all_gcore.js"></script>
+</head><body>
+
+<header id="top" class="banner" role="banner">
+	<a class="offscreen" href="#maincontent">skip to content</a>
+	<img src="static/global/img/branding.png" width="803" height="108" alt="" /> 
+</header>
+
+<section id="maincontent" class="container" role="main">
+
+<div class="title-bar"><h1>{{ page.title }}</h1></div>
+
+{% block control %}
+	<!-- various controls go here -->
+{% endblock %}
+
+</section><!-- ./container #maincontent -->
+
+{% block footer %}
+{% endblock %}
+
+{% block pagescripts %}
+{% endblock %}
+
+{% block analytics %}
+{% endblock %}
+</body></html>
