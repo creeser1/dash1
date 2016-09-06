@@ -22,8 +22,11 @@
 
 {% if page.tabs|length > 0 %}
 <ul class="nav nav-tabs tabtab" role="tablist">
-	<li>list goes here</li>
+	{% for tab in page.tabs %}
+	<li {{ tab.isactive ? 'class="active"' }}><a href="#{{ tab.anchor }}" role="tab" tabindex="0">{{ tab.label }}</a></li>
+	{% endfor %}
 </ul>
+{% endif %}
 
 
 
