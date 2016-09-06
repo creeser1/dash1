@@ -89,25 +89,30 @@ $app->get('/test1', function ($request, $response, $args) {
 			'style' => 'static/page/bublin/all_style.css',
 			'tabs' => [
 				[
+				'isactive' => true,
 				'label' => 'CSU Comparisons',
 				'anchor' => 'chart',
-				'isactive' => true
+				'embed' => 'static/page/bublin/chart.html'
 				],
 				[
 				'label' => 'Historical Trends',
-				'anchor' => 'trends'
+				'anchor' => 'trends',
+				'embed' => 'static/page/bublin/trends.html'
 				],
 				[
 				'label' => 'Chart Explanations',
-				'anchor' => 'explanations'
+				'anchor' => 'explanations',
+				'embed' => 'static/page/bublin/explanations.html'
 				],
 				[
 				'label' => 'Data Tables',
-				'anchor' => 'table'
+				'anchor' => 'table',
+				'embed' => 'static/page/bublin/table.html'
 				],
 				[
 				'label' => 'Methodology',
-				'anchor' => 'method'
+				'anchor' => 'method',
+				'embed' => 'static/page/bublin/method.html'
 				]
 			]
 		]
