@@ -3,16 +3,15 @@
 {% block control %}
 {% if page.controls|length > 0 %}
 <form class="page-controls"><fieldset class="controls"><legend class="offscreen">For accessibility devices</legend>
-	{% for control in page.controls %}
-		<span>{{ control.id }}</span>
-		{% if control.type == 'select' %}
+{% for control in page.controls %}
+{% if control.type == 'select' %}
 	<select id="{{ control.id }}">
-		{% for detail in control.details %}
-			<option value="{{ detail.option_value }}" {{detail.isselected ? 'selected'}}>{{ detail.option_text }}</option>
-			{% endfor %}
+{% for detail in control.details %}
+		<option value="{{ detail.option_value }}" {{detail.isselected ? 'selected'}}>{{ detail.option_text }}</option>
+{% endfor %}
 	</select>
-		{% endif %}
-	{% endfor %}
+{% endif %}
+{% endfor %}
 
 </fieldset></form>
 {% endif %}
