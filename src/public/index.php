@@ -92,7 +92,7 @@ $app->get('/test1', function ($request, $response, $args) {
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
     ]);
-	$this->logger->addInfo($settings['settings']['displayErrorDetails']);
+	$this->logger->addInfo($this['settings']);
 })->setName('test1');
 
 $app->run();
