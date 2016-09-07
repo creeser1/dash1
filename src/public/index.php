@@ -117,10 +117,10 @@ $app->get('/test1', function ($request, $response, $args) {
 	*/
 	$jsonstr = file_get_contents('../data/test1_settings.json');
 	$this->logger->addInfo($jsonstr);
-	$page2 = json_decode($jsonstr);
+	$page2 = json_decode($jsonstr, true);
 	$this->logger->addInfo(var_dump($page2));
     return $this->view->render($response, 'tpl_test1.html', [
-        'page' => $page2
+        'page' => $page
     ]);
 });
 
