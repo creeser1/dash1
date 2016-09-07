@@ -110,7 +110,7 @@ $app->get('/test1', function ($request, $response, $args) {
         'name' => 'test1_settings.json'
     ]);
 	$this->logger->addInfo($jsonstring);
-	$response->rewind();
+	$response->getBody()->rewind();
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
     ]);
