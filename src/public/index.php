@@ -42,7 +42,6 @@ $container['view'] = function ($container) {
         $container['router'],
         $container['request']->getUri()
     ));
-	$this->logger->addInfo($container['settings']);
 
     return $view;
 };
@@ -79,7 +78,7 @@ $app->get('/bublin5', function ($request, $response, $args) {
 })->setName('bublin5');
 
 $app->get('/data/{dataset}', function ($request, $response, $args) {
-        $newResponse = $response->withHeader('Content-type', 'application/json');
+	$newResponse = $response->withHeader('Content-type', 'application/json');
     return $this->data->render($newResponse, $args['dataset'], [
         'name' => $args['dataset']
     ]);
