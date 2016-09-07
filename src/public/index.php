@@ -89,17 +89,22 @@ $app->get('/data/{dataset}', function ($request, $response, $args) {
 $app->get('/test1', function ($request, $response, $args) {
 	$setup = new PageConfigurator('page_test1');
 	$page = $setup->getSetup();
-	$this->logger->addInfo($page['htmltitle']);
 	$settings = $this->get('settings')['db'];
 	$this->logger->addInfo($settings['dbname']);
+	$this->logger->addInfo($page['htmltitle']);
+
+
 	$newResponse = $response->withHeader('Content-type', 'application/json');
 	$jsonstring = $this->data->render($newResponse, 'test1_settings.json', [
         'name' => 'test1_settings.json'
     ]);
 	$this->logger->addInfo($jsonstring);
+	/*
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
     ]);
+	*/
+	return;
 })->setName('test1');
 
 $app->run();
