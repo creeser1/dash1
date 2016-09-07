@@ -116,7 +116,8 @@ $app->get('/test1', function ($request, $response, $args) {
 	$response->getBody()->rewind();
 	*/
 	$jsonstr = file_get_contents('../data/test1_settings.json');
-	$jsonstr = php_strip_whitespace($jsonstr);
+	$pattern = '/\s+/gi';
+	$jsonstr = preg_replace($pattern, ' ', $jsonstr);
 	$this->logger->addInfo($jsonstr);
 	$page2 = json_decode($jsonstr, true);
 	$this->logger->addInfo(var_dump($page2));
