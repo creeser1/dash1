@@ -103,7 +103,6 @@ $app->get('/test1', function ($request, $response, $args) {
 	$settings = $this->get('settings')['db'];
 	$this->logger->addInfo($settings['dbname']);
 	$this->logger->addInfo($page['htmltitle']);
-	$origResponse = $response;
 	/*
 	$jsonResponse = $response->withHeader('Content-type', 'application/json');
 	*/
@@ -111,7 +110,8 @@ $app->get('/test1', function ($request, $response, $args) {
         'name' => 'test1_settings.json'
     ]);
 	$this->logger->addInfo($jsonstring);
-    return $this->view->render($origResponse, 'tpl_test1.html', [
+	$response->rewind();
+    return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
     ]);
 });
