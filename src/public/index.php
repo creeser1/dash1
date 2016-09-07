@@ -113,6 +113,8 @@ $app->get('/test1', function ($request, $response, $args) {
 	$this->logger->addInfo($jsonstring);
 	$this->logger->addInfo($jsonbody);
 	$response->getBody()->rewind();
+	$jsonstr = file_get_contents('../data/test1_settings.json');
+	$this->logger->addInfo($jsonstr);
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
     ]);
