@@ -89,6 +89,7 @@ $app->get('/data/{dataset}', function ($request, $response, $args) {
 })->setName('dataset');
 
 $app->get('/test2', function ($request, $response, $args) {
+	$this->logger->addInfo('test2');
 	$newResponse = $response->withHeader('Content-type', 'application/json');
 	$this->logger->addInfo('json test2');
     return $this->data->render($newResponse, 'test1_settings.json', [
