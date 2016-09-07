@@ -42,6 +42,7 @@ $container['view'] = function ($container) {
         $container['router'],
         $container['request']->getUri()
     ));
+	$this->logger->addInfo($container['settings']);
 
     return $view;
 };
