@@ -8,8 +8,11 @@ spl_autoload_register(function ($classname) {
 });
 
 $config['displayErrorDetails'] = true;
+$settings = [
+	'settings' => $config
+];
 
-$app = new \Slim\App(["settings" => $config]);
+$app = new \Slim\App($settings);
 $container = $app->getContainer();
 
 $container['logger'] = function($c) {
@@ -84,9 +87,7 @@ $app->get('/data/{dataset}', function ($request, $response, $args) {
 $app->get('/test1', function ($request, $response, $args) {
 	$this->logger->addInfo("routing to /test1");
 	$setup = new PageConfigurator('page_test1');
-	$this->logger->addInfo("got setup");
 	$page = $setup->getSetup();
-	$this->logger->addInfo("got page");
 	$this->logger->addInfo($page['htmltitle']);
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
