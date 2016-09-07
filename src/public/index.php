@@ -81,12 +81,12 @@ $app->get('/bublin5', function ($request, $response, $args) {
 
 $app->get('/data/{dataset}', function ($request, $response, $args) {
 	$this->logger->addInfo('dataset');
-	$newResponse = $response->withHeader('Content-type', 'application/json');
 	$this->logger->addInfo($args['dataset']);
+	$newResponse = $response->withHeader('Content-type', 'application/json');
     return $this->data->render($newResponse, $args['dataset'], [
         'name' => $args['dataset']
     ]);
-})->setName('dataset');
+});
 
 $app->get('/test2', function ($request, $response, $args) {
 	$this->logger->addInfo('test2');
@@ -95,7 +95,7 @@ $app->get('/test2', function ($request, $response, $args) {
     return $this->data->render($newResponse, 'test1_settings.json', [
         'name' => 'test1_settings.json'
     ]);
-})->setName('test2');
+});
 
 $app->get('/test1', function ($request, $response, $args) {
 	$setup = new PageConfigurator('page_test1');
