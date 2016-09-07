@@ -91,7 +91,8 @@ $app->get('/test1', function ($request, $response, $args) {
 	$page = $setup->getSetup();
 	$this->logger->addInfo($page['htmltitle']);
 	$settings = $this->get('settings')['displayErrorDetails'];
-	$this->logger->addInfo($settings);
+	$settings = $this->get('settings')['db'];
+	$this->logger->addInfo($settings['dbname']);
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
     ]);
