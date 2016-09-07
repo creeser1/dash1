@@ -89,7 +89,6 @@ $app->get('/test1', function ($request, $response, $args) {
 	$setup = new PageConfigurator('page_test1');
 	$page = $setup->getSetup();
 	$this->logger->addInfo($page['htmltitle']);
-	$this->logger->addInfo($this['settings']);
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
     ]);
