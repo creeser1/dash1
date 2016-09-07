@@ -2,7 +2,7 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-require '../vendor/settings.php';
+/*require '../vendor/settings.php';*/
 require '../vendor/autoload.php';
 spl_autoload_register(function ($classname) {
     require ("../classes/" . $classname . ".php");
