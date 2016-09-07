@@ -3,7 +3,6 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../vendor/autoload.php';
-require '../vendor/settings.php';
 spl_autoload_register(function ($classname) {
     require ("../classes/" . $classname . ".php");
 });
