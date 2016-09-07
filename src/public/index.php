@@ -121,9 +121,9 @@ $app->get('/test1', function ($request, $response, $args) {
 	$this->logger->addInfo($jsonstr);
 	$page2 = json_decode($jsonstr, true);
 	$this->logger->addInfo(json_last_error_msg());
-	$this->logger->addInfo($page2);
+	$this->logger->addInfo(var_dump($page2));
     return $this->view->render($response, 'tpl_test1.html', [
-        'page' => $page
+        'page' => $page2
     ]);
 });
 
