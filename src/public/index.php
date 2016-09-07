@@ -106,10 +106,12 @@ $app->get('/test1', function ($request, $response, $args) {
 	/*
 	$jsonResponse = $response->withHeader('Content-type', 'application/json');
 	*/
-	$jsonstring = $this->data->display($response, 'test1_settings.json', [
+	$jsonstring = $this->data->render($response, 'test1_settings.json', [
         'name' => 'test1_settings.json'
     ]);
+	$jsonbody = $response-getBody()->getContents();
 	$this->logger->addInfo($jsonstring);
+	$this->logger->addInfo($jsonbody);
 	$response->getBody()->rewind();
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
