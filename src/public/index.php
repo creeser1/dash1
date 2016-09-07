@@ -81,6 +81,7 @@ $app->get('/bublin5', function ($request, $response, $args) {
 
 $app->get('/data/{dataset}', function ($request, $response, $args) {
 	$newResponse = $response->withHeader('Content-type', 'application/json');
+	$this->logger->addInfo($args['dataset']);	
     return $this->data->render($newResponse, $args['dataset'], [
         'name' => $args['dataset']
     ]);
@@ -88,6 +89,7 @@ $app->get('/data/{dataset}', function ($request, $response, $args) {
 
 $app->get('/test2', function ($request, $response, $args) {
 	$newResponse = $response->withHeader('Content-type', 'application/json');
+	$this->logger->addInfo('json test2');
     return $this->data->render($newResponse, 'test1_settings.json', [
         'name' => 'test1_settings.json'
     ]);
