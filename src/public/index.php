@@ -21,6 +21,8 @@ $container['logger'] = function($c) {
     $logger->pushHandler($file_handler);
     return $logger;
 };
+$this->logger->addInfo("logger started");
+$this->logger->addInfo($settings['settings']['displayErrorDetails']);
 
 $container['data'] = function ($container) {
     $view = new \Slim\Views\Twig('../data', [
