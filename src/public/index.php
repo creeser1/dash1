@@ -87,7 +87,7 @@ $app->get('/test1', function ($request, $response, $args) {
 	$this->logger->addInfo("got setup");
 	$page = $setup->getSetup();
 	$this->logger->addInfo("got page");
-	$this->logger->addInfo($page);
+	$this->logger->addInfo($page['htmltitle']);
 	/*
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
