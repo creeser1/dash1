@@ -106,6 +106,7 @@ $app->get('/test1', function ($request, $response, $args) {
 	/*
 	$jsonResponse = $response->withHeader('Content-type', 'application/json');
 	*/
+	/*
 	$jsonstring = $this->data->render($response, 'test1_settings.json', [
         'name' => 'test1_settings.json'
     ]);
@@ -113,10 +114,13 @@ $app->get('/test1', function ($request, $response, $args) {
 	$this->logger->addInfo($jsonstring);
 	$this->logger->addInfo($jsonbody);
 	$response->getBody()->rewind();
+	*/
 	$jsonstr = file_get_contents('../data/test1_settings.json');
 	$this->logger->addInfo($jsonstr);
+	$page2 = json_decode($jsonstr);
+	$this->logger->addInfo(var_dump($page2));
     return $this->view->render($response, 'tpl_test1.html', [
-        'page' => $page
+        'page' => $page2
     ]);
 });
 
