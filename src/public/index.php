@@ -106,7 +106,7 @@ $app->get('/test1', function ($request, $response, $args) {
 	/*
 	$jsonResponse = $response->withHeader('Content-type', 'application/json');
 	*/
-	$jsonstring = $this->data->render($response, 'test1_settings.json', [
+	$jsonstring = $this->data->display($response, 'test1_settings.json', [
         'name' => 'test1_settings.json'
     ]);
 	$this->logger->addInfo($jsonstring);
