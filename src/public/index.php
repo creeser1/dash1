@@ -2,14 +2,19 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+require '../vendor/settings.php';
 require '../vendor/autoload.php';
 spl_autoload_register(function ($classname) {
     require ("../classes/" . $classname . ".php");
 });
 
-$config['displayErrorDetails'] = true;
+/* add/overide some config items already set in required settings.php */
+$config['displayErrorDetails'] = true; 
+$settings = [
+	'settings' => $config
+];
 
-$app = new \Slim\App(["settings" => $config]);
+$app = new \Slim\App($settings);
 $container = $app->getContainer();
 
 $container['logger'] = function($c) {
@@ -75,7 +80,7 @@ $app->get('/bublin5', function ($request, $response, $args) {
 })->setName('bublin5');
 
 $app->get('/data/{dataset}', function ($request, $response, $args) {
-	$newResponse = $response->withHeader('Content-type', 'application/json');
+	$newResponse = $response->withHeader('Content-type', 'application/json;charset=utf-8');
     return $this->data->render($newResponse, $args['dataset'], [
         'name' => $args['dataset']
     ]);
