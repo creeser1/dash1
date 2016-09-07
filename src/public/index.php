@@ -92,12 +92,12 @@ $app->get('/test1', function ($request, $response, $args) {
 	$this->logger->addInfo($page['htmltitle']);
 	$settings = $this->get('settings')['db'];
 	$this->logger->addInfo($settings['dbname']);
-	$newResponse = $response;
-	$jsonstring = $this->data->render($response, 'test1_settings.json', [
+	$newResponse = $response->withHeader('Content-type', 'application/json');
+	$jsonstring = $this->data->render($newResponse, 'test1_settings.json', [
         'name' => 'test1_settings.json'
     ]);
 	$this->logger->addInfo($jsonstring);
-    return $this->view->render($newResponse, 'tpl_test1.html', [
+    return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
     ]);
 })->setName('test1');
