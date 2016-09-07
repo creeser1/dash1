@@ -109,7 +109,7 @@ $app->get('/test1', function ($request, $response, $args) {
 	$jsonstring = $this->data->render($response, 'test1_settings.json', [
         'name' => 'test1_settings.json'
     ]);
-	$jsonbody = $response-getBody()->getContents();
+	$jsonbody = $response->getBody()->getContents();
 	$this->logger->addInfo($jsonstring);
 	$this->logger->addInfo($jsonbody);
 	$response->getBody()->rewind();
