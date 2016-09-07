@@ -92,7 +92,7 @@ $app->get('/test1', function ($request, $response, $args) {
 	$this->logger->addInfo($page['htmltitle']);
 	$settings = $this->get('settings')['db'];
 	$this->logger->addInfo($settings['dbname']);
-	$jsonstring = $this->data->render($response, 'test1_settings.json', [
+	$jsonstring = $this->view->render($response, 'bublin-template5.html', [
         'name' => 'test1_settings.json'
     ]);
 	$this->logger->addInfo($jsonstring);
