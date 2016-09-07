@@ -88,7 +88,9 @@ $app->get('/data/{dataset}', function ($request, $response, $args) {
 
 $app->get('/test1', function ($request, $response, $args) {
 	$this->logger->addInfo("routing to /test1");
+	/*
 	$setup = new PageConfigurator('page_test1');
+	*/
 	/*
 	$this->logger->addInfo("got setup");
 	$page = $setup->getSetup();
