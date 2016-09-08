@@ -34,7 +34,7 @@
 	<!-- content of tab would get embedded here  -->
 	<h2>{{ tab.label }}</h2>
 	<p>Actual content from {{ tab.embed }} would go here.</p>
-	{{ tab.content }}
+	{{ tab.content|raw }}
 </div><!-- end of tab area  -->
 {% endfor %}
 </div><!--./tab-content-->
