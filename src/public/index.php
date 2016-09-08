@@ -107,7 +107,7 @@ $app->get('/test2', function ($request, $response, $args) {
     ]);
 });
 
-$app->get('/test1', function ($request, $response, $args) {
+$app->get('/test1/{id}', function ($request, $response, $args) {
 	$setup = new PageConfigurator('page_test1');
 	$page = $setup->getSetup();
 	$settings = $this->get('settings')['db'];
