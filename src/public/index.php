@@ -108,10 +108,9 @@ $app->get('/test2', function ($request, $response, $args) {
 });
 
 $app->get('/test1/{id}', function ($request, $response, $args) {
-	$setup = new PageConfigurator('page_test1');
-	$page = $setup->getSetup();
+	/* $setup = new PageConfigurator('page_test1');
+	$page = $setup->getSetup(); */
 	$settings = $this->get('settings')['db'];
-	$this->logger->addInfo($settings['dbname']);
 	$this->logger->addInfo($page['htmltitle']);
 	$pattern = '/\s+/';
 
@@ -120,15 +119,8 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
     $pagex = $mapper->getPageById($page_id);
 	$json = $pagex->getContent();
 	$page3 = json_decode($json, true);
-	$this->logger->addInfo(var_export($page3, true));
-	$this->logger->addInfo('-----');
+	/* $this->logger->addInfo(var_export($page3, true)); */
 
-	$jsonstr = file_get_contents('../data/test1_settings.json');
-	$jsonstr = preg_replace($pattern, ' ', $jsonstr);
-	$this->logger->addInfo($jsonstr);
-	$page2 = json_decode($jsonstr, true);
-	$this->logger->addInfo(json_last_error_msg());
-	$this->logger->addInfo(var_export($page2, true));
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page3
     ]);
