@@ -3,7 +3,7 @@
 class PageMapper extends Mapper
 {
     public function getPages() {
-        $sql = "SELECT * from page p";
+        $sql = "SELECT * from pgcontent p";
         $stmt = $this->db->query($sql);
 
         $results = [];
@@ -20,7 +20,7 @@ class PageMapper extends Mapper
      * @return PageEntity  The page
      */
     public function getPageById($page_id) {
-        $sql = "SELECT * from page p
+        $sql = "SELECT * from pgcontent p
             where p.id = :page_id";
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute(["page_id" => $page_id]);
