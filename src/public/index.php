@@ -118,7 +118,8 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
 	$page_id = (int)$args['id'];
     $mapper = new PageMapper($this->db);
     $pagex = $mapper->getPageById($page_id);
-	$json = $pagex['content'];
+	var_dump($pagex);
+	$json = $pagex->getContent();
 	$json = preg_replace($pattern, ' ', $json);
 	$this->logger->addInfo($json);
 	$this->logger->addInfo('-----');
