@@ -116,6 +116,7 @@ $app->get('/test1', function ($request, $response, $args) {
 	$pattern = '/\s+/';
 
     $mapper = new PageMapper($this->db);
+	$page_id = 1;
     $page = $mapper->getPageById($page_id);
 	$json = $page['content'];
 	$json = preg_replace($pattern, ' ', $json);
