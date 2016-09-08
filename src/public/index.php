@@ -118,10 +118,9 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
 	$page_id = (int)$args['id'];
     $mapper = new PageMapper($this->db);
     $pagex = $mapper->getPageById($page_id);
-	var_dump($pagex);
 	$json = $pagex->getContent();
-	$json = preg_replace($pattern, ' ', $json);
-	$this->logger->addInfo($json);
+	$page3 = json_decode($json, true);
+	$this->logger->addInfo(var_export($page3, true));
 	$this->logger->addInfo('-----');
 
 	$jsonstr = file_get_contents('../data/test1_settings.json');
@@ -131,7 +130,7 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
 	$this->logger->addInfo(json_last_error_msg());
 	$this->logger->addInfo(var_export($page2, true));
     return $this->view->render($response, 'tpl_test1.html', [
-        'page' => $page2
+        'page' => $page3
     ]);
 });
 
