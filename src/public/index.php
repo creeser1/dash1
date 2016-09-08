@@ -114,7 +114,7 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
     $page_settings = $mapper->getPageById($page_id);
 	$json = $page_settings->getContent();
 	$page = json_decode($json, true);
-	/* $this->logger->addInfo(var_export($page3, true)); */
+	$this->logger->addInfo($json);
 
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
