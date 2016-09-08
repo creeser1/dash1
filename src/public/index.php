@@ -115,7 +115,9 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
 	$json = $page_settings->getContent();
 	$page = json_decode($json, true);
 	$this->logger->addInfo($json);
-
+	foreach ($page['tabs'] as $tab) {
+		$this->logger->addInfo($tab[embed]);
+	}
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
     ]);
