@@ -125,6 +125,7 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
 	$html = $tab_content->getContent();
 	$this->logger->addInfo($html);
 	$page['tabs'][2]['content'] = $html;
+	$this->logger->addInfo(var_export($page, true));
 
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
