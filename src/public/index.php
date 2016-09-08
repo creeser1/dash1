@@ -108,21 +108,17 @@ $app->get('/test2', function ($request, $response, $args) {
 });
 
 $app->get('/test1/{id}', function ($request, $response, $args) {
-	/* $setup = new PageConfigurator('page_test1');
-	$page = $setup->getSetup(); */
 	$settings = $this->get('settings')['db'];
-	$this->logger->addInfo($page['htmltitle']);
-	$pattern = '/\s+/';
-
 	$page_id = (int)$args['id'];
+	$page_type = (int)'1';
     $mapper = new PageMapper($this->db);
-    $pagex = $mapper->getPageById($page_id);
-	$json = $pagex->getContent();
-	$page3 = json_decode($json, true);
+    $page_settings = $mapper->getPageById($page_id, $page_type);
+	$json = $page_settings->getContent();
+	$page = json_decode($json, true);
 	/* $this->logger->addInfo(var_export($page3, true)); */
 
     return $this->view->render($response, 'tpl_test1.html', [
-        'page' => $page3
+        'page' => $page
     ]);
 });
 
