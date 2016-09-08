@@ -124,7 +124,7 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
     $tab_content = $mapper->getPageById($page_id);
 	$html = $tab_content->getContent();
 	$this->logger->addInfo($html);
-	
+	$page['tabs'][2]['content'] = $html;
 
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
