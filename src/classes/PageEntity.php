@@ -36,7 +36,7 @@ class PageEntity
         $this->status = $data['status'];
         $this->content = $data['content'];
         $this->editor = $data['editor'];
-        /* $this->modified = $data['modified']; auto timestamp */
+		$this->modified = $data['modified']; /* auto timestamp */
         $this->start = $data['start'];
     }
 
