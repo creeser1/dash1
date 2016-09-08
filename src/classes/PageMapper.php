@@ -19,11 +19,11 @@ class PageMapper extends Mapper
      * @param int $page_id The ID of the ticket
      * @return PageEntity  The page
      */
-    public function getPageById($page_id, $type) {
+    public function getPageById($page_id) {
         $sql = "SELECT * from pgcontent p
-            where p.id = :page_id and p.type = :type";
+            where p.id = :page_id";
         $stmt = $this->db->prepare($sql);
-        $result = $stmt->execute(["page_id" => $page_id, "type" => $type]);
+        $result = $stmt->execute(["page_id" => $page_id]);
 
         if($result) {
             return new PageEntity($stmt->fetch());
