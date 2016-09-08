@@ -109,15 +109,23 @@ $app->get('/test2', function ($request, $response, $args) {
 
 $app->get('/test1/{id}', function ($request, $response, $args) {
 	$settings = $this->get('settings')['db'];
-	$page_id = (int)$args['id'];
     $mapper = new PageMapper($this->db);
+
+	$page_id = (int)$args['id'];
     $page_settings = $mapper->getPageById($page_id);
 	$json = $page_settings->getContent();
 	$page = json_decode($json, true);
 	$this->logger->addInfo($json);
 	foreach ($page['tabs'] as $tab) {
 		$this->logger->addInfo($tab[embed]);
+		/*load the tab content and place in tempate variables, eventually using query returning all at once*/
 	}
+	$page_id = 2;
+    $tab_content = $mapper->getPageById($page_id);
+	$html = $tab_content->getContent();
+	$this->logger->addInfo($html);
+	
+
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
     ]);
