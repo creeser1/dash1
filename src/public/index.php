@@ -113,20 +113,16 @@ $app->get('/test1', function ($request, $response, $args) {
 	$settings = $this->get('settings')['db'];
 	$this->logger->addInfo($settings['dbname']);
 	$this->logger->addInfo($page['htmltitle']);
-	/*
-	$jsonResponse = $response->withHeader('Content-type', 'application/json');
-	*/
-	/*
-	$jsonstring = $this->data->render($response, 'test1_settings.json', [
-        'name' => 'test1_settings.json'
-    ]);
-	$jsonbody = $response->getBody()->getContents();
-	$this->logger->addInfo($jsonstring);
-	$this->logger->addInfo($jsonbody);
-	$response->getBody()->rewind();
-	*/
-	$jsonstr = file_get_contents('../data/test1_settings.json');
 	$pattern = '/\s+/';
+
+    $mapper = new PageMapper($this->db);
+    $page = $mapper->getPageById($page_id);
+	$json = $page['content'];
+	$json = preg_replace($pattern, ' ', $json);
+	$this->logger->addInfo($json);
+	$this->logger->addInfo('-----');
+
+	$jsonstr = file_get_contents('../data/test1_settings.json');
 	$jsonstr = preg_replace($pattern, ' ', $jsonstr);
 	$this->logger->addInfo($jsonstr);
 	$page2 = json_decode($jsonstr, true);
