@@ -169,6 +169,10 @@ $app->put('/tab[/{params:.*}]', function (Request $request, Response $response) 
 	$tab = new PageEntity($tab_data); /* create new PageEntity object from array */
 	$tab_mapper->save($tab);
 
+	$newResponse = $response->withHeader('Content-type', 'application/json');
+	$body = $newResponse->getBody();
+	$body->write(json_encode($tab_data));
+
 	return $response;
 });
 
