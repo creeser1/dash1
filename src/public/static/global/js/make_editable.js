@@ -45,7 +45,7 @@ tinymce.init({
 		context: 'newmenu',
 		onclick: function() {
 		var content = tinymce.activeEditor.getContent();
-			//console.log(content);
+			console.log(content);
 			$.ajax({
 				url: 'http://dash1.activecampus.org/tab/bublin/method',
 				type: 'POST',
