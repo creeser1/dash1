@@ -148,7 +148,7 @@ $app->put('/tab[/{params:.*}]', function (Request $request, Response $response) 
 	$data = $request->getParsedBody();
 	$params = $request->getAttribute('params');
 	$this->logger->addInfo($params);
-	$this->logger->addInfo(var_export($request, true));
+	$this->logger->addInfo(var_export($data));
 	$tab_mapper = new PageMapper($this->db);
 	$tab_handle = 'bublin/method';
 	$tab_obj = $tab_mapper->getPageByHandle($tab_handle);
