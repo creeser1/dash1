@@ -150,12 +150,20 @@ $app->put('/tab[/{params:.*}]', function (Request $request, Response $response) 
 	$this->logger->addInfo($params);
 	$tab_mapper = new PageMapper($this->db);
 	$tab_handle = 'bublin/method';
-	$tab_data = $tab_mapper->getPageByHandle($tab_handle);
+	$tab_obj = $tab_mapper->getPageByHandle($tab_handle);
+	$tab_data = [];
 	$tab_data['description'] = filter_var($data['description'], FILTER_SANITIZE_STRING);
 	$tab_data['content'] = filter_var($data['content'], FILTER_SANITIZE_STRING);
-	$this->logger->addInfo(var_export($tab_data, true));
+	$tab_data['type'] = $tab_obj->type;
+	$tab_data['handle'] = $tab_obj->handle;
+	$tab_data['locator'] = $tab_obj->locator;
+	$tab_data['version'] = $tab_obj->version; /* get latest version and increment */
+	$tab_data['status'] = $tab_obj->status /* 1,2,... or draft, published, ... */;
+	$tab_data['editor'] = $tab_obj->editor /* current authenticated username */
+	$tab_data['start'] = $tab_obj->start /* if start provided */
+  	$this->logger->addInfo(var_export($tab_data, true));
 
-	$tab = new PageEntity($tab_data);
+	$tab = new PageEntity($tab_data); /* create new PageEntity object from array */
 	$tab_mapper->save($tab);
 
 	return $response;
