@@ -169,7 +169,9 @@ $app->put('/tab[/{params:.*}]', function (Request $request, Response $response) 
 	$tab = new PageEntity($tab_data); /* create new PageEntity object from array */
 	$tab_mapper->save($tab);
 	$json = json_encode($tab_data);
+  	$this->logger->addInfo('--json response--');
   	$this->logger->addInfo($json);
+	$this->logger->addInfo('------------------');
 	$newResponse = $response->withHeader('Content-type', 'application/json');
 	$jsonResponse = $newResponse->withJson($tab_data);
 
