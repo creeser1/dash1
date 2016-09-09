@@ -158,9 +158,9 @@ $app->put('/tab[/{params:.*}]', function (Request $request, Response $response) 
 	$tab_data['handle'] = $tab_obj->handle;
 	$tab_data['locator'] = $tab_obj->locator;
 	$tab_data['version'] = $tab_obj->version; /* get latest version and increment */
-	$tab_data['status'] = $tab_obj->status /* 1,2,... or draft, published, ... */;
-	$tab_data['editor'] = $tab_obj->editor /* current authenticated username */
-	$tab_data['start'] = $tab_obj->start /* if start provided */
+	$tab_data['status'] = $tab_obj->status; /* 1,2,... or draft, published, ... */;
+	$tab_data['editor'] = $tab_obj->editor; /* current authenticated username */
+	$tab_data['start'] = $tab_obj->start; /* if start provided */
   	$this->logger->addInfo(var_export($tab_data, true));
 
 	$tab = new PageEntity($tab_data); /* create new PageEntity object from array */
