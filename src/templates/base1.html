@@ -47,13 +47,28 @@
 
 {% block footer %}
 {% endblock %}
+<button id="restbtn">push</button>
 <script type="application/javascript">
 	$('.nav-tabs a').click(function (e) {
 		e.preventDefault();
 		e.stopPropagation();
 		$(this).tab('show');
 	});
-
+	$('restbtn').on('click', function (e) {
+		$.ajax({
+			url: 'http://dash1.activecampus.org/tab/bublin/method',
+			type: 'POSt',
+			dataType: 'json',
+			headers: {"X-HTTP-Method-Override": "PUT"},
+			data: '{"description": "Test description", "content": "<p>test</p>"}',
+			success: function (response) {
+				console.log(response);
+			},
+			error: function (a, b) {
+				console.log(JSON.stringify(['Error', a, b]));
+			}
+		});
+	});
 </script>
 <script src="/static/global/js/all_gcore.js"></script>
 <script src="/static/global/js/make_editable.js"></script>
