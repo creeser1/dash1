@@ -59,7 +59,7 @@
 		$.ajax({
 			url: 'http://dash1.activecampus.org/tab/bublin/method?v=2',
 			type: 'POST',
-			headers: {"X-HTTP-Method-Override": "PUT"},
+			//headers: {"X-HTTP-Method-Override": "PUT"},
 			contentType: 'application/json',
 			data: '{"description": "Test description", "content": "<p>test</p>"}',
 			success: function (response) {
