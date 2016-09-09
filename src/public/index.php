@@ -152,7 +152,7 @@ $app->put('/tab[/{params:.*}]', function (Request $request, Response $response) 
 	$this->logger->addInfo($params);
 	$this->logger->addInfo($method);
 	$this->logger->addInfo('--requested_data--');
-	$this->logger->addInfo(var_export($data));
+	$this->logger->addInfo($data);
 	$this->logger->addInfo('------------------');
 	$tab_mapper = new PageMapper($this->db);
 	$tab_handle = 'bublin/method';
