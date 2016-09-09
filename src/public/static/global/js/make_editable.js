@@ -47,14 +47,18 @@ tinymce.init({
 		var content = tinymce.activeEditor.getContent();
 			//console.log(content);
 			$.ajax({
-				method: "POST",
 				url: 'http://dash1.activecampus.org/tab/bublin/method',
-				data: {description: "Test description", content: content},
-			})
-				.done(function( msg ) {
-					console.log(msg);
-					console.log("Uploaded posted content.");
-				});
+				type: 'POST',
+				headers: {"X-HTTP-Method-Override": "PUT"},
+				contentType: 'application/json',
+				data: '{"description": "Test description", "content": "<p>test</p>"}',
+				success: function (response) {
+					console.log(response);
+				},
+				error: function (a, b) {
+					console.log(JSON.stringify(['Error', a, b]));
+				}
+			});
 		}
 	});
   },
