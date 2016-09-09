@@ -48,8 +48,8 @@ tinymce.init({
 			//console.log(content);
 			$.ajax({
 				method: "POST",
-				url: "//localhost/myuploader01.php",
-				data: { name: "test99.txt", content: content }
+				url: 'http://dash1.activecampus.org/tab/bublin/method',
+				data: {description: "Test description", content: content},
 			})
 				.done(function( msg ) {
 					console.log(msg);
