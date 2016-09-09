@@ -31,6 +31,18 @@ class PageMapper extends Mapper
 
     }
 
+    public function getPageByHandle($page_handle) {
+        $sql = "SELECT * from pgcontent p
+            where p.handle = :page_handle";
+        $stmt = $this->db->prepare($sql);
+        $result = $stmt->execute(["page_handle" => $page_handle]);
+
+        if($result) {
+            return new PageEntity($stmt->fetch());
+        }
+
+    }
+
     public function save(PageEntity $page) {
         $sql = "insert into pgcontent
             (type, handle, description, locator, version, status, content, editor, start) values
