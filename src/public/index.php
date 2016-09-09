@@ -147,8 +147,10 @@ $app->get('/page/{id}', function (Request $request, Response $response, $args) {
 $app->put('/tab[/{params:.*}]', function (Request $request, Response $response) {
 	$data = $request->getParsedBody();
 	$params = $request->getAttribute('params');
+	$method = $request->getMethod();
 	$this->logger->addInfo('--params--');
 	$this->logger->addInfo($params);
+	$this->logger->addInfo($method);
 	$this->logger->addInfo('--requested_data--');
 	$this->logger->addInfo(var_export($data));
 	$this->logger->addInfo('------------------');
