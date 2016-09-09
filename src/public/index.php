@@ -118,12 +118,11 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
 	$this->logger->addInfo($json);
 	$index = 0;
 	foreach ($page['tabs'] as $tab) {
-		$this->logger->addInfo($tab['embed']);
 		/*load the tab content and place in tempate variables, eventually using query returning all at once*/
 		$page_handle = $tab['embed']; /*'bublin/explanations';*/
+		$this->logger->addInfo($page_handle);
 		$tab_content = $mapper->getPageByHandle($page_handle);
 		$html = $tab_content->getContent();
-		$this->logger->addInfo($page_handle);
 		$page['tabs'][$index]['content'] = $html;
 		/* $this->logger->addInfo(var_export($page, true)); */
 		$index = $index + 1;
@@ -144,5 +143,22 @@ $app->get('/page/{id}', function (Request $request, Response $response, $args) {
 	*/
     return $response;
 })->setName('pgcontent');
+
+$app->put('/tab[/{params:.*}]', function (Request $request, Response $response) {
+	$data = $request->getParsedBody();
+	$params = $request->getAttribute('params');
+	$this->logger->addInfo($params);
+	$tab_mapper = new PageMapper($this->db);
+	$tab_handle = 'bublin/method';
+	$tab_data = $tab_mapper->getPageByHandle($tab_handle);
+	$tab_data['description'] = filter_var($data['description'], FILTER_SANITIZE_STRING);
+	$tab_data['content'] = filter_var($data['content'], FILTER_SANITIZE_STRING);
+	$this->logger->addInfo(var_export($tab_data, true));
+
+	$tab = new PageEntity($tab_data);
+	$tab_mapper->save($tab);
+
+	return $response;
+});
 
 $app->run();
