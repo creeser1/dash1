@@ -33,7 +33,7 @@ class PageMapper extends Mapper
 
     public function getPageByHandle($page_handle) {
         $sql = "select * from pgcontent p
-            where p.handle = :page_handle and p.id (select max(p.id) from pgcontent where p.handle = :page_handle)";
+            where p.handle = :page_handle and p.id = (select max(p.id) from pgcontent where p.handle = :page_handle)";
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute(["page_handle" => $page_handle]);
 
