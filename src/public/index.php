@@ -153,13 +153,14 @@ $app->any('/tab[/{params:.*}]', function (Request $request, Response $response, 
 	$this->logger->addInfo($method);
 	$this->logger->addInfo('--requested_data--');
 	$this->logger->addInfo($data);
+	$json_array = json_decode($data, true);
 	$this->logger->addInfo('------------------');
 	$tab_mapper = new PageMapper($this->db);
 	$tab_handle = 'bublin/method';
 	$tab_obj = $tab_mapper->getPageByHandle($tab_handle);
 	$tab_data = [];
-	$tab_data['description'] = filter_var($data['description'], FILTER_SANITIZE_STRING);
-	$tab_data['content'] = filter_var($data['content'], FILTER_SANITIZE_STRING);
+	$tab_data['description'] = filter_var($json_array['description'], FILTER_SANITIZE_STRING);
+	$tab_data['content'] = filter_var($json_array['content'], FILTER_SANITIZE_STRING);
 	$tab_data['type'] = $tab_obj->getType();
 	$tab_data['handle'] = $tab_obj->getHandle();
 	$tab_data['locator'] = $tab_obj->getLocator();
