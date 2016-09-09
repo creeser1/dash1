@@ -145,7 +145,7 @@ $app->get('/page/{id}', function (Request $request, Response $response, $args) {
 })->setName('pgcontent');
 
 $app->post('/tab[/{params:.*}]', function (Request $request, Response $response) {
-	$data = $request->getParsedBody();
+	$data = $request->getBody();
 	$params = $request->getAttribute('params');
 	$method = $request->getMethod();
 	$this->logger->addInfo('--params--');
