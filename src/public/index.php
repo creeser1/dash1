@@ -116,16 +116,18 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
 	$json = $page_settings->getContent();
 	$page = json_decode($json, true);
 	$this->logger->addInfo($json);
+	$index = 0;
 	foreach ($page['tabs'] as $tab) {
 		$this->logger->addInfo($tab['embed']);
 		/*load the tab content and place in tempate variables, eventually using query returning all at once*/
+		$page_handle = 'bublin/explanations';
+		$tab_content = $mapper->getPageByHandle($page_handle);
+		$html = $tab_content->getContent();
+		$this->logger->addInfo($page_handle);
+		$page['tabs'][$index]['content'] = $html;
+		/* $this->logger->addInfo(var_export($page, true)); */
+		$index = $index + 1;
 	}
-	$page_handle = 'bublin/explanations';
-    $tab_content = $mapper->getPageByHandle($page_handle);
-	$html = $tab_content->getContent();
-	$this->logger->addInfo($html);
-	$page['tabs'][2]['content'] = $html;
-	$this->logger->addInfo(var_export($page, true));
 
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
