@@ -54,7 +54,8 @@
 		e.stopPropagation();
 		$(this).tab('show');
 	});
-	$('restbtn').on('click', function (e) {
+	$('#restbtn').on('click', function (e) {
+		console.log('restbtn clicked');
 		$.ajax({
 			url: 'http://dash1.activecampus.org/tab/bublin/method',
 			type: 'POSt',
