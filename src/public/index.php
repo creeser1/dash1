@@ -154,7 +154,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$this->logger->addInfo('--requested_data--');
 	$this->logger->addInfo($data);
 	$json_array = json_decode($data, true);
-	$this->logger->addInfo('------------------');
+	$this->logger->addInfo('-------json_php_array---------');
   	$this->logger->addInfo(var_export($json_array, true));
 	$this->logger->addInfo('------------------');
 	$tab_mapper = new PageMapper($this->db);
@@ -163,6 +163,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$tab_data = [];
 	$tab_data['description'] = filter_var($json_array['description'], FILTER_SANITIZE_STRING);
 	$tab_data['content'] = filter_var($json_array['content'], FILTER_SANITIZE_STRING);
+	$this->logger->addInfo('------tab_data_content------');
 	$this->logger->addInfo($tab_data['content']);
 	$this->logger->addInfo('------------------');
 	$tab_data['type'] = $tab_obj->getType();
