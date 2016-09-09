@@ -51,7 +51,7 @@ tinymce.init({
 				type: 'POST',
 				headers: {"X-HTTP-Method-Override": "PUT"},
 				contentType: 'application/json',
-				data: '{"description": "Test description", "content": "<p>test</p>"}',
+				data: '{"description": "Test description", "content": "' + content + '"}',
 				success: function (response) {
 					console.log(response);
 				},
