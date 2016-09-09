@@ -148,19 +148,20 @@ $app->put('/tab[/{params:.*}]', function (Request $request, Response $response) 
 	$data = $request->getParsedBody();
 	$params = $request->getAttribute('params');
 	$this->logger->addInfo($params);
+	$this->logger->addInfo(var_export($request, true));
 	$tab_mapper = new PageMapper($this->db);
 	$tab_handle = 'bublin/method';
 	$tab_obj = $tab_mapper->getPageByHandle($tab_handle);
 	$tab_data = [];
 	$tab_data['description'] = filter_var($data['description'], FILTER_SANITIZE_STRING);
 	$tab_data['content'] = filter_var($data['content'], FILTER_SANITIZE_STRING);
-	$tab_data['type'] = $tab_obj->type;
-	$tab_data['handle'] = $tab_obj->handle;
-	$tab_data['locator'] = $tab_obj->locator;
-	$tab_data['version'] = $tab_obj->version; /* get latest version and increment */
-	$tab_data['status'] = $tab_obj->status; /* 1,2,... or draft, published, ... */;
-	$tab_data['editor'] = $tab_obj->editor; /* current authenticated username */
-	$tab_data['start'] = $tab_obj->start; /* if start provided */
+	$tab_data['type'] = $tab_obj->getType();
+	$tab_data['handle'] = $tab_obj->getHandle();
+	$tab_data['locator'] = $tab_obj->getLocator();
+	$tab_data['version'] = $tab_obj->getVersion(); /* get latest version and increment */
+	$tab_data['status'] = $tab_obj->getStatus(); /* 1,2,... or draft, published, ... */;
+	$tab_data['editor'] = $tab_obj->getEditor(); /* current authenticated username */
+	$tab_data['start'] = $tab_obj->getStart(); /* if start provided */
   	$this->logger->addInfo(var_export($tab_data, true));
 
 	$tab = new PageEntity($tab_data); /* create new PageEntity object from array */
