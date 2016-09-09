@@ -1,5 +1,5 @@
 tinymce.init({
-  selector: "#methodology",
+  selector: ".editable",
   height: 500,
   plugins: [
     'advlist autolink lists link image charmap print preview hr anchor pagebreak',
