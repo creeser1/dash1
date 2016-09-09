@@ -120,7 +120,7 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
 	foreach ($page['tabs'] as $tab) {
 		$this->logger->addInfo($tab['embed']);
 		/*load the tab content and place in tempate variables, eventually using query returning all at once*/
-		$page_handle = 'bublin/explanations';
+		$page_handle = $tab['embed']; /*'bublin/explanations';*/
 		$tab_content = $mapper->getPageByHandle($page_handle);
 		$html = $tab_content->getContent();
 		$this->logger->addInfo($page_handle);
