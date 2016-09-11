@@ -124,6 +124,8 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
 		$this->logger->addInfo($page_handle);
 		$tab_content = $mapper->getPageByHandle($page_handle);
 		$html = $tab_content->getContent();
+		$id = $tab_content->getId();
+		$this->logger->addInfo($id);
 		$this->logger->addInfo($html);
 		$this->logger->addInfo('============');
 		$page['tabs'][$index]['content'] = stripslashes($html);
