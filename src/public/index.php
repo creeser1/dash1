@@ -177,7 +177,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$content = $json_array['content'];
 	$description = $json_array['description'];
 	$tab_data['description'] = filter_var($description, FILTER_SANITIZE_STRING);
-	$tab_data['content'] = filter_var($content, FILTER_SANITIZE_STRING);
+	$tab_data['content'] = filter_var($content, FILTER_UNSAFE_RAW);
 	$this->logger->addInfo('------tab_data_content------');
 	$this->logger->addInfo($tab_data['content']);
 	$this->logger->addInfo('------------------');
