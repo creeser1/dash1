@@ -27,11 +27,11 @@ class PageConfigurator
 		if (is_array($page) and array_key_exists('tabs', $page)
 				and is_array($page['tabs']) and is_array($page['tabs'][0])) {
 			$index = 0;
-			$this->logger->addInfo('============');
+			/*$this->logger->addInfo('============');*/
 			foreach ($page['tabs'] as $tab) {
 				/*load the tab content and place in tempate variables, eventually using query returning all at once*/
 				$page_handle = $tab['embed']; /*'bublin/explanations';*/
-				$this->logger->addInfo($page_handle);
+				/*$this->logger->addInfo($page_handle);*/
 				$tab_content = $mapper->getPageByHandle($page_handle);
 				$html = $tab_content->getContent();
 				$id = $tab_content->getId();
