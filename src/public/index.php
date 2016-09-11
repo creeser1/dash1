@@ -117,12 +117,15 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
 	$page = json_decode($json, true);
 	$this->logger->addInfo($json);
 	$index = 0;
+	$this->logger->addInfo('============');
 	foreach ($page['tabs'] as $tab) {
 		/*load the tab content and place in tempate variables, eventually using query returning all at once*/
 		$page_handle = $tab['embed']; /*'bublin/explanations';*/
 		$this->logger->addInfo($page_handle);
 		$tab_content = $mapper->getPageByHandle($page_handle);
 		$html = $tab_content->getContent();
+		$this->logger->addInfo($html);
+		$this->logger->addInfo('============');
 		$page['tabs'][$index]['content'] = stripslashes($html);
 		/* $this->logger->addInfo(var_export($page, true)); */
 		$index = $index + 1;
