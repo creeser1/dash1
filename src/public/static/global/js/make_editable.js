@@ -1,4 +1,4 @@
-tinymce.init({
+$(tinymce.init({
   selector: ".editable",
   height: 500,
   plugins: [
@@ -67,4 +67,4 @@ tinymce.init({
   content_css: [
     //'assets/peercomp3projection.css?v=2'
   ]
-});
+}));
