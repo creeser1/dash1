@@ -157,6 +157,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$json_array = json_decode($data, true);
 	$this->logger->addInfo('-------json_php_array---------');
   	$this->logger->addInfo(var_export($json_array, true));
+  	$this->logger->addInfo(json_last_error());
 	$this->logger->addInfo('------------------');
 	$tab_mapper = new PageMapper($this->db);
 	$tab_handle = 'bublin/method';
