@@ -4,12 +4,13 @@ class PageConfigurator
 {
     protected $name;
 
-    public function __construct($name) {
+    public function __construct($name, $db) {
         $this->name = $name; /* use to distinquish page and to construct source for JSON stream */
+        $this->db = $db;
     }
 
 	public function loadPage($id) {
-		$settings = $this->get('settings')['db'];
+		/*$settings = $this->get('settings')['db'];*/
 		$mapper = new PageMapper($this->db);
 		$page_id = (int)$id;
 

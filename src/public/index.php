@@ -108,7 +108,7 @@ $app->get('/test2', function ($request, $response, $args) {
 });
 
 $app->get('/page/{id}', function ($request, $response, $args) {
-	$builder = new PageConfigurator('bublin');
+	$builder = new PageConfigurator('bublin', $this->db);
 	$page = $builder->loadPage($args['id']);
 
 	return $this->view->render($response, 'tpl_test2.html', [
