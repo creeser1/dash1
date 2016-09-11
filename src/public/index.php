@@ -123,7 +123,7 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
 		$this->logger->addInfo($page_handle);
 		$tab_content = $mapper->getPageByHandle($page_handle);
 		$html = $tab_content->getContent();
-		$page['tabs'][$index]['content'] = $html;
+		$page['tabs'][$index]['content'] = stripslashes($html);
 		/* $this->logger->addInfo(var_export($page, true)); */
 		$index = $index + 1;
 	}
@@ -161,8 +161,10 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$tab_handle = 'bublin/method';
 	$tab_obj = $tab_mapper->getPageByHandle($tab_handle);
 	$tab_data = [];
-	$tab_data['description'] = filter_var($json_array['description'], FILTER_SANITIZE_STRING);
-	$tab_data['content'] = filter_var($json_array['content'], FILTER_SANITIZE_STRING);
+	$content = addslashes($json_array['content'];
+	$description = $json_array['description'];
+	$tab_data['description'] = filter_var($description, FILTER_SANITIZE_STRING);
+	$tab_data['content'] = filter_var($content), FILTER_SANITIZE_STRING);
 	$this->logger->addInfo('------tab_data_content------');
 	$this->logger->addInfo($tab_data['content']);
 	$this->logger->addInfo('------------------');
