@@ -46,7 +46,7 @@ tinymce.init({
 		onclick: function() {
 		var content = tinymce.activeEditor.getContent();
 			content = content.replace(/"/g,'\\\"');
-			content = content.replace(/'/g,'\\\'');
+			content = content.replace(/'/g,'&apos;');
 			console.log(content);
 			$.ajax({
 				url: 'http://dash1.activecampus.org/tab/bublin/method',
