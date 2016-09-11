@@ -41,11 +41,18 @@
 {% endif %}
 
 
+
 </section><!-- ./container #maincontent -->
 
 {% block footer %}
 {% endblock %}
-
+<script type="application/javascript">
+	$('.nav-tabs a').click(function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+		$(this).tab('show');
+	});
+</script>
 <script src="/static/global/js/all_gcore.js"></script>
 {% block pagescripts %}
 {% endblock %}
