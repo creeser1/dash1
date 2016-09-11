@@ -152,6 +152,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$this->logger->addInfo($params);
 	$this->logger->addInfo($method);
 	$this->logger->addInfo('--requested_data--');
+	$data = addslashes($data);
 	$this->logger->addInfo($data);
 	$json_array = json_decode($data, true);
 	$this->logger->addInfo('-------json_php_array---------');
@@ -161,7 +162,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$tab_handle = 'bublin/method';
 	$tab_obj = $tab_mapper->getPageByHandle($tab_handle);
 	$tab_data = [];
-	$content = addslashes($json_array['content']);
+	$content = $json_array['content'];
 	$description = $json_array['description'];
 	$tab_data['description'] = filter_var($description, FILTER_SANITIZE_STRING);
 	$tab_data['content'] = filter_var($content, FILTER_SANITIZE_STRING);
