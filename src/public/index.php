@@ -164,7 +164,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$this->logger->addInfo($method);
 	$this->logger->addInfo('--requested_data--');
 	$this->logger->addInfo($dataraw);
-	$patterns = ["/\s+/m" "/'/"];
+	$patterns = ["/\s+/m", "/'/"];
 	$replacements = [" ", "'"];
 	$data = preg_replace($patterns, $replacements, $dataraw);
 	$this->logger->addInfo(preg_last_error());
