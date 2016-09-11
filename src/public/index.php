@@ -145,15 +145,17 @@ $app->get('/page/{id}', function (Request $request, Response $response, $args) {
 })->setName('pgcontent');
 
 $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Response $response, $args) {
-	$data = $request->getBody();
+	$dataraw = $request->getBody();
 	$params = $request->getAttribute('params');
 	$method = $request->getMethod();
 	$this->logger->addInfo('--params--');
 	$this->logger->addInfo($params);
 	$this->logger->addInfo($method);
 	$this->logger->addInfo('--requested_data--');
-	$pattern1 = '/\w/';
-	$data = preg_replace($pattern1, ' ', $data);
+	$this->logger->addInfo($dataraw);
+	$pattern = '/\w+/';
+	$replacement = ' ';
+	$data = preg_replace($pattern, $replacement, $dataraw);
 	$this->logger->addInfo(preg_last_error());
 	$this->logger->addInfo($data);
 	$json_array = json_decode($data, true);
