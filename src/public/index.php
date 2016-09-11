@@ -161,7 +161,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$tab_handle = 'bublin/method';
 	$tab_obj = $tab_mapper->getPageByHandle($tab_handle);
 	$tab_data = [];
-	$content = addslashes($json_array['content'];
+	$content = addslashes($json_array['content']);
 	$description = $json_array['description'];
 	$tab_data['description'] = filter_var($description, FILTER_SANITIZE_STRING);
 	$tab_data['content'] = filter_var($content), FILTER_SANITIZE_STRING);
