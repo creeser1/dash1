@@ -152,7 +152,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$this->logger->addInfo($params);
 	$this->logger->addInfo($method);
 	$this->logger->addInfo('--requested_data--');
-	$data = addslashes($data);
+	/*$data = addslashes($data);*/
 	$this->logger->addInfo($data);
 	$json_array = json_decode($data, true);
 	$this->logger->addInfo('-------json_php_array---------');
