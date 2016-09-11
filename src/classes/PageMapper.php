@@ -38,7 +38,7 @@ class PageMapper extends Mapper
         $result = $stmt->execute(["page_handle" => $page_handle]);
 
         if($result) {
-            return new PageEntity($stmt->fetch());
+            return new PageEntity($stmt->fetchAll());
         }
 
     }
