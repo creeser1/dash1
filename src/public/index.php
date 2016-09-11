@@ -121,7 +121,7 @@ $app->get('/test1/{id}', function ($request, $response, $args) {
 	if ($json_err != 0) {
 	  $this->logger->addInfo($json_err);
   } /* else */
-  	/* assert $page has at least one of tabs and each has content
+  	/* assert $page has at least one of tabs and each has content */
 	$index = 0;
 	$this->logger->addInfo('============');
 	foreach ($page['tabs'] as $tab) {
