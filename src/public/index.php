@@ -157,7 +157,8 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$replacement = ' ';
 	$data = preg_replace($pattern, $replacement, $dataraw);
 	$this->logger->addInfo(preg_last_error());*/
-	$data = htmlentities($dataraw, ENT_NOQUOTES);
+	/*$data = htmlentities($dataraw, ENT_NOQUOTES);*/
+	$data = $dataraw;
 	$this->logger->addInfo($data);
 	$json_array = json_decode($data, true);
   $this->logger->addInfo(json_last_error());
