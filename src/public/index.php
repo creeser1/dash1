@@ -153,7 +153,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$this->logger->addInfo($method);
 	$this->logger->addInfo('--requested_data--');
 	$this->logger->addInfo($dataraw);
-	$pattern = '/\w+/';
+	$pattern = '/\s+/';
 	$replacement = ' ';
 	$data = preg_replace($pattern, $replacement, $dataraw);
 	$this->logger->addInfo(preg_last_error());
