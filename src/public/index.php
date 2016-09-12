@@ -130,10 +130,10 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$dataraw = $request->getBody();
 	$params = $request->getAttribute('params');
 	$method = $request->getMethod();
-	
+
 	$builder = new PageConfigurator('bublin', $this->db);
 	$tab_data = $builder->loadEditor($params, $method, $dataraw);
-	
+
 	$newResponse = $response->withHeader('Content-type', 'application/json');
 	$jsonResponse = $newResponse->withJson($tab_data);
 
