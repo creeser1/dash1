@@ -48,9 +48,9 @@ $(tinymce.init({
 			content = content.replace(/"/g,'\\\"');
 			content = content.replace(/'/g,'&apos;');
 			console.log(content);
-			console.log(this);
+			console.log($('.active').attr('id'));
 			console.log(e);
-			var path = 'tabs/bublin/method';
+			var path = 'tab/bublin/method';
 			console.log(path);
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
