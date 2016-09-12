@@ -89,7 +89,7 @@ $app->get('/bublin5', function ($request, $response, $args) {
     ]);
 })->setName('bublin5');
 
-$app->get('/data/{dataset}', function ($request, $response, $args) {
+$app->get('/data/{dataset:.*}', function ($request, $response, $args) {
 	$this->logger->addInfo('dataset');
 	$this->logger->addInfo($args['dataset']);
 	$newResponse = $response->withHeader('Content-type', 'application/json');
