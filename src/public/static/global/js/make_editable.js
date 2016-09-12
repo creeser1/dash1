@@ -48,7 +48,8 @@ $(tinymce.init({
 			content = content.replace(/"/g,'\\\"');
 			content = content.replace(/'/g,'&apos;');
 			console.log(content);
-			console.log($('.active').attr('id'));
+			var $activetab = $('.active')
+			console.log($activetab);
 			console.log(e);
 			var path = 'tab/bublin/method';
 			console.log(path);
