@@ -101,6 +101,8 @@ $app->get('/data/{dataset}', function ($request, $response, $args) {
 $app->get('/page/{id}', function ($request, $response, $args) {
 	$builder = new PageConfigurator('bublin', $this->db);
 	$page = $builder->loadPage($args['id']);
+	$template = $page['pagetemplate'].'html';
+	$this->logger->addInfo($template);
 
 	return $this->view->render($response, 'tpl_test2.html', [
 		'page' => $page
@@ -111,6 +113,8 @@ $app->get('/page/{id}', function ($request, $response, $args) {
 $app->get('/edit/{id}', function ($request, $response, $args) {
 	$builder = new PageConfigurator('bublin', $this->db);
 	$page = $builder->loadPage($args['id']);
+	$template = $page['edittemplate'].'html';
+	$this->logger->addInfo($template);
 
     return $this->view->render($response, 'tpl_test1.html', [
         'page' => $page
