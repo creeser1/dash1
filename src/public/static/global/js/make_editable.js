@@ -50,7 +50,7 @@ $(tinymce.init({
 			console.log(content);
 			var $activetab = $('div.active')
 			console.log($activetab);
-			console.log(e);
+			console.log($activetab.attr('id'));
 			var path = 'tab/bublin/method';
 			console.log(path);
 			$.ajax({
