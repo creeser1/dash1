@@ -98,10 +98,10 @@ class PageConfigurator
 		}
 
 		/* Finally, respond with accepted json object */
-		$json = json_encode($tab_data);
-		$this->logger->addInfo('--json response--');
+		/*$json = json_encode($tab_data);*/
+		/*$this->logger->addInfo('--json response--');
 		$this->logger->addInfo($json);
-		$this->logger->addInfo('------------------');
+		$this->logger->addInfo('------------------');*/
 
 		return $tab_data;
 	}
