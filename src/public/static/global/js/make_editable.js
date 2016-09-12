@@ -49,7 +49,7 @@ $(tinymce.init({
 			content = content.replace(/'/g,'&apos;');
 			console.log(content);
 			var $activetab = $('div.active').attr('id');
-			var path = 'tab/bublin/' + $activetab;
+			var path = 'tab/peercomp/' + $activetab;
 			console.log(path);
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
