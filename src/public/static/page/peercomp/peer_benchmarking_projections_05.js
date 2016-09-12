@@ -814,7 +814,7 @@ $(document).ready(function () {
 	};
 
 	var load_table_peers = function (config, callback) {
-		var table_data_src_parts = ['data/GRtables/', config.campus.replace(pattern2, '_'), '_', config.cohort, '_briefplus.json', defeat_cache];
+		var table_data_src_parts = ['/data/GRtables/', config.campus.replace(pattern2, '_'), '_', config.cohort, '_briefplus.json', defeat_cache];
 		$.ajax({
 			url: table_data_src_parts.join(''),
 			datatype: "json",
@@ -871,7 +871,7 @@ $(document).ready(function () {
 	};
 
 	var load_peer_campus_urls = function (config, callback) {
-		var chart_data_src = 'data/peer_campus_urls.json' + defeat_cache;
+		var chart_data_src = '/data/peer_campus_urls.json' + defeat_cache;
 
 		$.ajax({
 			url: chart_data_src,
@@ -890,7 +890,7 @@ $(document).ready(function () {
 	// nor does a change of cohort year, as this file also provides data for peer comparisons graph
 	var load_chart_historical_trends = function (config, callback) {
 		// build relative url, e.g. 'data/GR6yr/San_Luis_Obispo_6yrGR.json'
-		var chart_data_src_parts = ['data/', config.type, config.grad_year, '/', config.campus.replace(pattern2, '_'), '_', config.grad_year, config.type, '.json', defeat_cache];
+		var chart_data_src_parts = ['/data/', config.type, config.grad_year, '/', config.campus.replace(pattern2, '_'), '_', config.grad_year, config.type, '.json', defeat_cache];
 
 		$.ajax({
 			url: chart_data_src_parts.join(''),
@@ -907,7 +907,7 @@ $(document).ready(function () {
 	var load_chart_projected_trends = function (config, callback) {
 		// build (relative) source url from parts in config, e.g. 'data/GR6yr/San_Luis_Obispo_6yrGR.json'
 		//var chart_data_src = 'data/peer_campus_projection_data_cleaned.json' + defeat_cache;
-		var chart_data_src = 'data/peer_campus_pbdata4.json' + defeat_cache;
+		var chart_data_src = '/data/peer_campus_pbdata4.json' + defeat_cache;
 
 		$.ajax({
 			url: chart_data_src,
