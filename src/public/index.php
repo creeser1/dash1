@@ -92,6 +92,7 @@ $app->get('/bublin5', function ($request, $response, $args) {
 $app->get('/data/{dataset:.*}', function ($request, $response, $args) {
 	$this->logger->addInfo('dataset');
 	$this->logger->addInfo($args['dataset']);
+	/*if .json else (if .zip content type different return binary stream -- href download property)*/
 	$newResponse = $response->withHeader('Content-type', 'application/json');
     return $this->data->render($newResponse, $args['dataset'], [
         'name' => $args['dataset']

@@ -49,7 +49,8 @@ $(tinymce.init({
 			content = content.replace(/'/g,'&apos;');
 			console.log(content);
 			var $activetab = $('div.active').attr('id');
-			var path = 'tab/peercomp/' + $activetab;
+			var $app = $('body').attr('data-app');
+			var path = 'tab/' + $app + '/' + $activetab;
 			console.log(path);
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
