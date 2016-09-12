@@ -32,7 +32,7 @@
 {% for tab in page.tabs %}
 <div id="{{ tab.anchor }}" class="tab-pane fade {{ tab.isactive ? 'in active'}}">
 	<!-- content of tab would get embedded here  -->
-	<div class="editable">
+	<div{{ tab.iseditable ? ' class="editable"'}}>
 		{{ tab.content|raw }}
 	</div>
 </div><!-- end of tab area  -->
