@@ -43,13 +43,17 @@ $(tinymce.init({
 	editor.addMenuItem('save', {
 		text: 'Save',
 		context: 'newmenu',
-		onclick: function() {
+		onclick: function(e) {
 		var content = tinymce.activeEditor.getContent();
 			content = content.replace(/"/g,'\\\"');
 			content = content.replace(/'/g,'&apos;');
 			console.log(content);
+			console.log(this);
+			console.log(e);
+			var path = 'tabs/bublin/method';
+			console.log(path);
 			$.ajax({
-				url: 'http://dash1.activecampus.org/tab/bublin/method',
+				url: 'http://dash1.activecampus.org/' + path,
 				type: 'POST',
 				headers: {"X-HTTP-Method-Override": "PUT"},
 				contentType: 'application/json',
