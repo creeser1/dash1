@@ -1,0 +1,21 @@
+{% extends "base1.html" %}
+
+{% block control %}
+{% if page.controls|length > 0 %}
+<form class="page-controls"><fieldset class="controls"><legend class="offscreen">For accessibility devices</legend>
+{% for control in page.controls %}
+{% if control.type == 'select' %}
+	<select id="{{ control.id }}">
+{% for detail in control.details %}
+		<option value="{{ detail.option_value }}"{{detail.isselected ? ' selected'}}>{{ detail.option_text }}</option>
+{% endfor %}
+	</select>
+{% endif %}
+{% endfor %}
+</fieldset></form>
+{% endif %}
+{% endblock %}
+
+{% block pagescripts %}
+<script src="/static/page/peercomp/peer_benchmarking_projections_05.js"></script>
+{% endblock %}
