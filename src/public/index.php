@@ -104,7 +104,7 @@ $app->get('/page/{id}', function ($request, $response, $args) {
 	$template = $page['pagetemplate'].'.html';
 	$this->logger->addInfo($template);
 
-	return $this->view->render($response, 'tpl_test2.html', [
+	return $this->view->render($response, $template, [
 		'page' => $page
 	]);
 
@@ -116,7 +116,7 @@ $app->get('/edit/{id}', function ($request, $response, $args) {
 	$template = $page['edittemplate'].'.html';
 	$this->logger->addInfo($template);
 
-    return $this->view->render($response, 'tpl_test1.html', [
+    return $this->view->render($response, $template, [
         'page' => $page
     ]);
 });
