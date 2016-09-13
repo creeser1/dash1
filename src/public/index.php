@@ -154,6 +154,19 @@ $app->get('/testlogin', function (Request $request, Response $response, $args) {
     ]);
 });
 
+$app->map(['PUT', 'POST'], '/testlogin[/{params:.*}]', function (Request $request, Response $response, $args) {
+	$dataraw = $request->getBody();
+	$params = $request->getAttribute('params');
+	$method = $request->getMethod();
+	$this->logger->addInfo('---params---');
+	$this->logger->addInfo($params);
+	$this->logger->addInfo('---headers---');
+	$this->logger->addInfo($request->isXhr());
+	$this->logger->addInfo(var_export($request->getHeaders(), true));
+	$this->logger->addInfo('---endheaders---');
+	return $response;
+});
+
 $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$dataraw = $request->getBody();
 	$params = $request->getAttribute('params');
