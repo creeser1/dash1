@@ -154,11 +154,6 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$method = $request->getMethod();
 	$this->logger->addInfo($params);
 
-	$headers = $request->getHeaders();
-	foreach ($headers as $name => $values) {
-		$this-logger->addInfo($name . ": " . implode(", ", $values));
-	}
-
 	$builder = new PageConfigurator('bublin', $this->db);
 	$tab_data = $builder->loadEditor($params, $method, $dataraw);
 	$json = json_encode($tab_data);
