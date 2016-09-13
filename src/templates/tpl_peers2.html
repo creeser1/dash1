@@ -17,5 +17,10 @@
 {% endblock %}
 
 {% block pagescripts %}
-<script src="/static/page/peercomp/peer_benchmarking_05b508a.js"></script>
+{% if page.scripts|length > 0 %}
+{% for scriptsrc in page.scripts %}
+<script src="{{ scriptsrc }}"></script>
+{% endfor %}
+{% endif %}
+
 {% endblock %}
