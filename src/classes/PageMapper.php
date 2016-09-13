@@ -33,7 +33,7 @@ class PageMapper extends Mapper
     public function getPageConfigByHandle($page_handle) { /* to edit the most recent version published or not */
     		$sql = "select * from pgcontent as m
     			where m.handle = :page_handle and m.type = 1 
-    				and m.id = (select max(id) from pgcontent where handle = :page_handle and m.type = 1)";
+    				and m.id = (select max(id) from pgcontent where handle = :page_handle and type = 1)";
         /*$sql = "select * from pgcontent p order by p.id desc
             where p.handle = :page_handle";*/
         $stmt = $this->db->prepare($sql);
