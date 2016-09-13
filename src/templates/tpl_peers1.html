@@ -17,7 +17,11 @@
 {% endblock %}
 
 {% block pagescripts %}
-<script src="/static/page/peercomp/peer_benchmarking_05b508a.js"></script>
+{% if page.scripts|length > 0 %}
+{% for scriptsrc in page.scripts %}
+<script src="{{ scriptsrc }}"></script>
+{% endfor %}
+{% endif %}
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 <script src="/static/global/js/make_editable.js"></script>
 {% endblock %}
