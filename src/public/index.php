@@ -110,7 +110,7 @@ $app->get('/page/{id}', function ($request, $response, $args) {
 		$this->logger->addInfo($template);
 	} else {
 		$this->logger->addInfo('Requested missing page: '.$args['id']);
-		return $c['response']->withStatus(404)->withHeader('Content-Type', 'text/html')
+		return $response->withStatus(404)->withHeader('Content-Type', 'text/html')
 			->write('Page not found');
 	}
 
