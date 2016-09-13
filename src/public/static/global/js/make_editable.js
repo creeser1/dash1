@@ -55,7 +55,10 @@ $(tinymce.init({
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
 				type: 'POST',
-				headers: {"X-HTTP-Method-Override": "PUT"},
+				headers: {
+					"X-HTTP-Method-Override": "PUT",
+					"X-Auth-Token": "JPso76OIYLK5a3knb"
+				},
 				contentType: 'application/json',
 				data: '{"description": "Draft description...", "content": "' + content + '"}',
 				success: function (response) {
@@ -82,7 +85,10 @@ $(tinymce.init({
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
 				type: 'POST',
-				headers: {"X-HTTP-Method-Override": "PUT"},
+				headers: {
+					"X-HTTP-Method-Override": "PUT",
+					"X-Auth-Token": "JPso76OIYLK5a3knb"
+				},
 				contentType: 'application/json',
 				data: '{"description": "Published description...", "content": "' + content + '", "status": "published"}',
 				success: function (response) {
