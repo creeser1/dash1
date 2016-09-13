@@ -123,12 +123,12 @@ $app->get('/edit/{id}', function ($request, $response, $args) {
 });
 
 $app->get('/dump/{id}', function (Request $request, Response $response, $args) {
-  $page_id = (int)$args['id'];
-  $mapper = new PageMapper($this->db);
-  $page = $mapper->getPageById($page_id);
-	var_dump(htmlentities($page));
-
-  return $response;
+	$page_id = (int)$args['id'];
+	$mapper = new PageMapper($this->db);
+	$page = $mapper->getPageById($page_id);
+	$page_str = htmlentities(var_export($page));
+	echo $page_str;
+	return $response;
 });
 
 $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Response $response, $args) {
