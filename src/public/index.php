@@ -152,8 +152,8 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$dataraw = $request->getBody();
 	$params = $request->getAttribute('params');
 	$method = $request->getMethod();
-	$this->logger->addInfo($params);
 	$this->logger->addInfo('---params---');
+	$this->logger->addInfo($params);
 	$headers = $request->getHeaders();
 	$this->logger->addInfo('---headers---');
 	$this->logger->addInfo($headers);
@@ -162,8 +162,8 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$builder = new PageConfigurator('bublin', $this->db);
 	$tab_data = $builder->loadEditor($params, $method, $dataraw);
 	$json = json_encode($tab_data);
-	$this->logger->addInfo('---jsondata---');
-	$this->logger->addInfo($json);
+	/*$this->logger->addInfo('---jsondata---');
+	$this->logger->addInfo($json);*/
 
 	$newResponse = $response->withHeader('Content-type', 'application/json');
 	$jsonResponse = $newResponse->withJson($tab_data);
