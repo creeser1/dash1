@@ -101,8 +101,9 @@ $app->get('/data/{dataset:.*}', function ($request, $response, $args) {
 
 $app->get('/page/{id}', function ($request, $response, $args) {
 	$builder = new PageConfigurator('bublin', $this->db);
-	$page = $builder->loadPage($args['id']);
+	$page = $builder->loadPublishedPage($args['id']);
 	$template = $page['pagetemplate'].'.html';
+	$this->logger->addInfo('published page');
 	$this->logger->addInfo($template);
 
 	return $this->view->render($response, $template, [
