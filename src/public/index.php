@@ -148,6 +148,12 @@ $app->get('/dump/{id}', function (Request $request, Response $response, $args) {
 	return $response;
 });
 
+$app->get('/testlogin', function (Request $request, Response $response, $args) {
+    return $this->view->render($response, 'login.html', [
+        'name' => 'login'
+    ]);
+});
+
 $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$dataraw = $request->getBody();
 	$params = $request->getAttribute('params');
