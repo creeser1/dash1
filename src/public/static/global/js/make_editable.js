@@ -24,7 +24,7 @@ $(tinymce.init({
         format : {title : 'Format', items : 'bold italic underline strikethrough superscript subscript | formats | removeformat'},
         table  : {title : 'Table' , items : 'inserttable tableprops deletetable | cell row column'},
         tools  : {title : 'Tools' , items : 'spellchecker code'},
-        newmenu: {title : 'Custom', items : 'load save'}
+        newmenu: {title : 'Custom', items : 'load save publish'}
     },
     menubar: 'file edit insert, view, format, table, tools, newmenu',
     setup: function(editor) {
