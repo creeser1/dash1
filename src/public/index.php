@@ -154,7 +154,7 @@ $app->get('/testlogin', function (Request $request, Response $response, $args) {
     ]);
 });
 
-$app->map(['PUT', 'POST'], '/testlogin[/{params:.*}]', function (Request $request, Response $response, $args) {
+$app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$dataraw = $request->getBody();
 	$params = $request->getAttribute('params');
 	$method = $request->getMethod();
