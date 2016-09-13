@@ -126,7 +126,7 @@ $app->get('/dump/{id}', function (Request $request, Response $response, $args) {
 	$page_id = (int)$args['id'];
 	$mapper = new PageMapper($this->db);
 	$page = $mapper->getPageById($page_id);
-	$page_str = htmlentities(var_export($page));
+	$page_str = htmlentities(var_export($page, true));
 	echo $page_str;
 	return $response;
 });
