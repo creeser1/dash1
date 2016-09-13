@@ -100,7 +100,7 @@ $app->get('/data/{dataset:.*}', function ($request, $response, $args) {
 });
 
 $app->get('/page/{id}', function ($request, $response, $args) {
-	$whitelist = ['bublin6' => '1', 'peercomp' => '2'];
+	$whitelist = ['bublin' => '1', 'peercomp' => '2'];
 	if (array_key_exists($args['id'], $whitelist)) {
 		$id = $whitelist[$args['id']];
 		$builder = new PageConfigurator('bublin', $this->db);
