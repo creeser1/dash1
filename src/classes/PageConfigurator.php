@@ -59,6 +59,7 @@ class PageConfigurator
 			foreach ($page['tabs'] as $tab) {
 				/*load the tab content and place in tempate variables, eventually using query returning all at once*/
 				$page_handle = $tab['embed']; /*'bublin/explanations';*/
+				$this->logger->addInfo($page_handle);
 				$tab_content = $mapper->getPublishedPageByHandle($page_handle);
 				$html = $tab_content->getContent();
 				$id = $tab_content->getId();
