@@ -156,7 +156,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$this->logger->addInfo($params);
 	$headers = $request->getHeaders();
 	$this->logger->addInfo('---headers---');
-	$this->logger->addInfo($headers);
+	$this->logger->addInfo(var_export($headers, true));
 	$this->logger->addInfo('---endheaders---');
 
 	$builder = new PageConfigurator('bublin', $this->db);
