@@ -153,6 +153,8 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$params = $request->getAttribute('params');
 	$method = $request->getMethod();
 	$this->logger->addInfo($params);
+	$headers = $request->getHeaders();
+	$this->logger->addInfo($headers);
 
 	$builder = new PageConfigurator('bublin', $this->db);
 	$tab_data = $builder->loadEditor($params, $method, $dataraw);
