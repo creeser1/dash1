@@ -99,7 +99,7 @@ $app->get('/data/{dataset:.*}', function ($request, $response, $args) {
     ]);
 });
 
-$app->get('/page/{id}', function ($request, $response, $args) {
+$app->get('/dashboard/{id}', function ($request, $response, $args) {
 	$whitelist = ['bublin' => '1', 'peercomp' => '2'];
 	if (array_key_exists($args['id'], $whitelist)) {
 		$id = $whitelist[$args['id']];
@@ -121,10 +121,18 @@ $app->get('/page/{id}', function ($request, $response, $args) {
 });
 
 $app->get('/edit/{id}', function ($request, $response, $args) {
-	$builder = new PageConfigurator('bublin', $this->db);
-	$page = $builder->loadPage($args['id']);
-	$template = $page['edittemplate'].'.html';
-	$this->logger->addInfo($template);
+	$whitelist = ['bublin' => '1', 'peercomp' => '2'];
+	if (array_key_exists($args['id'], $whitelist)) {
+		$id = $whitelist[$args['id']];
+		$builder = new PageConfigurator('bublin', $this->db);
+		$page = $builder->loadPage($id);
+		$template = $page['edittemplate'].'.html';
+		$this->logger->addInfo($template);
+	} else {
+		$this->logger->addInfo('Requested missing page: '.$args['id']);
+		return $response->withStatus(404)->withHeader('Content-Type', 'text/html')
+			->write('Page not found');
+	}
 
     return $this->view->render($response, $template, [
         'page' => $page
