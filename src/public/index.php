@@ -100,11 +100,19 @@ $app->get('/data/{dataset:.*}', function ($request, $response, $args) {
 });
 
 $app->get('/page/{id}', function ($request, $response, $args) {
-	$builder = new PageConfigurator('bublin', $this->db);
-	$page = $builder->loadPublishedPage($args['id']);
-	$template = $page['pagetemplate'].'.html';
-	$this->logger->addInfo('published page');
-	$this->logger->addInfo($template);
+	$whitelist = ['bublin6' => '1', 'peercomp' => '2'];
+	if (array_key_exists($args['id'], $whitelist)) {
+		$id = $whitelist[$args['id']];
+		$builder = new PageConfigurator('bublin', $this->db);
+		$page = $builder->loadPublishedPage($id);
+		$template = $page['pagetemplate'].'.html';
+		$this->logger->addInfo('published page');
+		$this->logger->addInfo($template);
+	} else {
+		$this->logger->addInfo('Requested missing page: '.$args['id']);
+		return $c['response']->withStatus(404)->withHeader('Content-Type', 'text/html')
+			->write('Page not found');
+	}
 
 	return $this->view->render($response, $template, [
 		'page' => $page
