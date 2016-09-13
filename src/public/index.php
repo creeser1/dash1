@@ -169,6 +169,7 @@ $app->map(['PUT', 'POST'], '/testlogin[/{params:.*}]', function (Request $reques
 
 $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$dataraw = $request->getBody();
+	$this->logger->addInfo($dataraw);
 	$params = $request->getAttribute('params');
 	$method = $request->getMethod();
 	$this->logger->addInfo('---params---');
