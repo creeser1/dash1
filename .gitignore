@@ -1,1 +1,4 @@
 vendor/*
+src/vendor/*
+src/data/*
+src/data1/*
