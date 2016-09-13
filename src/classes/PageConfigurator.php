@@ -97,7 +97,12 @@ class PageConfigurator
 		$tab_data['handle'] = $tab_obj->getHandle();
 		$tab_data['locator'] = $tab_obj->getLocator();
 		$tab_data['version'] = $tab_obj->getVersion(); /* get latest version and increment */
-		$tab_data['status'] = $tab_obj->getStatus(); /* 1,2,... or draft, published, ... */;
+		if (array_key_exists('status', $json_array) and $json_array['status'] == 'published') {
+			$tab_data['status'] = 1; /* 1,2,... or draft, published, ... */;
+		} else {
+			$tab_data['status'] = 2; /* 1,2,... or draft, published, ... */;
+		}
+		/*$tab_data['status'] = $tab_obj->getStatus();*/ /* 1,2,... or draft, published, ... */;
 		$tab_data['editor'] = $tab_obj->getEditor(); /* current authenticated username */
 		$tab_data['start'] = $tab_obj->getStart(); /* if start provided */
 		/*$this->logger->addInfo(var_export($tab_data, true));*/

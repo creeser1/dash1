@@ -67,6 +67,33 @@ $(tinymce.init({
 			});
 		}
 	});
+	editor.addMenuItem('publish', {
+		text: 'Publish',
+		context: 'newmenu',
+		onclick: function(e) {
+		var content = tinymce.activeEditor.getContent();
+			content = content.replace(/"/g,'\\\"');
+			content = content.replace(/'/g,'&apos;');
+			console.log(content);
+			var $activetab = $('div.active').attr('id');
+			var $app = $('body').attr('data-app');
+			var path = 'tab/' + $app + '/' + $activetab;
+			console.log(path);
+			$.ajax({
+				url: 'http://dash1.activecampus.org/' + path,
+				type: 'POST',
+				headers: {"X-HTTP-Method-Override": "PUT"},
+				contentType: 'application/json',
+				data: '{"description": "Test description", "content": "' + content + '", "status": "published"}',
+				success: function (response) {
+					console.log(response);
+				},
+				error: function (a, b) {
+					console.log(JSON.stringify(['Error', a, b]));
+				}
+			});
+		}
+	});
   },
   content_css: [
     //'assets/peercomp3projection.css?v=2'
