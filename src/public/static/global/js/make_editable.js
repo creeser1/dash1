@@ -57,7 +57,7 @@ $(tinymce.init({
 				type: 'POST',
 				headers: {"X-HTTP-Method-Override": "PUT"},
 				contentType: 'application/json',
-				data: '{"description": "Test description", "content": "' + content + '"}',
+				data: '{"description": "Draft description...", "content": "' + content + '"}',
 				success: function (response) {
 					console.log(response);
 				},
@@ -84,7 +84,7 @@ $(tinymce.init({
 				type: 'POST',
 				headers: {"X-HTTP-Method-Override": "PUT"},
 				contentType: 'application/json',
-				data: '{"description": "Test description", "content": "' + content + '", "status": "published"}',
+				data: '{"description": "Published description...", "content": "' + content + '", "status": "published"}',
 				success: function (response) {
 					console.log(response);
 				},
