@@ -192,7 +192,7 @@ $app->map(['PUT', 'POST'], '/register[/{params:.*}]', function (Request $request
 	if ($hasUser == false) { // not an existing user so go ahead and register
 		$hash = $auth->registerUser($password);
 		$this->logger->addInfo('---registering---');
-		$this->logger->addInfo(var_dump($hash, true));		
+		$this->logger->addInfo(var_export($hash, true));		
 	} else {
 		$this->logger->addInfo('---already registered---');
 		$this->logger->addInfo(var_export($hasUser, true));
