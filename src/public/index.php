@@ -175,6 +175,8 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 	$hash = $auth->registerUser($password);
 	$this->logger->addInfo('---hash---');
 	$this->logger->addInfo($hash);
+	$hasUser = $auth->hasUser($username);
+	$this->logger->addInfo($hasUser);
 	return $response;
 });
 
