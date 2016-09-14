@@ -148,13 +148,13 @@ $app->get('/dump/{id}', function (Request $request, Response $response, $args) {
 	return $response;
 });
 
-$app->get('/testlogin', function (Request $request, Response $response, $args) {
+$app->get('/loginto', function (Request $request, Response $response, $args) {
     return $this->view->render($response, 'login.html', [
         'name' => 'login'
     ]);
-});
+})->setName('loginto');
 
-$app->map(['PUT', 'POST'], '/loginto[/{params:.*}]', function (Request $request, Response $response, $args) {
+$app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$dataraw = $request->getBody();
 	$params = $request->getAttribute('params');
 	$this->logger->addInfo($params);
@@ -191,7 +191,7 @@ $app->map(['PUT', 'POST'], '/loginto[/{params:.*}]', function (Request $request,
 		])); // login succeeded, so load the page prevously desired
 		return $response;
 	}
-})->setName('loginto');
+})->setName('loginpost');
 
 $app->map(['PUT', 'POST'], '/register[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$dataraw = $request->getBody();
