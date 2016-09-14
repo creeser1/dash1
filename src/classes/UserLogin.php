@@ -48,6 +48,7 @@ class UserLogin
 			if (password_verify($password, $hash)) {
 				return true;
 			}
+			return false;
 		}
 		return false;
 	}
