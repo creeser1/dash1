@@ -169,6 +169,7 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 	$auth = new UserLogin($username, $this->db);
 	$hasUser = $auth->hasUser($username);
 	/*$this->logger->addInfo(var_export($hasUser, true));*/
+	$isAuthenticated = false;
 	if ($hasUser != false) { // an existing user so go ahead and check valid password
 		$isAuthenticated = $auth->authenticateUser($password);
 	}
