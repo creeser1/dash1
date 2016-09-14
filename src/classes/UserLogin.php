@@ -42,7 +42,7 @@ class UserLogin
 	public function authenticateUser($password) {
 		/*hash the password and verify it matches existing user record*/
 		$user_mapper = new UserMapper($this->db);
-		$user = $user_mapper->getUserByUsername($username);
+		$user = $user_mapper->getUserByUsername($this->username);
 		if ($user != false) {
 			$hash = $user->getHash();
 			return $hash;
