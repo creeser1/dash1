@@ -157,6 +157,7 @@ $app->get('/testlogin', function (Request $request, Response $response, $args) {
 $app->map(['PUT', 'POST'], '/loginto[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$dataraw = $request->getBody();
 	$params = $request->getAttribute('params');
+	$this->logger->addInfo($params);
 	$username = $request->getParsedBodyParam('username', $default = null);
 	$password = $request->getParsedBodyParam('password', $default = null);
 	$this->logger->addInfo('---request to login---');
