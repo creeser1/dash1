@@ -12,6 +12,7 @@ class UserLogin
     }
 
 	public function hasUser($username) {
+		$user_mapper = new UserMapper($this->db);
 		return $user_mapper->getUserByUsername($username);
     }
 
