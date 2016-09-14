@@ -37,7 +37,12 @@ class UserMapper extends Mapper
         $result = $stmt->execute(["username" => $username]);
 		/*return $result;*/
         if ($result) {
-            return new UserEntity($stmt->fetch());
+			$row = $stmt->fetch();
+			if ($row) {
+				return new UserEntity($row);
+			} else {
+				return false;
+			}
         }
     }
 
