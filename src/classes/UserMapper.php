@@ -35,10 +35,12 @@ class UserMapper extends Mapper
     			where m.username = :username and m.status = 1";
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute(["username" => $username]);
-
+		return $result;
+		/*
         if($result) {
             return new UserEntity($stmt->fetch());
         }
+	*/
     }
 
     public function remove($user_id) {
