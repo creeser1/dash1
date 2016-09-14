@@ -52,11 +52,11 @@ class UserMapper extends Mapper
 
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute([
-            "username" => $user>getUsername(),
-            "hash" => $user>getHash(),
-            "salt" => $user>getSalt(),
-            "status" => $user>getStatus(),
-            "content" => $user>getContent()
+            "username" => $user->getUsername(),
+            "hash" => $user->getHash(),
+            "salt" => $user->getSalt(),
+            "status" => $user->getStatus(),
+            "content" => $user->getContent()
         ]);
 
         if(!$result) {
