@@ -193,25 +193,33 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 		//	'id' => $params
 		//])); // login succeeded, so load the page prevously desired
 		//$response = $response->withRedirect($uri, 200); //->withHeader("X-Auth-Token", "JPso76OIYLK5a3knb");
-		$whitelist = ['bublin' => '1', 'peercomp' => '2'];
-		$token = '';
-		if (array_key_exists($params, $whitelist)) {
-			$id = $whitelist[$params];
-			$builder = new PageConfigurator('bublin', $this->db);
-			$page = $builder->loadPage($id);
-			$template = $page['edittemplate'].'.html';
-			$this->logger->addInfo($template);
-			$token = 'askj45yghfafyh23hoer';
-		} else {
-			$this->logger->addInfo('Requested missing page: '.$params);
-			return $response->withStatus(404)->withHeader('Content-Type', 'text/html')
-				->write('Page not found');
-		}
+		if ($isAuthenticated) {
+			$whitelist = ['bublin' => '1', 'peercomp' => '2'];
+			$token = '';
+			if (array_key_exists($params, $whitelist)) {
+				$id = $whitelist[$params];
+				$builder = new PageConfigurator('bublin', $this->db);
+				$page = $builder->loadPage($id);
+				$template = $page['edittemplate'].'.html';
+				$this->logger->addInfo($template);
+				$token = 'askj45yghfafyh23hoer';
+			} else {
+				$this->logger->addInfo('Requested missing page: '.$params);
+				return $response->withStatus(404)->withHeader('Content-Type', 'text/html')
+					->write('Page not found');
+			}
 
-		return $this->view->render($response, $template, [
-			'page' => $page,
-			'ses' => $token
-		]);
+			return $this->view->render($response, $template, [
+				'page' => $page,
+				'ses' => $token
+			]);
+		} else {
+			$response = $response->withStatus(401); // not authorized
+			return $this->view->render($response, 'login.html', [
+				'destination' => '/'.$params,
+				'message' => 'invalid credentials'
+			]);
+		}
 	}
 	return $response;
 });
