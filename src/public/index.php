@@ -187,11 +187,10 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 		$isAuthenticated = $auth->authenticateUser($password);
 		$this->logger->addInfo(var_export($isAuthenticated, true));
 		$this->logger->addInfo('---done---');
-		/*
-		//$uri = $request->getUri()->withPath($this->router->pathFor('edit', [
-		//	'id' => $params
-		//])); // login succeeded, so load the page prevously desired
-		*/
+
+		$uri = $request->getUri()->withPath($this->router->pathFor('edit', [
+			'id' => $params
+		])); // login succeeded, so load the page prevously desired
 	}
 	return $response;
 });
