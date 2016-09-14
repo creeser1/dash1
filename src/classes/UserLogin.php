@@ -18,7 +18,7 @@ class UserLogin
 		$user_data = [];
 		$user_data['username'] = $this->username;
 		$user_data['hash'] = $this->hash;
-		$user = new PageEntity($user_data); /* create new PageEntity object from array */
+		$user = new UserEntity($user_data); /* create new PageEntity object from array */
 		$user_mapper->save($user);
 		return $this->hash;
 	}
