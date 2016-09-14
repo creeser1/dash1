@@ -199,6 +199,7 @@ $app->map(['PUT', 'POST'], '/register[/{params:.*}]', function (Request $request
 		$hash = $auth->registerUser($password);
 	} else {
 		/*return username already in use*/
+		$this->logger->addInfo('---already registered---');
 	}
 	$this->logger->addInfo('---hash---');
 	$this->logger->addInfo($hash);
