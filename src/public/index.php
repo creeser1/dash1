@@ -183,7 +183,7 @@ $app->map(['PUT', 'POST'], '/edit[/{params:.*}]', function (Request $request, Re
 		//$response = $response->withRedirect($uri, 200); //->withHeader("X-Auth-Token", "JPso76OIYLK5a3knb");
 		if ($isAuthenticated) {
 			$whitelist = ['bublin' => '1', 'peercomp' => '2'];
-			$token = '';
+			$token = false;
 			if (array_key_exists($params, $whitelist)) {
 				$id = $whitelist[$params];
 				$builder = new PageConfigurator('bublin', $this->db);
@@ -191,6 +191,9 @@ $app->map(['PUT', 'POST'], '/edit[/{params:.*}]', function (Request $request, Re
 				$template = $page['edittemplate'].'.html';
 				$this->logger->addInfo($template);
 				$token = 'askj45yghfafyh23hoer';
+				$token = $auth->getNewToken();
+				$this->logger->addInfo('---new token---');
+				$this->logger->addInfo($token);
 			} else {
 				$this->logger->addInfo('Requested missing page: '.$params);
 				return $response->withStatus(404)->withHeader('Content-Type', 'text/html')
@@ -246,8 +249,17 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$this->logger->addInfo(var_export($request->getHeaders(), true));
 	$headerValueArray = $request->getHeader('X-Auth-Token');
 	$this->logger->addInfo('----token----');
-	$this->logger->addInfo(var_export($headerValueArray, true));
+	$token = '';
+	if (is_array($headerValueArray) and isset($headerValueArray[0])) {
+		$this->logger->addInfo(var_export($headerValueArray, true));
+		$token = $headerValueArray[0];
+	}
 	$this->logger->addInfo('---endheaders---');
+
+	$auth = new UserLogin($username, $this->db);
+	$isvalidToken = $auth->verifyToken($token);
+	$this->logger->addInfo('----is-valid-token----');
+	$this->logger->addInfo($isvalidToken);
 
 	$builder = new PageConfigurator('bublin', $this->db);
 	$tab_data = $builder->loadEditor($params, $method, $dataraw);
