@@ -169,6 +169,10 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 	$this->logger->addInfo($request->isXhr());
 	$this->logger->addInfo(var_export($request->getHeaders(), true));
 	$this->logger->addInfo('---endheaders---');
+	$auth = new UserLogin($username, $this->db);
+	$hash = $auth->registerUser($password);
+	$this->logger->addInfo('---hash---');
+	$this->logger->addInfo($hash);
 	return $response;
 });
 
