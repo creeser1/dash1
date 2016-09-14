@@ -255,6 +255,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 		$jsonToken = $headerValueArray[0];
 		$json_array = json_decode($jsonToken, true);
 		$this->logger->addInfo(json_last_error());
+		$this->logger->addInfo(var_export($json_array));
 		$token = $json_array['token'];
 		$username = $json_array['params'];
 	}
