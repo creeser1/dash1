@@ -12,16 +12,20 @@ class UserLogin
     }
 
 	public function registerUser($password) {
-		/*hash the password and add record to database if unique username*/
-		$this->hash = password_hash($password, PASSWORD_DEFAULT);
 		$user_mapper = new UserMapper($this->db);
+		/*hash the password and add record to database if unique username*/
+		$status = $user_mapper->getUserByUsername($this->username);
+		return $status;
+		/*
+		$this->hash = password_hash($password, PASSWORD_DEFAULT);
 		$user_data = [];
 		$user_data['username'] = $this->username;
 		$user_data['hash'] = $this->hash;
-		$user_data['status'] = 1; /* 1 active, 2 inactive */
-		$user = new UserEntity($user_data); /* create new PageEntity object from array */
+		$user_data['status'] = 1;
+		$user = new UserEntity($user_data);
 		$user_mapper->save($user);
 		return $this->hash;
+		*/
 	}
 
 	public function removeUser() {
