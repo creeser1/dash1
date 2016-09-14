@@ -78,6 +78,8 @@ $(tinymce.init({
 			content = content.replace(/"/g,'\\\"');
 			content = content.replace(/'/g,'&apos;');
 			console.log(content);
+			console.log(document.getElementById('header'));
+			console.log($('header'));
 			var $activetab = $('div.active').attr('id');
 			var $app = $('body').attr('data-app');
 			var path = 'tab/' + $app + '/' + $activetab;

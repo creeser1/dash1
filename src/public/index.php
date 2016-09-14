@@ -135,7 +135,8 @@ $app->get('/edit/{id}', function ($request, $response, $args) {
 	}
 
     return $this->view->render($response, $template, [
-        'page' => $page
+        'page' => $page,
+		'ses' => $token
     ]);
 })->setName('edit');
 
@@ -174,7 +175,7 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 		$this->logger->addInfo(var_export($hasUser, true));
 		$this->logger->addInfo('---done---');
 		//$response = $response->withRedirect($uri, 403);
-		$response = $response->withStatus(403); // not authorized
+		$response = $response->withStatus(401); // not authorized
 		return $this->view->render($response, 'login.html', [
 			'destination' => '/'.$params,
 			'message' => 'invalid credentials'
@@ -191,7 +192,7 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 		$uri = $request->getUri()->withPath($this->router->pathFor('edit', [
 			'id' => $params
 		])); // login succeeded, so load the page prevously desired
-		$response = $response->withHeader("X-Auth-Token", "JPso76OIYLK5a3knb")->withRedirect($uri, 200);
+		$response = $response->withRedirect($uri, 303)->withHeader("X-Auth-Token", "JPso76OIYLK5a3knb");
 	}
 	return $response;
 });
