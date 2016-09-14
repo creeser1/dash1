@@ -172,11 +172,11 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 	$this->logger->addInfo(var_export($request->getHeaders(), true));
 	$this->logger->addInfo('---endheaders---');
 	$auth = new UserLogin($username, $this->db);
+	$hasUser = $auth->hasUser($username);
+	$this->logger->addInfo($hasUser);
 	$hash = $auth->registerUser($password);
 	$this->logger->addInfo('---hash---');
 	$this->logger->addInfo($hash);
-	$hasUser = $auth->hasUser($username);
-	$this->logger->addInfo($hasUser);
 	return $response;
 });
 
