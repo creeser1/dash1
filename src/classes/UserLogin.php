@@ -15,7 +15,6 @@ class UserLogin
 		$user_mapper = new UserMapper($this->db);
 		/*hash the password and add record to database if unique username*/
 		$status = $user_mapper->getUserByUsername($this->username);
-		return $status;
 		/*
 		$this->hash = password_hash($password, PASSWORD_DEFAULT);
 		$user_data = [];
@@ -26,6 +25,7 @@ class UserLogin
 		$user_mapper->save($user);
 		return $this->hash;
 		*/
+		return $status;
 	}
 
 	public function removeUser() {
