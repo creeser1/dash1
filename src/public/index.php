@@ -77,18 +77,6 @@ $app->get('/favicon.ico', function ($request, $response, $args) {
     ]);
 })->setName('favicon');
 
-$app->get('/bublin', function ($request, $response, $args) {
-    return $this->view->render($response, 'bublin-template.html', [
-        'name' => $args['name']
-    ]);
-})->setName('bublin');
-
-$app->get('/bublin5', function ($request, $response, $args) {
-    return $this->view->render($response, 'bublin-template5.html', [
-        'name' => $args['name']
-    ]);
-})->setName('bublin5');
-
 $app->get('/data/{dataset:.*}', function ($request, $response, $args) {
 	$this->logger->addInfo('dataset');
 	$this->logger->addInfo($args['dataset']);
@@ -113,7 +101,7 @@ $app->get('/dashboard/{id}', function ($request, $response, $args) {
 		return $response->withStatus(404)->withHeader('Content-Type', 'text/html')
 			->write('Page not found');
 	}
-
+	
 	return $this->view->render($response, $template, [
 		'page' => $page
 	]);
@@ -156,7 +144,7 @@ $app->get('/loginto[/{params:.*}]', function (Request $request, Response $respon
     ]);
 })->setName('loginto');
 
-$app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $request, Response $response, $args) {
+$app->map(['PUT', 'POST'], '/edit[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$dataraw = $request->getBody();
 	$params = $request->getAttribute('params');
 	$this->logger->addInfo($params);
@@ -256,6 +244,9 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$this->logger->addInfo('---headers---');
 	$this->logger->addInfo($request->isXhr());
 	$this->logger->addInfo(var_export($request->getHeaders(), true));
+	$headerValueArray = $request->getHeader('X-Auth-Token');
+	$this->logger->addInfo('----token----');
+	$this->logger->addInfo(var_export($headerValueArray, true));
 	$this->logger->addInfo('---endheaders---');
 
 	$builder = new PageConfigurator('bublin', $this->db);
