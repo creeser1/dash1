@@ -43,9 +43,11 @@ class UserLogin
 		/*hash the password and verify it matches existing user record*/
 		$user_mapper = new UserMapper($this->db);
 		$user = $user_mapper->getUserByUsername($username);
-		$hash = $user->getHash();
-		if (password_verify($password, $hash)) {
-			return true;
+		if ($user != false) {
+			$hash = $user->getHash();
+			if (password_verify($password, $hash)) {
+				return true;
+			}
 		}
 		return false;
 	}
