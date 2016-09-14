@@ -156,28 +156,49 @@ $app->get('/testlogin', function (Request $request, Response $response, $args) {
 
 $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$dataraw = $request->getBody();
-	$this->logger->addInfo($dataraw);
 	$username = $request->getParsedBodyParam('username', $default = null);
 	$password = $request->getParsedBodyParam('password', $default = null);
 	$this->logger->addInfo('username: '.$username);
 	$hash = password_hash($password, PASSWORD_DEFAULT);
 	$this->logger->addInfo($hash);
-	$this->logger->addInfo('password: '.$password);
-	$params = $request->getAttribute('params');
-	$method = $request->getMethod();
-	$this->logger->addInfo('---params---');
-	$this->logger->addInfo($params);
 	$this->logger->addInfo('---headers---');
-	$this->logger->addInfo($request->isXhr());
-	$this->logger->addInfo(var_export($request->getHeaders(), true));
+	$this->logger->addInfo(var_export($request->isXhr(), true));
+	/*$this->logger->addInfo(var_export($request->getHeaders(), true));*/
 	$this->logger->addInfo('---endheaders---');
+
 	$auth = new UserLogin($username, $this->db);
-	$this->logger->addInfo('---endhasUser1---');
 	$hasUser = $auth->hasUser($username);
-	$this->logger->addInfo(var_export($hasUser, true));
-	$this->logger->addInfo('---endhasUser2---');
-	$this->logger->addInfo('---endhasUser3---');
-	/*$hash = $auth->registerUser($password);*/
+	/*$this->logger->addInfo(var_export($hasUser, true));*/
+	if ($hasUser != false) { // an existing user so go ahead and check valid password
+		$isAuthenticated = $auth->authenticateUser($password);
+	}
+	$this->logger->addInfo('---auth---');
+	$this->logger->addInfo(var_export($isAuthenticated, true));
+	$this->logger->addInfo('---hash---');
+	$this->logger->addInfo($hash);
+	return $response;
+});
+
+$app->map(['PUT', 'POST'], '/register[/{params:.*}]', function (Request $request, Response $response, $args) {
+	$dataraw = $request->getBody();
+	$username = $request->getParsedBodyParam('username', $default = null);
+	$password = $request->getParsedBodyParam('password', $default = null);
+	$this->logger->addInfo('username: '.$username);
+	$hash = password_hash($password, PASSWORD_DEFAULT);
+	$this->logger->addInfo($hash);
+	$this->logger->addInfo('---headers---');
+	$this->logger->addInfo(var_export($request->isXhr(), true));
+	/*$this->logger->addInfo(var_export($request->getHeaders(), true));*/
+	$this->logger->addInfo('---endheaders---');
+
+	$auth = new UserLogin($username, $this->db);
+	$hasUser = $auth->hasUser($username);
+	/*$this->logger->addInfo(var_export($hasUser, true));*/
+	if ($hasUser == false) { // not an existing user so go ahead and register
+		$hash = $auth->registerUser($password);
+	} else {
+		/*return username already in use*/
+	}
 	$this->logger->addInfo('---hash---');
 	$this->logger->addInfo($hash);
 	return $response;
