@@ -272,6 +272,8 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$this->logger->addInfo('----is-valid-token----');
 	$this->logger->addInfo($isvalidToken);
 
+	/*if valid token then save changes else notify of failure to save due to invalid credentials, ask to login again*/
+
 	$builder = new PageConfigurator('bublin', $this->db);
 	$tab_data = $builder->loadEditor($params, $method, $dataraw);
 	$json = json_encode($tab_data);
