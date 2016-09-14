@@ -52,12 +52,14 @@ $(tinymce.init({
 			var $app = $('body').attr('data-app');
 			var path = 'tab/' + $app + '/' + $activetab;
 			console.log(path);
+			var ses = $('body').attr('data-ses');
+			console.log('******ses: ' + ses);
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
 				type: 'POST',
 				headers: {
 					"X-HTTP-Method-Override": "PUT",
-					"X-Auth-Token": "JPso76OIYLK5a3knb"
+					"X-Auth-Token": ses
 				},
 				contentType: 'application/json',
 				data: '{"description": "Draft description...", "content": "' + content + '"}',
@@ -84,12 +86,14 @@ $(tinymce.init({
 			var $app = $('body').attr('data-app');
 			var path = 'tab/' + $app + '/' + $activetab;
 			console.log(path);
+			var ses = $('body').attr('data-ses');
+			console.log('******ses: ' + ses);
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
 				type: 'POST',
 				headers: {
 					"X-HTTP-Method-Override": "PUT",
-					"X-Auth-Token": "JPso76OIYLK5a3knb"
+					"X-Auth-Token": ses
 				},
 				contentType: 'application/json',
 				data: '{"description": "Published description...", "content": "' + content + '", "status": "published"}',
