@@ -259,9 +259,12 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 		$this->logger->addInfo('---json2phparray---');
 		$this->logger->addInfo(var_export($json_array, true));
 		$token = $json_array['token'];
-		$username = $json_array['params'];
+		$username = $json_array['data'];
 	}
 	$this->logger->addInfo('---endheaders---');
+	$this->logger->addInfo($username);
+	$this->logger->addInfo($token);
+	
 	$this->logger->addInfo('---username---');
 	$this->logger->addInfo($username);
 	$auth = new UserLogin($username, $this->db);
