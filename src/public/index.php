@@ -151,7 +151,7 @@ $app->get('/dump/{id}', function (Request $request, Response $response, $args) {
 $app->get('/loginto[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$params = $request->getAttribute('params');
     return $this->view->render($response, 'login.html', [
-        'destination' => $params;
+        'destination' => 'bublin'
     ]);
 })->setName('loginto');
 
@@ -173,6 +173,7 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 		$this->logger->addInfo('---not registered---');
 		$this->logger->addInfo(var_export($hasUser, true));
 		$this->logger->addInfo('---done---');
+		/*
 		//$response = $response->withRedirect($uri, 403);
 		//$response = $response->withStatus(403); // not authorized
 		//return $this->view->render($response, 'login.html', [
@@ -181,18 +182,20 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 		//$uri = $request->getUri()->withPath($this->router->pathFor('loginto', [
 		//	'params' => $params
 		//])); // login succeeded, so load the page prevously desired
-		return $response;
+		*/
 	} else { // username valid so check password
 		$this->logger->addInfo('---authenticating---');
 		$isAuthenticated = $auth->authenticateUser($password);
 		$this->logger->addInfo(var_export($isAuthenticated, true));
 		$this->logger->addInfo('---done---');
+		/*
 		//$uri = $request->getUri()->withPath($this->router->pathFor('edit', [
 		//	'id' => $params
 		//])); // login succeeded, so load the page prevously desired
-		return $response;
+		*/
 	}
-})->setName('loginpost');
+	return $response;
+});
 
 $app->map(['PUT', 'POST'], '/register[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$dataraw = $request->getBody();
