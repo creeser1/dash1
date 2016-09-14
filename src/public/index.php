@@ -148,9 +148,10 @@ $app->get('/dump/{id}', function (Request $request, Response $response, $args) {
 	return $response;
 });
 
-$app->get('/loginto', function (Request $request, Response $response, $args) {
+$app->get('/loginto[/{params:.*}]', function (Request $request, Response $response, $args) {
+	$params = $request->getAttribute('params');
     return $this->view->render($response, 'login.html', [
-        'name' => 'login'
+        'destination' => $params;
     ]);
 })->setName('loginto');
 
