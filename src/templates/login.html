@@ -37,7 +37,7 @@ height:1.7em;
 right:10px;
 top:-5px;
 }
-#loginform input[type="submit"] {
+#loginform button[type="submit"] {
 margin:15px;
 height:2em;
 padding:0 5px;
@@ -48,7 +48,8 @@ padding:0 5px;
 <form id="loginform" method="post" action="loginpost"><fieldset><legend>Login</legend>
 <label>Username: <input name="username" type="text" /></label>
 <label>Password: <input name="password" type="password" /></label>
-<input type="submit" />
+<button type="submit">Login</button>
+<button type="submit" formaction="register">Register</button>
 </form>
 </body>
 </html>
