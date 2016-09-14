@@ -13,7 +13,7 @@ class UserLogin
 
 	public function registerUser($password) {
 		/*hash the password and add record to database if unique username*/
-		$this->hash = password_hash($password);
+		$this->hash = password_hash($password, PASSWORD_DEFAULT);
 		$user_mapper = new UserMapper($this->db);
 		$user_data = [];
 		$user_data['username'] = $this->username;
