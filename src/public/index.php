@@ -160,6 +160,7 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 	$username = $request->getParsedBodyParam('username', $default = null);
 	$password = $request->getParsedBodyParam('password', $default = null);
 	$this->logger->addInfo('username: '.$username);
+	$this->logger->addInfo(password_hash($password, PASSWORD_DEFAULT));
 	$this->logger->addInfo('password: '.$password);
 	$params = $request->getAttribute('params');
 	$method = $request->getMethod();
@@ -173,7 +174,6 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 	$hash = $auth->registerUser($password);
 	$this->logger->addInfo('---hash---');
 	$this->logger->addInfo($hash);
-	$this->logger->addInfo(password_hash($password));
 	return $response;
 });
 
