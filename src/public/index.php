@@ -285,12 +285,18 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 
 		return $jsonResponse;
 	} else {
+			// for a popup
+			/*
 			$response = $response->withStatus(401); // not authorized
 			return $this->view->render($response, 'login.html', [
 				'destination' => '/'.$params,
 				'message' => 'invalid credentials'
 			]);
+			*/
+			// else redirect
+			$response = $response->withRedirect('/loginto/'.$params, 401);
 			return $response;
+			
 	}
 });
 
