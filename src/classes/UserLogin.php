@@ -19,7 +19,7 @@ class UserLogin
 		$user_data['username'] = $this->username;
 		$user_data['hash'] = $this->hash;
 		$user = new UserEntity($user_data); /* create new PageEntity object from array */
-		/*$user_mapper->save($user);*/
+		$user_mapper->save($user);
 		return $this->hash;
 	}
 
