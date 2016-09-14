@@ -63,7 +63,7 @@ class UserLogin
 			$user_data['salt'] = $token;
 			$user_data['id'] = $user->getId();
 			$user_data['username'] = $user->getUsername();
-			$user_data['status'] = $usre->getStatus();
+			$user_data['status'] = $user->getStatus();
 			$user = new UserEntity($user_data); /* create new PageEntity object from array */
 			$user_mapper->update($user);
 			return $token;
