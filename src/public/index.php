@@ -109,7 +109,7 @@ $app->get('/dashboard/{id}', function ($request, $response, $args) {
 		$this->logger->addInfo('published page');
 		$this->logger->addInfo($template);
 	} else {
-		$this->logger->addInfo('Requested missing page: '.$args['id']);
+		$this->logger->addInfo('Requested missing page: /dashboard/'.$args['id']);
 		return $response->withStatus(404)->withHeader('Content-Type', 'text/html')
 			->write('Page not found');
 	}
@@ -157,6 +157,10 @@ $app->get('/testlogin', function (Request $request, Response $response, $args) {
 $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$dataraw = $request->getBody();
 	$this->logger->addInfo($dataraw);
+	$username = $request->getParsedBodyParam('username', $default = null);
+	$password = $request->getParsedBodyParam('password', $default = null);
+	$this->logger->addInfo('username: '.$username);
+	$this->logger->addInfo('password: '.$password);
 	$params = $request->getAttribute('params');
 	$method = $request->getMethod();
 	$this->logger->addInfo('---params---');
