@@ -158,25 +158,23 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 	$dataraw = $request->getBody();
 	$username = $request->getParsedBodyParam('username', $default = null);
 	$password = $request->getParsedBodyParam('password', $default = null);
+	$this->logger->addInfo('---request to login---');
 	$this->logger->addInfo('username: '.$username);
-	$hash = password_hash($password, PASSWORD_DEFAULT);
-	$this->logger->addInfo($hash);
-	$this->logger->addInfo('---headers---');
+	$this->logger->addInfo('---xhr---');
 	$this->logger->addInfo(var_export($request->isXhr(), true));
-	/*$this->logger->addInfo(var_export($request->getHeaders(), true));*/
-	$this->logger->addInfo('---endheaders---');
 
 	$auth = new UserLogin($username, $this->db);
 	$hasUser = $auth->hasUser($username);
-	/*$this->logger->addInfo(var_export($hasUser, true));*/
 	$isAuthenticated = false;
-	if ($hasUser != false) { // an existing user so go ahead and check valid password
+	if ($hasUser == false) { // not an existing user so reject login
+		$this->logger->addInfo('---not registered---');
+		$this->logger->addInfo(var_export($hasUser, true));
+	} else { // username valid so check password
+		$this->logger->addInfo('---authenticating---');
 		$isAuthenticated = $auth->authenticateUser($password);
+		$this->logger->addInfo(var_export($isAuthenticated, true));
 	}
-	$this->logger->addInfo('---auth---');
-	$this->logger->addInfo(var_export($isAuthenticated, true));
-	$this->logger->addInfo('---hash---');
-	$this->logger->addInfo($hash);
+	$this->logger->addInfo('---done---');
 	return $response;
 });
 
@@ -184,25 +182,22 @@ $app->map(['PUT', 'POST'], '/register[/{params:.*}]', function (Request $request
 	$dataraw = $request->getBody();
 	$username = $request->getParsedBodyParam('username', $default = null);
 	$password = $request->getParsedBodyParam('password', $default = null);
+	$this->logger->addInfo('---request to register---');
 	$this->logger->addInfo('username: '.$username);
-	$hash = password_hash($password, PASSWORD_DEFAULT);
-	$this->logger->addInfo($hash);
-	$this->logger->addInfo('---headers---');
+	$this->logger->addInfo('---xhr---');
 	$this->logger->addInfo(var_export($request->isXhr(), true));
-	/*$this->logger->addInfo(var_export($request->getHeaders(), true));*/
-	$this->logger->addInfo('---endheaders---');
 
 	$auth = new UserLogin($username, $this->db);
 	$hasUser = $auth->hasUser($username);
-	/*$this->logger->addInfo(var_export($hasUser, true));*/
 	if ($hasUser == false) { // not an existing user so go ahead and register
 		$hash = $auth->registerUser($password);
+		$this->logger->addInfo('---registering---');
+		$this->logger->addInfo(var_dump($hash, true));		
 	} else {
-		/*return username already in use*/
 		$this->logger->addInfo('---already registered---');
+		$this->logger->addInfo(var_export($hasUser, true));
 	}
-	$this->logger->addInfo('---hash---');
-	$this->logger->addInfo($hash);
+	$this->logger->addInfo('---done---');
 	return $response;
 });
 
