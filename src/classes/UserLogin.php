@@ -11,6 +11,10 @@ class UserLogin
         $this->db = $db;
     }
 
+	public function hasUser($username) {
+		return $user_mapper->getUserByUsername($username);
+    }
+
 	public function registerUser($password) {
 		$user_mapper = new UserMapper($this->db);
 		/*hash the password and add record to database if unique username*/
