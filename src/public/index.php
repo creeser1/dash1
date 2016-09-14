@@ -174,22 +174,22 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 		$this->logger->addInfo(var_export($hasUser, true));
 		$this->logger->addInfo('---done---');
 		//$response = $response->withRedirect($uri, 403);
-		$response = $response->withStatus(403); // not authorized
+		//$response = $response->withStatus(403); // not authorized
 		//return $this->view->render($response, 'login.html', [
 		//	'params' => $params
 		//]);
-		$uri = $request->getUri()->withPath($this->router->pathFor('loginto', [
-			'params' => $params
-		])); // login succeeded, so load the page prevously desired
+		//$uri = $request->getUri()->withPath($this->router->pathFor('loginto', [
+		//	'params' => $params
+		//])); // login succeeded, so load the page prevously desired
 		return $response;
 	} else { // username valid so check password
 		$this->logger->addInfo('---authenticating---');
 		$isAuthenticated = $auth->authenticateUser($password);
 		$this->logger->addInfo(var_export($isAuthenticated, true));
 		$this->logger->addInfo('---done---');
-		$uri = $request->getUri()->withPath($this->router->pathFor('edit', [
-			'id' => $params
-		])); // login succeeded, so load the page prevously desired
+		//$uri = $request->getUri()->withPath($this->router->pathFor('edit', [
+		//	'id' => $params
+		//])); // login succeeded, so load the page prevously desired
 		return $response;
 	}
 })->setName('loginpost');
