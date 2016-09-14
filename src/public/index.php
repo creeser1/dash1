@@ -252,10 +252,15 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$token = '';
 	if (is_array($headerValueArray) and isset($headerValueArray[0])) {
 		$this->logger->addInfo(var_export($headerValueArray, true));
-		$token = $headerValueArray[0];
+		$jsonToken = $headerValueArray[0];
+		$json_array = json_decode($jsonToken, true);
+		$this->logger->addInfo(json_last_error());
+		$token = $json_array['token'];
+		$username = $json_array['params'];
 	}
 	$this->logger->addInfo('---endheaders---');
-
+	$this->logger->addInfo('---username---');
+	$this->logger->addInfo($username);
 	$auth = new UserLogin($username, $this->db);
 	$isvalidToken = $auth->verifyToken($token);
 	$this->logger->addInfo('----is-valid-token----');

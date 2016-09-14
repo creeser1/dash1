@@ -66,7 +66,7 @@ class UserLogin
 			$user_data['status'] = $user->getStatus();
 			$user = new UserEntity($user_data); /* create new PageEntity object from array */
 			$user_mapper->update($user);
-			return $token;
+			return '{"token": "'.$token.'", "data": "'.$this->username.'"}';
 		}
 		return false;
 	}
