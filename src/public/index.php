@@ -273,17 +273,25 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$this->logger->addInfo($isvalidToken);
 
 	/*if valid token then save changes else notify of failure to save due to invalid credentials, ask to login again*/
+	if ($isvalidToken) {
+		$builder = new PageConfigurator('bublin', $this->db);
+		$tab_data = $builder->loadEditor($params, $method, $dataraw);
+		$json = json_encode($tab_data);
+		/*$this->logger->addInfo('---jsondata---');
+		$this->logger->addInfo($json);*/
 
-	$builder = new PageConfigurator('bublin', $this->db);
-	$tab_data = $builder->loadEditor($params, $method, $dataraw);
-	$json = json_encode($tab_data);
-	/*$this->logger->addInfo('---jsondata---');
-	$this->logger->addInfo($json);*/
+		$newResponse = $response->withHeader('Content-type', 'application/json');
+		$jsonResponse = $newResponse->withJson($tab_data);
 
-	$newResponse = $response->withHeader('Content-type', 'application/json');
-	$jsonResponse = $newResponse->withJson($tab_data);
-
-	return $jsonResponse;
+		return $jsonResponse;
+	} else {
+			$response = $response->withStatus(401); // not authorized
+			return $this->view->render($response, 'login.html', [
+				'destination' => '/'.$params,
+				'message' => 'invalid credentials'
+			]);
+			return $response;
+	}
 });
 
 $app->run();
