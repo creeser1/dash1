@@ -174,6 +174,7 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 	$auth = new UserLogin($username, $this->db);
 	$this->logger->addInfo('---endhasUser1---');
 	$hasUser = $auth->hasUser($username);
+	$this->logger->addInfo(var_export($hasUser, true));
 	$this->logger->addInfo('---endhasUser2---');
 	$this->logger->addInfo($hasUser);
 	$this->logger->addInfo('---endhasUser3---');
