@@ -18,6 +18,7 @@ class UserLogin
 		$user_data = [];
 		$user_data['username'] = $this->username;
 		$user_data['hash'] = $this->hash;
+		$user_data['status'] = 1; /* 1 active, 2 inactive */
 		$user = new UserEntity($user_data); /* create new PageEntity object from array */
 		$user_mapper->save($user);
 		return $this->hash;
