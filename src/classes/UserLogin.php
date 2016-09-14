@@ -59,12 +59,13 @@ class UserLogin
 			$hash = $user->getHash();
 			$token = password_hash($hash.'pqWer2y9H7nNv48gB', PASSWORD_DEFAULT);
 			$user_data = [];
-			$user_data['username'] = $this->username;
 			$user_data['hash'] = $hash;
 			$user_data['salt'] = $token;
-			$user_data['status'] = 1; /* 1 active, 2 inactive */
+			$user_data['id'] = $user->getId();
+			$user_data['username'] = $user->getUsername();
+			$user_data['status'] = $usre->getStatus();
 			$user = new UserEntity($user_data); /* create new PageEntity object from array */
-			$user_mapper->save($user);
+			$user_mapper->update($user);
 			return $token;
 		}
 		return false;

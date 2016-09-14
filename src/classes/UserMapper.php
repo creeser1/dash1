@@ -50,6 +50,20 @@ class UserMapper extends Mapper
 		
     }
 
+    public function update(UserEntity $user) {
+		$sql = "update pguser set hash=:hash, salt=:salt, status=:status where id=:user_id";
+        $stmt = $this->db->prepare($sql);
+		$result = $stmt->execute([
+			"hash" => $user->getHash(),
+			"salt" => $user->getSalt(),
+			"status" => $user->getStatus(),
+			"user_id" => $user->getId()
+		]);
+		if (!$result) {
+            throw new Exception("could not update record");
+		}
+    }
+
     public function save(UserEntity $user) {
         $sql = "insert into pguser
             (username, hash, salt, status) values
