@@ -79,6 +79,7 @@ class UserLogin
 			if ($token == $storedToken) {
 				return true;
 			}
+			return $storedToken;
 		}
 		return false;
 	}
