@@ -45,10 +45,11 @@ class UserLogin
 		$user = $user_mapper->getUserByUsername($username);
 		if ($user != false) {
 			$hash = $user->getHash();
-			if (password_verify($password, $hash)) {
-				return true;
-			}
-			return false;
+			return $hash;
+			//if (password_verify($password, $hash)) {
+			//	return true;
+			//}
+			//return false;
 		}
 		return false;
 	}
