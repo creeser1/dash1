@@ -192,7 +192,7 @@ $app->map(['PUT', 'POST'], '/loginpost[/{params:.*}]', function (Request $reques
 		$uri = $request->getUri()->withPath($this->router->pathFor('edit', [
 			'id' => $params
 		])); // login succeeded, so load the page prevously desired
-		$response = $response->withRedirect($uri, 303)->withHeader("X-Auth-Token", "JPso76OIYLK5a3knb");
+		$response = $response->withRedirect($uri, 200)->withHeader("X-Auth-Token", "JPso76OIYLK5a3knb");
 	}
 	return $response;
 });
