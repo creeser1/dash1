@@ -20,6 +20,7 @@ class UserLogin
 		$user_data['hash'] = $this->hash;
 		$user = new PageEntity($user_data); /* create new PageEntity object from array */
 		$user_mapper->save($user);
+		return $this->hash;
 	}
 
 	public function removeUser() {
