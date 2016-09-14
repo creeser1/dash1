@@ -151,7 +151,7 @@ $app->get('/dump/{id}', function (Request $request, Response $response, $args) {
 $app->get('/loginto[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$params = $request->getAttribute('params');
     return $this->view->render($response, 'login.html', [
-        'destination' => 'bublin'
+        'destination' => $params
     ]);
 })->setName('loginto');
 
