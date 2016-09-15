@@ -294,6 +294,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 			]);
 			*/
 			// else redirect
+			// change method to get before redirect and clear request payload
 			$response = $response->withRedirect('/loginto/'.$params, 401);
 			return $response;
 			

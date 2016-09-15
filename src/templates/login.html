@@ -25,7 +25,7 @@ margin-left:15px;
 #loginform label {
 position:relative;
 display:block;
-margin:15px;
+margin:10px 15px 0;
 width: 300px;
 height:2em;
 }
@@ -42,15 +42,20 @@ margin:15px;
 height:2em;
 padding:0 5px;
 }
+.errmsg {
+	color: #d10c01;
+	margin:0 10px;
+	text-align:center;
+}
 </style>
 </head>
 <body>
 <form id="loginform" method="post" action="/edit{{ destination }}"><fieldset><legend>Login</legend>
 <label>Username: <input name="username" type="text" /></label>
 <label>Password: <input name="password" type="password" /></label>
+<p class="errmsg">{{ message }}</p>
 <button type="submit">Login</button>
 <button type="submit" formaction="register">Register</button>
-<p>{{ message }}</p>
-</form>
+</fieldset></form>
 </body>
 </html>
