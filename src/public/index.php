@@ -144,6 +144,23 @@ $app->get('/loginto[/{params:.*}]', function (Request $request, Response $respon
     ]);
 })->setName('loginto');
 
+$app->post('/login', function (Request $request, Response $response, $args) {
+	$dataraw = $request->getBody();
+	$username = $request->getParsedBodyParam('username', $default = null);
+
+	$isAuthenticated = false;
+	$token = false;
+	$auth = new UserLogin($username, $this->db);
+	$isAuthenticated = $auth->authenticateUser($request->getParsedBodyParam('password', $default = null));
+	if ($isAuthenticated) {
+		$token = $auth->getNewToken();
+		return $response->withHeader('Content-Type', 'text/plain')
+			->write($token);
+	}
+	return $response->withStatus(401)->withHeader('Content-Type', 'text/plain')
+		->write('Invalid credentials');
+})->setName('login');
+
 $app->map(['PUT', 'POST'], '/edit[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$dataraw = $request->getBody();
 	$params = $request->getAttribute('params');
