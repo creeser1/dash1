@@ -2,21 +2,23 @@
 
 class UserEntity
 {
-    protected $id;
-    protected $username;
-    protected $hash;
-    protected $salt;
-    protected $status;
-    protected $created;
-    protected $modified;
+	protected $id;
+	protected $username;
+	protected $hash;
+	protected $salt;
+	protected $expires;
+	protected $role;
+	protected $status;
+	protected $created;
+	protected $modified;
 
-    /**
-     * Accept an array of data matching properties of this class
-     * and create the class
-     *
-     * @param array $data The data to use to create
-     */
-    public function __construct(array $data) {
+	/**
+	* Accept an array of data matching properties of this class
+	* and create the class
+	*
+	* @param array $data The data to use to create
+	*/
+	public function __construct(array $data) {
         // no id if we're creating also created is one-time auto timestamp
         if(isset($data['id'])) {
             $this->id = $data['id'];
@@ -26,6 +28,7 @@ class UserEntity
         $this->username = $data['username'];
         $this->hash = $data['hash'];
         $this->salt = $data['salt'];
+        $this->role = $data['role'];
         $this->status = $data['status'];
     }
 
@@ -43,6 +46,14 @@ class UserEntity
 
     public function getSalt() {
         return $this->salt;
+    }
+
+    public function getExpires() {
+        return $this->expires;
+    }
+
+    public function getRole() {
+        return $this->role;
     }
 
     public function getStatus() {
