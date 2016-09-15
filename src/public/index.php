@@ -254,7 +254,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 		$this->logger->addInfo(var_export($headerValueArray, true));
 		$jsonToken = $headerValueArray[0];
 		$json_array = json_decode($jsonToken, true);
-		$this->logger->addInfo(json_last_error());
+		$this->logger->addInfo(json_last_error_msg());
 		$this->logger->addInfo(jsonToken);
 		$this->logger->addInfo('---json2phparray---');
 		$this->logger->addInfo(var_export($json_array, true));
@@ -285,7 +285,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 		/* {"content": "<p class=\"ok\">It&apos;s ok</p>"} */
 		/* {"content": "<p class="notok">It's not ok</p>"} */
 		$json_array = json_decode($data, true);
-		$this->logger->addInfo(json_last_error());
+		$this->logger->addInfo(json_last_error_msg());
 		$this->logger->addInfo(var_export($json_array, true));
 
 
