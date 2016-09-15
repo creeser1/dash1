@@ -28,6 +28,7 @@ class UserEntity
         $this->username = $data['username'];
         $this->hash = $data['hash'];
         $this->salt = $data['salt'];
+        $this->expires = $data['expires'];
         $this->role = $data['role'];
         $this->status = $data['status'];
     }
