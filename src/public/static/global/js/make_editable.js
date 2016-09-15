@@ -38,7 +38,7 @@ $(tinymce.init({
 			var path = 'tab/' + $app + '/' + $activetab;
 			var ses = $('body').attr('data-ses');
 			if (!ses) {
-				$('body').append('<object id="loginpopup" width="400" height="300" data="/loginto/' + $app + '" style="position:absolute;right:20%;top:20%;background:rgba(200,200,200,0.3);z-index:900;"></object>');
+				$('body').append('<object id="loginpopup" width="400" height="300" data="/loginto/' + $app + '" style="position:absolute;right:20%;top:20%;background:rgba(200,200,200,0.3);z-index:90000;"></object>');
 			}
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
