@@ -51,7 +51,7 @@ class UserMapper extends Mapper
     }
 
     public function update(UserEntity $user) {
-		$expires = time() + 3600; // extend expires to an hour from now
+		$expires = '2016-09-16 23:30:45'; // extend expires to an hour from now
 		$sql = "update pguser set hash=:hash, salt=:salt, expires=:expires, role=:role, status=:status where id=:user_id";
         $stmt = $this->db->prepare($sql);
 		$result = $stmt->execute([
