@@ -70,8 +70,8 @@ class UserMapper extends Mapper
 
     public function save(UserEntity $user) {
         $sql = "insert into pguser
-            (username, hash, salt, status) values
-            (:username, :hash, :salt, :status)"; 
+            (username, hash, salt, role, status) values
+            (:username, :hash, :salt, :role, :status)"; 
 
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute([
