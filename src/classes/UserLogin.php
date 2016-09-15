@@ -63,6 +63,7 @@ class UserLogin
 			$user_data['salt'] = $token;
 			$user_data['id'] = $user->getId();
 			$user_data['username'] = $user->getUsername();
+			$user_data['role'] = $user->getRole();
 			$user_data['status'] = $user->getStatus();
 			$user = new UserEntity($user_data); /* create new PageEntity object from array */
 			$user_mapper->update($user);
@@ -75,11 +76,13 @@ class UserLogin
 		$user_mapper = new UserMapper($this->db);
 		$user = $user_mapper->getUserByUsername($this->username);
 		if ($user != false) {
+			$now = date('F j, Y, g:i a', strtotime('now'));
 			$storedToken = $user->getSalt();
-			if ($token == $storedToken) {
+			$expires = $user->getExpires();
+			if ($token == $storedToken and $expires > $now) {
 				return true;
 			}
-			return $storedToken;
+			return $storedToken.' '.$expires.' '.$now; // debug
 		}
 		return false;
 	}
