@@ -51,7 +51,7 @@ $(tinymce.init({
 				return; // don't send anything here, since login will redirect
 			}
 			var $data = '{"description": "' + description + '", "content": "' + content + '" "status": "' + status + '"}';
-			console.log(data);
+			console.log($data);
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
 				type: 'POST',
