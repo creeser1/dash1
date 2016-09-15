@@ -233,7 +233,7 @@ $app->map(['PUT', 'POST'], '/register[/{params:.*}]', function (Request $request
 		$this->logger->addInfo('---registration duplicate for: '.$username);
 			return $this->view->render($response, 'login.html', [
 				'destination' => '/'.$params,
-				'message' => $username.' is already registerd'
+				'message' => $username.' is unavailable, please choose another username'
 			]);
 	}
 	return $response;
