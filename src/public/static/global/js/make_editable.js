@@ -50,6 +50,8 @@ $(tinymce.init({
 								data: $('#loginform').serialize(),
 								success: function (response) {
 									console.log(response);
+									ses = response;									
+									$('body').attr('data-ses', ses); // set token
 								},
 								error: function (a, b) {
 									console.log(JSON.stringify(['Error', a, b])); // popup login
