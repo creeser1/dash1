@@ -216,25 +216,26 @@ $app->map(['PUT', 'POST'], '/edit[/{params:.*}]', function (Request $request, Re
 });
 
 $app->map(['PUT', 'POST'], '/register[/{params:.*}]', function (Request $request, Response $response, $args) {
-	$dataraw = $request->getBody();
+	//$dataraw = $request->getBody();
 	$username = $request->getParsedBodyParam('username', $default = null);
-	$password = $request->getParsedBodyParam('password', $default = null);
-	$this->logger->addInfo('---request to register---');
-	$this->logger->addInfo('username: '.$username);
-	$this->logger->addInfo('---xhr---');
-	$this->logger->addInfo(var_export($request->isXhr(), true));
+	//$password = $request->getParsedBodyParam('password', $default = null);
 
 	$auth = new UserLogin($username, $this->db);
 	$hasUser = $auth->hasUser($username);
 	if ($hasUser == false) { // not an existing user so go ahead and register
-		$hash = $auth->registerUser($password);
-		$this->logger->addInfo('---registering---');
-		$this->logger->addInfo(var_export($hash, true));		
+		$hash = $auth->registerUser($request->getParsedBodyParam('password', $default = null));
+		$this->logger->addInfo('---registration request for: '.$username);
+			return $this->view->render($response, 'login.html', [
+				'destination' => '/'.$params,
+				'message' => 'registration request pending review'
+			]);
 	} else {
-		$this->logger->addInfo('---already registered---');
-		$this->logger->addInfo(var_export($hasUser, true));
+		$this->logger->addInfo('---registration duplicate for: '.$username);
+			return $this->view->render($response, 'login.html', [
+				'destination' => '/'.$params,
+				'message' => $username.' is already registerd'
+			]);
 	}
-	$this->logger->addInfo('---done---');
 	return $response;
 });
 
