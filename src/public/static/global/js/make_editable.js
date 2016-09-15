@@ -48,6 +48,7 @@ $(tinymce.init({
 						$('body').append(xbody);
 					}
 				});
+				return; // don't send anything here, since login will redirect
 			}
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
