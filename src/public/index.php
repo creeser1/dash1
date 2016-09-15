@@ -276,6 +276,19 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 
 	/*if valid token then save changes else notify of failure to save due to invalid credentials, ask to login again*/
 	if ($isvalidToken) {
+
+		$patterns = ["/\s+/m", "/'/"];
+		$replacements = [" ", "'"];
+		$data = preg_replace($patterns, $replacements, $dataraw);
+		$this->logger->addInfo(preg_last_error());
+		/* json_decode fails if quotes not escaped in json obj values */
+		/* {"content": "<p class=\"ok\">It&apos;s ok</p>"} */
+		/* {"content": "<p class="notok">It's not ok</p>"} */
+		$json_array = json_decode($data, true);
+		$this->logger->addInfo(json_last_error());
+		$this->logger->addInfo(var_export($json_array, true));
+
+
 		$builder = new PageConfigurator('bublin', $this->db);
 		$tab_data = $builder->loadEditor($params, $method, $dataraw);
 		$json = json_encode($tab_data);
