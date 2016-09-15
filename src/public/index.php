@@ -271,6 +271,8 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$isvalidToken = $auth->verifyToken($token);
 	$this->logger->addInfo('----is-valid-token----');
 	$this->logger->addInfo($isvalidToken);
+	$this->logger->addInfo($isvalidToken);
+	$this->logger->addInfo('----end raw input----');
 
 	/*if valid token then save changes else notify of failure to save due to invalid credentials, ask to login again*/
 	if ($isvalidToken) {

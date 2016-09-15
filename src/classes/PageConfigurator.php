@@ -74,12 +74,14 @@ class PageConfigurator
 		$patterns = ["/\s+/m", "/'/"];
 		$replacements = [" ", "'"];
 		$data = preg_replace($patterns, $replacements, $dataraw);
-		/*$this->logger->addInfo(preg_last_error());*/
+		$this->logger->addInfo(preg_last_error());
+		$this->logger->addInfo($data);
 		/* json_decode fails if quotes not escaped in json obj values */
 		/* {"content": "<p class=\"ok\">It&apos;s ok</p>"} */
 		/* {"content": "<p class="notok">It's not ok</p>"} */
 		$json_array = json_decode($data, true);
-		/*$this->logger->addInfo(json_last_error());*/
+		$this->logger->addInfo(json_last_error());
+		$this->logger->addInfo($json_array);
 
 		/* At this point we should have the new content as a php array */
 		/* Now, get record having the latest version of this content from database */
