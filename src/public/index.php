@@ -242,58 +242,35 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$dataraw = $request->getBody();
 	$params = $request->getAttribute('params');
 	$method = $request->getMethod();
-	$this->logger->addInfo('---params---');
-	$this->logger->addInfo($params);
-	$this->logger->addInfo('---headers---');
-	$this->logger->addInfo($request->isXhr());
-	$this->logger->addInfo(var_export($request->getHeaders(), true));
 	$headerValueArray = $request->getHeader('X-Auth-Token');
-	$this->logger->addInfo('----token----');
 	$token = '';
+	$username = '';
+	$isvalidToken = false;
 	if (is_array($headerValueArray) and isset($headerValueArray[0])) {
-		$this->logger->addInfo(var_export($headerValueArray, true));
 		$jsonToken = $headerValueArray[0];
 		$json_array = json_decode($jsonToken, true);
-		$this->logger->addInfo(json_last_error_msg());
-		$this->logger->addInfo(jsonToken);
-		$this->logger->addInfo('---json2phparray---');
-		$this->logger->addInfo(var_export($json_array, true));
 		$token = $json_array['token'];
 		$username = $json_array['data'];
 	}
-	$this->logger->addInfo('---endheaders---');
-	$this->logger->addInfo($username);
-	$this->logger->addInfo($token);
-	
-	$this->logger->addInfo('---username---');
-	$this->logger->addInfo($username);
-	$auth = new UserLogin($username, $this->db);
-	$isvalidToken = $auth->verifyToken($token);
-	$this->logger->addInfo('----is-valid-token----');
-	$this->logger->addInfo($isvalidToken);
-	$this->logger->addInfo($dataraw);
-	$this->logger->addInfo('----end raw input----');
-
+	if (isset($token) and isset($username)) {
+		$auth = new UserLogin($username, $this->db);
+		$isvalidToken = $auth->verifyToken($token);
+	}
 	/*if valid token then save changes else notify of failure to save due to invalid credentials, ask to login again*/
-	if ($isvalidToken) {
-
-		$patterns = ["/\s+/m", "/'/"];
-		$replacements = [" ", "'"];
+	if ($isvalidToken == true) {
+		//$patterns = ["/\s+/m", "/'/"];
+		//$replacements = [" ", "'"];
+		$patterns = "/\s+/m"; // only one pattern for now
+		$replacements = " ";
 		$data = preg_replace($patterns, $replacements, $dataraw);
-		$this->logger->addInfo(preg_last_error());
-		/* json_decode fails if quotes not escaped in json obj values */
-		/* {"content": "<p class=\"ok\">It&apos;s ok</p>"} */
-		/* {"content": "<p class="notok">It's not ok</p>"} */
+		// json_decode fails if quotes not escaped in json obj values
+		// {"content": "<p class=\"ok\">It&apos;s ok</p>"}
+		// {"content": "<p class="notok">It's not ok</p>"}
 		$json_array = json_decode($data, true);
-		$this->logger->addInfo(json_last_error_msg());
-		$this->logger->addInfo(var_export($json_array, true));
-
 
 		$builder = new PageConfigurator('bublin', $this->db);
 		$tab_data = $builder->loadEditor($params, $method, $dataraw);
 		$json = json_encode($tab_data);
-		/*$this->logger->addInfo('---jsondata---');
-		$this->logger->addInfo($json);*/
 
 		$newResponse = $response->withHeader('Content-type', 'application/json');
 		$jsonResponse = $newResponse->withJson($tab_data);

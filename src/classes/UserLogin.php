@@ -76,7 +76,7 @@ class UserLogin
 		$user_mapper = new UserMapper($this->db);
 		$user = $user_mapper->getUserByUsername($this->username);
 		if ($user != false) {
-			$now = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s -14",strtotime('now'))));
+			$now = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s-14:00",strtotime('now'))));
 			$storedToken = $user->getSalt();
 			$expires = $user->getExpires();
 			if ($token == $storedToken and $expires > $now) {
