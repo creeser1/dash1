@@ -78,6 +78,7 @@ class UserMapper extends Mapper
             "username" => $user->getUsername(),
             "hash" => $user->getHash(),
             "salt" => $user->getSalt(),
+            "role" => $user->getRole(),
             "status" => $user->getStatus()
         ]);
 
