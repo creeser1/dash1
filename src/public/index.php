@@ -270,7 +270,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 		$json_array = json_decode($data, true);
 
 		$builder = new PageConfigurator('bublin', $this->db);
-		$tab_data = $builder->loadEditor($params, $method, $dataraw);
+		$tab_data = $builder->loadEditor($params, $method, $dataraw, $username);
 		$json = json_encode($tab_data);
 
 		$newResponse = $response->withHeader('Content-type', 'application/json');

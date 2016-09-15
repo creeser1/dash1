@@ -70,7 +70,7 @@ class PageConfigurator
 		return $page;
 	}
 
-	public function loadEditor($params, $method, $dataraw) {
+	public function loadEditor($params, $method, $dataraw, $username) {
 		$patterns = ["/\s+/m", "/'/"];
 		$replacements = [" ", "'"];
 		$data = preg_replace($patterns, $replacements, $dataraw);
@@ -103,7 +103,8 @@ class PageConfigurator
 			$tab_data['status'] = 2; /* 1,2,... or draft, published, ... */;
 		}
 		/*$tab_data['status'] = $tab_obj->getStatus();*/ /* 1,2,... or draft, published, ... */;
-		$tab_data['editor'] = $tab_obj->getEditor(); /* current authenticated username */
+		$tab_data['editor'] = $username; 
+		//$tab_obj->getEditor(); /* current authenticated username */
 		$tab_data['start'] = $tab_obj->getStart(); /* if start provided */
 		/*$this->logger->addInfo(var_export($tab_data, true));*/
 
