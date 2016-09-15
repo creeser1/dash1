@@ -45,6 +45,10 @@ class UserLogin
 		$user_mapper = new UserMapper($this->db);
 		$user = $user_mapper->getUserByUsername($this->username);
 		if ($user != false) {
+			$status = $user->getStatus();
+			if ($status != 1) { // 1 is active, 2 inactive
+				return false;
+			}
 			$hash = $user->getHash();
 			if (password_verify($password, $hash)) {
 				return true;
@@ -57,15 +61,19 @@ class UserLogin
 		$user_mapper = new UserMapper($this->db);
 		$user = $user_mapper->getUserByUsername($this->username);
 		if ($user != false) {
+			$status = $user->getStatus();
+			if ($status != 1) { // 1 is active, 2 inactive
+				return false;
+			}
 			$hash = $user->getHash();
 			$token = password_hash($hash.'pqWer2y9H7nNv48gB', PASSWORD_DEFAULT);
 			$user_data = [];
 			$user_data['hash'] = $hash;
 			$user_data['salt'] = $token;
+			$user_data['status'] = $status;
 			$user_data['id'] = $user->getId();
 			$user_data['username'] = $user->getUsername();
 			$user_data['role'] = $user->getRole();
-			$user_data['status'] = $user->getStatus();
 			$user = new UserEntity($user_data); /* create new PageEntity object from array */
 			$user_mapper->update($user);
 			return '{"token": "'.$token.'", "data": "'.$this->username.'"}';
@@ -77,6 +85,10 @@ class UserLogin
 		$user_mapper = new UserMapper($this->db);
 		$user = $user_mapper->getUserByUsername($this->username);
 		if ($user != false) {
+			$status = $user->getStatus();
+			if ($status != 1) { // 1 is active, 2 inactive
+				return false;
+			}
 			$now = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s-14:00",strtotime('now'))));
 			$storedToken = $user->getSalt();
 			$expires = $user->getExpires();
