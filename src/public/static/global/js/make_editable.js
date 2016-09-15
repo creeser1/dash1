@@ -38,7 +38,8 @@ $(tinymce.init({
 						xbody = xbody.replace(/<\/body>.*<\/html>/m,'');
 						$xbody = $(xbody);
 						$xbody.appendTo('body');
-						$xbody.find('submit[type=submit]').on('click', function (e) {
+						console.log($xbody.find('button[type=submit]'));
+						$xbody.find('button[type=submit]').on('click', function (e) {
 							e.preventDefault();
 							e.stopPropagation();
 							console.log(e);
