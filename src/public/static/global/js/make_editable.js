@@ -52,6 +52,7 @@ $(tinymce.init({
 									console.log(response);
 									ses = response;									
 									$('body').attr('data-ses', ses); // set token
+									$xbody.remove();
 								},
 								error: function (a, b) {
 									console.log(JSON.stringify(['Error', a, b])); // popup login
