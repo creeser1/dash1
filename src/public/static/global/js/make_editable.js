@@ -42,7 +42,8 @@ $(tinymce.init({
 					url: 'http://dash1.activecampus.org/loginto/' + $app,
 					success: function (response) {
 						var xbody = response.replace(/[\n\r]/mg, ' ');
-						var xbody = xbody.replace(/<!DOCTYPE html>.*<body>/m,'x');
+						xbody = xbody.replace(/<!DOCTYPE html>.*<body>/m,'');
+						xbody = xbody.replace(/<\/body>.*<\/html>/m,'');
 						console.log(xbody);
 					}
 				});
