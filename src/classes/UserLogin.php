@@ -82,7 +82,7 @@ class UserLogin
 			if ($token == $storedToken and $expires > $now) {
 				return true;
 			}
-			return $storedToken.' '.$expires.' '.$now; // debug
+			return $storedToken.' | '.$expires.' | '.$now.' | '; // debug
 		}
 		return false;
 	}
