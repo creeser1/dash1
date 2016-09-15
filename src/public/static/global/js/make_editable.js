@@ -45,9 +45,9 @@ $(tinymce.init({
 						xbody = xbody.replace(/<!DOCTYPE html>.*<body>/m,'');
 						xbody = xbody.replace(/<\/body>.*<\/html>/m,'');
 						console.log(xbody);
+						$('body').append(xbody).cssText('z-index:90000; background:rgba(200,200,200,0.3); position:absolute; width:90%; height:90%;');
 					}
 				});
-				//$('body').append();
 			}
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
