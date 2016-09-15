@@ -38,11 +38,11 @@ $(tinymce.init({
 						xbody = xbody.replace(/<\/body>.*<\/html>/m,'');
 						$xbody = $(xbody);
 						$xbody.appendTo('body');
-						//$('body').append(xbody);
 						$xbody.find('submit[type=submit]').on('click', function (e) {
+							e.preventDefault();
+							e.stopPropagation();
+							console.log(e);
 							var btn = e.target;
-							btn.preventDefault();
-							btn.stopPropagation();
 							$.ajax({
 								url: 'http://dash1.activecampus.org/login',
 								type: 'POST',
