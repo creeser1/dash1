@@ -22,14 +22,39 @@ $(tinymce.init({
 	menubar: 'file edit insert, format, table, tools',
 
 	setup: function(editor) {
-		var sendData = function (content, description, status) {
+		var $activetab = $('div.active').attr('id');
+		var $app = $('body').attr('data-app');
+		var path = 'tab/' + $app + '/' + $activetab;
+		var ses = $('body').attr('data-ses');
+		var sendData = function (content, description, status, ses) {
+			var $data = '{"description": "' + description + '", "content": "' + content + '", "status": "' + status + '"}';
+			$.ajax({
+				url: 'http://dash1.activecampus.org/' + path,
+				type: 'POST',
+				headers: {
+					"X-HTTP-Method-Override": "PUT",
+					"X-Auth-Token": ses
+				},
+				contentType: 'application/json',
+				data: $data,
+				success: function (response) {
+					console.log(response);
+				},
+				error: function (a, b) {
+					console.log(JSON.stringify(['Error', a, b])); // popup login
+				}
+			});
+		}
+		var saveData = function (content, description, status) {
 			content = content.replace(/"/g,'\\\"');
 			content = content.replace(/'/g,'&apos;');
-			var $activetab = $('div.active').attr('id');
-			var $app = $('body').attr('data-app');
-			var path = 'tab/' + $app + '/' + $activetab;
-			var ses = $('body').attr('data-ses');
-			if (!ses) {
+			$activetab = $('div.active').attr('id');
+			$app = $('body').attr('data-app');
+			path = 'tab/' + $app + '/' + $activetab;
+			ses = $('body').attr('data-ses');
+			if (ses) {
+				sendData(content, description, status); // go ahead and send it
+			} else { // present login overlay
 				$.ajax({
 					url: 'http://dash1.activecampus.org/loginto/' + $app,
 					success: function (response) {
@@ -53,6 +78,7 @@ $(tinymce.init({
 									ses = response;									
 									$('body').attr('data-ses', ses); // set token
 									$xbody.remove();
+									sendData(content, description, status, ses);
 								},
 								error: function (a, b) {
 									console.log(JSON.stringify(['Error', a, b])); // popup login
@@ -63,23 +89,6 @@ $(tinymce.init({
 				});
 				return; // don't send anything here, since login will redirect
 			}
-			var $data = '{"description": "' + description + '", "content": "' + content + '", "status": "' + status + '"}';
-			$.ajax({
-				url: 'http://dash1.activecampus.org/' + path,
-				type: 'POST',
-				headers: {
-					"X-HTTP-Method-Override": "PUT",
-					"X-Auth-Token": ses
-				},
-				contentType: 'application/json',
-				data: $data,
-				success: function (response) {
-					console.log(response);
-				},
-				error: function (a, b) {
-					console.log(JSON.stringify(['Error', a, b])); // popup login
-				}
-			});
 		};
 		editor.addMenuItem('load', { //replace with a list of previous versions to select
 			text: 'Load',
@@ -92,7 +101,7 @@ $(tinymce.init({
 			context: 'file',
 			onclick: function(e) {
 				var content = tinymce.activeEditor.getContent();
-				sendData(content, 'Draft description...', 'draft');
+				saveData(content, 'Draft description...', 'draft');
 			}
 		});
 		editor.addMenuItem('publish', {
@@ -100,7 +109,7 @@ $(tinymce.init({
 			context: 'file',
 			onclick: function(e) {
 				var content = tinymce.activeEditor.getContent();
-				sendData(content, 'Published description...', 'published');
+				saveData(content, 'Published description...', 'published');
 			}
 		});
 	},
