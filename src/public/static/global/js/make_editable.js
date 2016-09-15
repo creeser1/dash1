@@ -53,7 +53,7 @@ $(tinymce.init({
 			path = 'tab/' + $app + '/' + $activetab;
 			ses = $('body').attr('data-ses');
 			if (ses) {
-				sendData(content, description, status); // go ahead and send it
+				sendData(content, description, status, ses); // go ahead and send it
 			} else { // present login overlay
 				$.ajax({
 					url: 'http://dash1.activecampus.org/loginto/' + $app,
