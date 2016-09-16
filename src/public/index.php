@@ -191,6 +191,8 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	if (isset($token) and isset($username)) { // credentials provided
 		$auth = new UserLogin($username, $this->db);
 		$isvalidToken = $auth->verifyToken($token);
+		$this->logger->addInfo('---authenticating: '.$username);
+		$this->logger->addInfo('---isvalidToken: '.$isvalidToken);
 	}
 	if ($isvalidToken == true) { // ok to update the content
 		$patterns = "/\s+/m"; // only one pattern for now, for more use array:  ["/\s+/m", "/'/"];
