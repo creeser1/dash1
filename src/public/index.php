@@ -182,6 +182,7 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 
 	$auth = new UserLogin($username, $this->db);
 	$isAuthenticated = $auth->authenticateUser();
+	$this->logger->addInfo('---Auth: '.$isAuthenticated);
 	if ($isAuthenticated) {
 		$token = base64_encode($auth->getNewToken());
 		return $response->withHeader('Content-Type', 'text/plain')
