@@ -177,6 +177,9 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 	$username = filter_var($username, FILTER_SANITIZE_STRING);
 	$password = $request->getParsedBodyParam('password', $default = null);
 	$password = substr(trim($password), 0, 127); // some reasonable max
+	$this->logger->addInfo('---test usr: '.$username);
+	$this->logger->addInfo('---test pwd: '.$password);
+
 	$auth = new UserLogin($username, $this->db);
 	$isAuthenticated = $auth->authenticateUser();
 	if ($isAuthenticated) {
