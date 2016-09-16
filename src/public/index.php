@@ -207,9 +207,12 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	$headerValueArray = $request->getHeader('X-Auth-Token');
 	if (is_array($headerValueArray) and isset($headerValueArray[0])) {
 		$jsonToken = base64_decode($headerValueArray[0]);
+		$this->logger->addInfo('---header: '.$jsonToken);
 		$json_array = json_decode($jsonToken, true);
 		$token = $json_array['token'];
 		$username = $json_array['data'];
+		$this->logger->addInfo('---token: '.$token);
+		$this->logger->addInfo('---username: '.$username);
 	}
 	$isvalidToken = false;
 	if (isset($token) and isset($username)) { // credentials provided
