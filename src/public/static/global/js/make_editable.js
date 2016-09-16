@@ -125,6 +125,7 @@ $(tinymce.init({
 					if (ses === '') {
 						saveData(content, 'Draft description...', 'draft');
 					} else {
+						ses = '';
 						localStorage.setItem('ses', ses);
 					}
 				} else {
