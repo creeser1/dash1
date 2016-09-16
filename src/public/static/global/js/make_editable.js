@@ -28,7 +28,7 @@ $(tinymce.init({
 		var ses = $('body').attr('data-ses'); //  ********* should convert from base64 string
 		var sendData = function (content, description, status, ses) {
 			var $data = '{"description": "' + description + '", "content": "' + content + '", "status": "' + status + '"}';
-			console.log(ses);
+			console.log('****SES: ' + ses);
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
 				type: 'POST',
@@ -46,6 +46,14 @@ $(tinymce.init({
 				}
 			});
 		}
+		var showLogin = function (response) {
+			var xbody = response.replace(/[\n\r]/mg, ' ');
+			xbody = xbody.replace(/<!DOCTYPE html>.*<body>/m,'');
+			xbody = xbody.replace(/<\/body>.*<\/html>/m,'');
+			$xbody = $(xbody);
+			$xbody.appendTo('body');
+			return $xbody;
+		};
 		var saveData = function (content, description, status) {
 			content = content.replace(/"/g,'\\\"');
 			content = content.replace(/'/g,'&apos;');
@@ -59,11 +67,7 @@ $(tinymce.init({
 				$.ajax({
 					url: 'http://dash1.activecampus.org/login',
 					success: function (response) {
-						var xbody = response.replace(/[\n\r]/mg, ' ');
-						xbody = xbody.replace(/<!DOCTYPE html>.*<body>/m,'');
-						xbody = xbody.replace(/<\/body>.*<\/html>/m,'');
-						$xbody = $(xbody);
-						$xbody.appendTo('body');
+						var $xbody = showLogin(response);
 						//console.log($xbody.find('button[type=submit]'));
 						$xbody.find('button[type=submit]').on('click', function (e) {
 							e.preventDefault();
@@ -76,11 +80,15 @@ $(tinymce.init({
 								type: 'POST',
 								data: $('#loginform').serialize(),
 								success: function (response) {
+									$xbody.remove(); // successful login no longer needs login overlay
+									if (destination === 'login') {
+										ses = response; //  ********* should convert to base64 string
+										$('body').attr('data-ses', ses); // set token
+										sendData(content, description, status, ses);
+									} else {
+										$xbody = showLogin(response); // show with new message
+									}
 									console.log(response);
-									ses = response; //  ********* should convert to base64 string
-									$('body').attr('data-ses', ses); // set token
-									$xbody.remove();
-									sendData(content, description, status, ses);
 								},
 								error: function (a, b) {
 									console.log(JSON.stringify(['Error', a, b])); // popup login
