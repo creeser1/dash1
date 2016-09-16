@@ -23,6 +23,7 @@ $(tinymce.init({
 	menubar: 'file edit insert, format, table, tools',
 
 	setup: function(editor) {
+		var content;
 		var $activetab = $('div.active').attr('id');
 		var $app = $('body').attr('data-app');
 		var path = 'tab/' + $app + '/' + $activetab;
@@ -123,6 +124,9 @@ $(tinymce.init({
 			onclick: function() {
 				if (typeof(Storage) !== "undefined") {
 					if (ses === '') {
+						if (typeof content === 'undefined') {
+							content = tinymce.activeEditor.getContent();
+						}
 						saveData(content, 'Draft description...', 'draft');
 					} else {
 						ses = '';
@@ -143,7 +147,7 @@ $(tinymce.init({
 			text: 'Save',
 			context: 'file',
 			onclick: function(e) {
-				var content = tinymce.activeEditor.getContent();
+				content = tinymce.activeEditor.getContent();
 				saveData(content, 'Draft description...', 'draft');
 			}
 		});
@@ -151,7 +155,7 @@ $(tinymce.init({
 			text: 'Publish',
 			context: 'file',
 			onclick: function(e) {
-				var content = tinymce.activeEditor.getContent();
+				content = tinymce.activeEditor.getContent();
 				saveData(content, 'Published description...', 'published');
 			}
 		});
