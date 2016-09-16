@@ -63,18 +63,18 @@ $(tinymce.init({
 						xbody = xbody.replace(/<\/body>.*<\/html>/m,'');
 						$xbody = $(xbody);
 						$xbody.appendTo('body');
-						console.log($xbody.find('button[type=submit]'));
+						//console.log($xbody.find('button[type=submit]'));
 						$xbody.find('button[type=submit]').on('click', function (e) {
 							e.preventDefault();
 							e.stopPropagation();
-							console.log(e);
+							//console.log(e);
 							var btn = e.target;
 							$.ajax({
 								url: 'http://dash1.activecampus.org/login',
 								type: 'POST',
 								data: $('#loginform').serialize(),
 								success: function (response) {
-									console.log(response);
+									//console.log(response);
 									ses = response;									
 									$('body').attr('data-ses', ses); // set token
 									$xbody.remove();
