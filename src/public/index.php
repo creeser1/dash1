@@ -208,7 +208,9 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 		$tab_data_str = 'ok'; // no need to return anything
 		$response = $response->withHeader('Content-type', 'text/plain')
 			->write($tab_data_str); // not necessary
+		$this->logger->addInfo('---successful save by: '.$username);
 	} else { // ask to authenticate (via popover)
+		$this->logger->addInfo('---failure to save by: '.$username);
 		$tab_data_str = '';
 		$response = $response->withHeader('Content-type', 'text/plain')
 			->withStatus(401) // not authorized

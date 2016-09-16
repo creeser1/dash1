@@ -44,8 +44,8 @@ $(tinymce.init({
 				success: function (response) {
 					console.log(response);
 				},
-				error: function (a, b) {
-					console.log(JSON.stringify(['Error', a, b])); // popup login
+				error: function (response) {
+					console.log(JSON.stringify(['Error', response])); // popup login
 				}
 			});
 		}
