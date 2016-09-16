@@ -186,11 +186,12 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 		$token = base64_encode($auth->getNewToken());
 		return $response->withHeader('Content-Type', 'text/plain')
 			->write($token);
+	} else {
+		$message = 'invalid credentials';
+		return $response->withHeader('Content-Type', 'text/plain')
+			->withStatus(401)
+			->write($message);
 	}
-	$message = 'invalid credentials';
-	return $response->withHeader('Content-Type', 'text/plain')
-		->withStatus(401)
-		->write($message);
 })->setName('login');
 
 $app->get('/login', function (Request $request, Response $response, $args) {
