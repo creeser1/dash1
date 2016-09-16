@@ -156,7 +156,7 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 	$auth = new UserLogin($username, $this->db);
 	$isAuthenticated = $auth->authenticateUser($request->getParsedBodyParam('password', $default = null));
 	if ($isAuthenticated) {
-		$token = $auth->getNewToken();
+		$token = base64_encode($auth->getNewToken());
 		return $response->withHeader('Content-Type', 'text/plain')
 			->write($token);
 	}
@@ -177,7 +177,7 @@ $app->get('/login', function (Request $request, Response $response, $args) {
 $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$headerValueArray = $request->getHeader('X-Auth-Token');
 	if (is_array($headerValueArray) and isset($headerValueArray[0])) {
-		$jsonToken = $headerValueArray[0];
+		$jsonToken = base64_decode($headerValueArray[0]);
 		$json_array = json_decode($jsonToken, true);
 		$token = $json_array['token'];
 		$username = $json_array['data'];
