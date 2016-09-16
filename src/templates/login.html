@@ -90,6 +90,7 @@ $(function () {
 					if (typeof(Storage) !== "undefined") {
 						localStorage.setItem('ses', ses);
 					}
+					$('#loginform .errmsg').text('now logged in').css('color', '#01d10c'); // success
 				} else {
 					$('#loginform .errmsg').text(response.responseText);
 				}
