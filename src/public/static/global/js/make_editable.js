@@ -26,6 +26,9 @@ $(tinymce.init({
 		var $app = $('body').attr('data-app');
 		var path = 'tab/' + $app + '/' + $activetab;
 		var ses = $('body').attr('data-ses'); //  ********* should convert from base64 string
+		if (typeof(Storage) !== "undefined") {
+			localStorage.getItem('ses');
+		}
 		var sendData = function (content, description, status, ses) {
 			var $data = '{"description": "' + description + '", "content": "' + content + '", "status": "' + status + '"}';
 			console.log('****SES: ' + ses);
@@ -61,6 +64,9 @@ $(tinymce.init({
 			$app = $('body').attr('data-app');
 			path = 'tab/' + $app + '/' + $activetab;
 			ses = $('body').attr('data-ses'); //  ********* should convert from base64 string
+			if (typeof(Storage) !== "undefined") {
+				localStorage.getItem('ses');
+			}
 			if (ses) {
 				sendData(content, description, status, ses); // go ahead and send it
 			} else { // present login overlay
@@ -84,6 +90,9 @@ $(tinymce.init({
 										$xbody.remove(); // successful login no longer needs login overlay
 										ses = response; //  ********* should convert to base64 string
 										$('body').attr('data-ses', ses); // set token
+										if (typeof(Storage) !== "undefined") {
+											localStorage.setItem('ses', ses);
+										}
 										sendData(content, description, status, ses);
 									} else {
 										$('#loginform .errmsg').text(response.responseText);
