@@ -32,7 +32,7 @@ $(tinymce.init({
 		}
 		var sendData = function (content, description, status, ses) {
 			var $data = '{"description": "' + description + '", "content": "' + content + '", "status": "' + status + '"}';
-			console.log('****SES: ' + ses);
+			//console.log('****SES: ' + ses);
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
 				type: 'POST',
@@ -51,7 +51,7 @@ $(tinymce.init({
 						localStorage.setItem('ses', ses);
 					}
 					saveData(content, description, status);
-					console.log(JSON.stringify(['Error', response])); // popup login
+					//console.log(JSON.stringify(['Error', response])); // popup login
 				}
 			});
 		}
@@ -75,7 +75,7 @@ $(tinymce.init({
 			if (ses) {
 				sendData(content, description, status, ses); // go ahead and send it
 			} else { // present login overlay
-				console.log('no ses: ' + ses);
+				//console.log('no ses: ' + ses);
 				$.ajax({
 					url: 'http://dash1.activecampus.org/login',
 					success: function (response) {
@@ -88,7 +88,7 @@ $(tinymce.init({
 							e.stopPropagation();
 							var btn = e.target;
 							var destination = $(btn).text().toLowerCase();
-							console.log(destination);
+							//console.log(destination);
 							$.ajax({
 								url: 'http://dash1.activecampus.org/' + destination,
 								type: 'POST',
@@ -104,11 +104,11 @@ $(tinymce.init({
 									} else {
 										$('#loginform .errmsg').text(response.responseText);
 									}
-									console.log(response);
+									//console.log(response);
 								},
 								error: function (response) {
 									$('#loginform .errmsg').text(response.responseText);
-									console.log(response); // popup login
+									//console.log(response); // popup login
 								}
 							});
 						});
