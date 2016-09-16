@@ -58,7 +58,7 @@ $(tinymce.init({
 		var showLogin = function (response) {
 			var xbody = response.replace(/[\n\r]/mg, ' ');
 			xbody = xbody.replace(/<!DOCTYPE html>.*<body>/m,'');
-			xbody = xbody.replace(/<\/body>.*<\/html>/m,'');
+			xbody = xbody.replace(/<script>.*<\/html>/m,'');
 			$xbody = $(xbody);
 			$xbody.appendTo('body');
 			return $xbody;
@@ -80,7 +80,6 @@ $(tinymce.init({
 					url: 'http://dash1.activecampus.org/login',
 					success: function (response) {
 						var $xbody = showLogin(response);
-						//console.log($xbody.find('button[type=submit]'));
 						$xbody.find('button[type=button]').on('click', function (e) {
 							$xbody.remove(); // successful login no longer needs login overlay
 						});
@@ -97,7 +96,7 @@ $(tinymce.init({
 								success: function (response) {
 									if (destination === 'login') {
 										$xbody.remove(); // successful login no longer needs login overlay
-										ses = response; //  ********* should convert to base64 string
+										ses = response;
 										if (typeof(Storage) !== "undefined") {
 											localStorage.setItem('ses', ses);
 										}
