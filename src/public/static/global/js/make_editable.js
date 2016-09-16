@@ -56,7 +56,7 @@ $(tinymce.init({
 				sendData(content, description, status, ses); // go ahead and send it
 			} else { // present login overlay
 				$.ajax({
-					url: 'http://dash1.activecampus.org/loginto/' + $app,
+					url: 'http://dash1.activecampus.org/login',
 					success: function (response) {
 						var xbody = response.replace(/[\n\r]/mg, ' ');
 						xbody = xbody.replace(/<!DOCTYPE html>.*<body>/m,'');
