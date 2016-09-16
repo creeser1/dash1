@@ -35,7 +35,7 @@ $(tinymce.init({
 			var $data = '{"description": "' + description + '", "content": "' + content + '", "status": "' + status + '"}';
 			//console.log('****SES: ' + ses);
 			$.ajax({
-				url: '//dash1.activecampus.org/' + path,
+				url: '/' + path,
 				type: 'POST',
 				headers: {
 					"X-HTTP-Method-Override": "PUT",
@@ -78,7 +78,7 @@ $(tinymce.init({
 			} else { // present login overlay
 				//console.log('no ses: ' + ses);
 				$.ajax({
-					url: '//dash1.activecampus.org/login',
+					url: '/login',
 					success: function (response) {
 						var $xbody = showLogin(response);
 						$xbody.find('button[type=button]').on('click', function (e) {
@@ -91,7 +91,7 @@ $(tinymce.init({
 							var destination = $(btn).text().toLowerCase();
 							//console.log(destination);
 							$.ajax({
-								url: '//dash1.activecampus.org/' + destination,
+								url: '/' + destination,
 								type: 'POST',
 								data: $('#loginform').serialize(),
 								success: function (response) {
