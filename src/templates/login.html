@@ -90,7 +90,6 @@ $(function () {
 					if (typeof(Storage) !== "undefined") {
 						localStorage.setItem('ses', ses);
 					}
-					sendData(content, description, status, ses);
 				} else {
 					$('#loginform .errmsg').text(response.responseText);
 				}
