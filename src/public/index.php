@@ -137,17 +137,34 @@ $app->get('/edit/{id}', function ($request, $response, $args) {
 })->setName('edit');
 
 $app->post('/register', function (Request $request, Response $response, $args) {
+	$ok = true;
 	$username = $request->getParsedBodyParam('username', $default = null);
-
-	$auth = new UserLogin($username, $this->db);
-	$hasUser = $auth->hasUser($username); // active or pending
-	if ($hasUser == false) { // not an existing user so go ahead and register
-		$hash = $auth->registerUser($request->getParsedBodyParam('password', $default = null));
-		$this->logger->addInfo('---registration request for: '.$username);
-			$message = 'registration request pending review';
-	} else {
-		$this->logger->addInfo('---registration duplicate for: '.$username);
-		$message = $username.' is unavailable, please choose another username';
+	$username = filter_var($username, FILTER_SANITIZE_STRING);
+	$minUsernameLength = 3;
+	$minPasswordLength = 8; // may want to get these from some config file
+	if (strlen($username) < $minUsernameLength) {
+		$this->logger->addInfo('---registration name too short: '.$username);
+		$message = $username.' is too short, please choose another username of at least 3 letters';
+		$ok = false;
+	}
+	$password = $request->getParsedBodyParam('password', $default = null);
+	$password = substr(trim($password), 0, 127); // some reasonable max
+	if (strlen($password) < $minPasswordLength) {
+		$this->logger->addInfo('---registration name too short: '.$username);
+		$message = 'password is too short, please choose another password of at least 8 characters';
+		$ok = false;
+	}
+	if ($ok) { // no point in adding too short username/password
+		$auth = new UserLogin($username, $this->db);
+		$hasUser = $auth->hasUser($username); // active or pending
+		if ($hasUser == false) { // not an existing user so go ahead and register
+			$hash = $auth->registerUser();
+			$this->logger->addInfo('---registration request for: '.$username);
+				$message = 'registration request pending review';
+		} else {
+			$this->logger->addInfo('---registration duplicate for: '.$username);
+			$message = $username.' is unavailable, please choose another username';
+		}
 	}
 	return $response->withHeader('Content-Type', 'text/plain')
 		->withStatus(401)
@@ -157,9 +174,11 @@ $app->post('/register', function (Request $request, Response $response, $args) {
 // should only happen via ajax post request from make_editable.js
 $app->post('/login', function (Request $request, Response $response, $args) {
 	$username = $request->getParsedBodyParam('username', $default = null);
-
+	$username = filter_var($username, FILTER_SANITIZE_STRING);
+	$password = $request->getParsedBodyParam('password', $default = null);
+	$password = substr(trim($password), 0, 127); // some reasonable max
 	$auth = new UserLogin($username, $this->db);
-	$isAuthenticated = $auth->authenticateUser($request->getParsedBodyParam('password', $default = null));
+	$isAuthenticated = $auth->authenticateUser();
 	if ($isAuthenticated) {
 		$token = base64_encode($auth->getNewToken());
 		return $response->withHeader('Content-Type', 'text/plain')
