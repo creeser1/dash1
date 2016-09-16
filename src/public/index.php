@@ -144,7 +144,7 @@ $app->post('/register', function (Request $request, Response $response, $args) {
 		$this->logger->addInfo('---registration duplicate for: '.$username);
 		$message = $username.' is unavailable, please choose another username';
 	}
-	$params = '#'; // stay on login page (go to thanks for registering else to home page '/')
+	$params = '../login'; // stay on login page (go to thanks for registering else to home page '/')
 	return $this->view->render($response, 'login.html', [
 		'destination' => '/'.$params,
 		'message' => $message
