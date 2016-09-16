@@ -5,6 +5,7 @@
 <title>Dash1 Dev Login</title>
 </head>
 <body>
+<div id="loginframe">
 <style type="text/css">
 #loginframe * {
 margin:0;
@@ -56,13 +57,14 @@ padding:0 5px;
 	text-align:center;
 }
 </style>
-<div id="loginframe">
+
 <form id="loginform" method="post" action="/edit{{ destination }}"><fieldset><legend>Login</legend>
 <label>Username: <input name="username" type="text" /></label>
 <label>Password: <input name="password" type="password" /></label>
 <p class="errmsg">{{ message }}</p>
 <button type="submit">Login</button>
 <button type="submit" formaction="/register">Register</button>
+<button type="button">Close</button>
 </fieldset></form>
 </div>
 </body>
