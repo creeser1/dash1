@@ -12,7 +12,7 @@ $(tinymce.init({
 	inline: true,
 	menubar: true,
 	menu : {
-		file   : {title : 'File'  , items : 'newdocument load save publish'},
+		file   : {title : 'File'  , items : 'loginout newdocument load save publish'},
 		edit   : {title : 'Edit'  , items : 'undo redo | cut copy paste pastetext | selectall'},
 		insert : {title : 'Insert', items : 'link media | template hr'},
 		format : {title : 'Format', items : 'bold italic underline strikethrough superscript subscript | formats | removeformat'},
@@ -116,6 +116,16 @@ $(tinymce.init({
 				return; // don't send anything here, since login will redirect
 			}
 		};
+		editor.addMenuItem('loginout', { //replace with a list of previous versions to select
+			text: 'Login/Logout',
+			context: 'file',
+			onclick: function() {
+				ses = '';
+				if (typeof(Storage) !== "undefined") {
+					localStorage.setItem('ses', ses);
+				}
+			}
+		});
 		editor.addMenuItem('load', { //replace with a list of previous versions to select
 			text: 'Load',
 			context: 'file',
