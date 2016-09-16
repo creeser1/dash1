@@ -197,7 +197,7 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 
 $app->get('/login', function (Request $request, Response $response, $args) {
 	return $this->view->render($response, 'login.html', [
-		'destination' => '../login',
+		'destination' => '/../login',
 		'message' => ''
 	]);
 });
