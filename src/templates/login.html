@@ -79,14 +79,13 @@ $(function () {
 		e.stopPropagation();
 		var btn = e.target;
 		var destination = $(btn).text().toLowerCase();
-		console.log(destination);
+		var ses;
 		$.ajax({
 			url: 'http://dash1.activecampus.org/' + destination,
 			type: 'POST',
 			data: $('#loginform').serialize(),
 			success: function (response) {
 				if (destination === 'login') {
-					$xbody.remove(); // successful login no longer needs login overlay
 					ses = response;
 					if (typeof(Storage) !== "undefined") {
 						localStorage.setItem('ses', ses);
