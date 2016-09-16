@@ -1,5 +1,6 @@
 $(tinymce.init({
 	selector: ".editable",
+	custom_undo_redo_levels: 20,
 	height: 500,
 	plugins: [
 		'advlist autolink lists link image charmap print preview hr anchor pagebreak',
@@ -25,7 +26,7 @@ $(tinymce.init({
 		var $activetab = $('div.active').attr('id');
 		var $app = $('body').attr('data-app');
 		var path = 'tab/' + $app + '/' + $activetab;
-		var ses; // = $('body').attr('data-ses'); //  ********* should convert from base64 string
+		var ses;
 		if (typeof(Storage) !== "undefined") {
 			ses = localStorage.getItem('ses');
 		}
@@ -68,7 +69,6 @@ $(tinymce.init({
 			$activetab = $('div.active').attr('id');
 			$app = $('body').attr('data-app');
 			path = 'tab/' + $app + '/' + $activetab;
-			//ses = $('body').attr('data-ses'); //  ********* should convert from base64 string
 			if (typeof(Storage) !== "undefined") {
 				ses = localStorage.getItem('ses');
 			}
@@ -98,7 +98,6 @@ $(tinymce.init({
 									if (destination === 'login') {
 										$xbody.remove(); // successful login no longer needs login overlay
 										ses = response; //  ********* should convert to base64 string
-										//$('body').attr('data-ses', ses); // set token
 										if (typeof(Storage) !== "undefined") {
 											localStorage.setItem('ses', ses);
 										}
@@ -123,9 +122,14 @@ $(tinymce.init({
 			text: 'Login/Logout',
 			context: 'file',
 			onclick: function() {
-				ses = '';
 				if (typeof(Storage) !== "undefined") {
-					localStorage.setItem('ses', ses);
+					if (ses === '') {
+						saveData(content, 'Draft description...', 'draft');
+					} else {
+						localStorage.setItem('ses', ses);
+					}
+				} else {
+					ses = '';
 				}
 			}
 		});
