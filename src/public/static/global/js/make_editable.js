@@ -81,6 +81,9 @@ $(tinymce.init({
 					success: function (response) {
 						var $xbody = showLogin(response);
 						//console.log($xbody.find('button[type=submit]'));
+						$xbody.find('button[type=button]').on('click', function (e) {
+							$xbody.remove(); // successful login no longer needs login overlay
+						});
 						$xbody.find('button[type=submit]').on('click', function (e) {
 							e.preventDefault();
 							e.stopPropagation();
