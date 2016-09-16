@@ -25,9 +25,9 @@ $(tinymce.init({
 		var $activetab = $('div.active').attr('id');
 		var $app = $('body').attr('data-app');
 		var path = 'tab/' + $app + '/' + $activetab;
-		var ses = $('body').attr('data-ses'); //  ********* should convert from base64 string
+		var ses; // = $('body').attr('data-ses'); //  ********* should convert from base64 string
 		if (typeof(Storage) !== "undefined") {
-			localStorage.getItem('ses');
+			ses = localStorage.getItem('ses');
 		}
 		var sendData = function (content, description, status, ses) {
 			var $data = '{"description": "' + description + '", "content": "' + content + '", "status": "' + status + '"}';
@@ -63,13 +63,14 @@ $(tinymce.init({
 			$activetab = $('div.active').attr('id');
 			$app = $('body').attr('data-app');
 			path = 'tab/' + $app + '/' + $activetab;
-			ses = $('body').attr('data-ses'); //  ********* should convert from base64 string
+			//ses = $('body').attr('data-ses'); //  ********* should convert from base64 string
 			if (typeof(Storage) !== "undefined") {
-				localStorage.getItem('ses');
+				ses = localStorage.getItem('ses');
 			}
 			if (ses) {
 				sendData(content, description, status, ses); // go ahead and send it
 			} else { // present login overlay
+				console.log('no ses: ' + ses);
 				$.ajax({
 					url: 'http://dash1.activecampus.org/login',
 					success: function (response) {
@@ -89,7 +90,7 @@ $(tinymce.init({
 									if (destination === 'login') {
 										$xbody.remove(); // successful login no longer needs login overlay
 										ses = response; //  ********* should convert to base64 string
-										$('body').attr('data-ses', ses); // set token
+										//$('body').attr('data-ses', ses); // set token
 										if (typeof(Storage) !== "undefined") {
 											localStorage.setItem('ses', ses);
 										}
