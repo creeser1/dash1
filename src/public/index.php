@@ -32,7 +32,6 @@ $container['data'] = function ($container) {
         $container['router'],
         $container['request']->getUri()
     ));
-
     return $view;
 };
 
@@ -44,7 +43,6 @@ $container['view'] = function ($container) {
         $container['router'],
         $container['request']->getUri()
     ));
-
     return $view;
 };
 
@@ -57,25 +55,29 @@ $container['db'] = function ($c) {
 
     return $pdo;
 };
-
+/*
+***********************
+*** Routing begins here
+***********************
+*/
 /*some automated server monitoring expects this*/
 $app->get('/index.html', function ($request, $response, $args) {
     return $this->view->render($response, 'root.html', [
         'name' => 'test'
     ]);
-})->setName('index');
+});
 
 $app->get('/', function ($request, $response, $args) {
     return $this->view->render($response, 'root.html', [
         'name' => 'root'
     ]);
-})->setName('root');
+});
 
 $app->get('/favicon.ico', function ($request, $response, $args) {
     return $this->view->render($response, 'csyoufavicon.ico', [
         'name' => 'favicon'
     ]);
-})->setName('favicon');
+});
 
 $app->get('/data/{dataset:.*}', function ($request, $response, $args) {
 	$this->logger->addInfo('dataset');
@@ -85,8 +87,9 @@ $app->get('/data/{dataset:.*}', function ($request, $response, $args) {
     return $this->data->render($newResponse, $args['dataset'], [
         'name' => $args['dataset']
     ]);
-});
+})->setName('dataset');
 
+// normal read only access
 $app->get('/dashboard/{id}', function ($request, $response, $args) {
 	$whitelist = ['bublin' => '1', 'peercomp' => '2'];
 	if (array_key_exists($args['id'], $whitelist)) {
@@ -96,60 +99,62 @@ $app->get('/dashboard/{id}', function ($request, $response, $args) {
 		$template = $page['pagetemplate'].'.html';
 		$this->logger->addInfo('published page');
 		$this->logger->addInfo($template);
+		return $this->view->render($response, $template, [
+			'page' => $page // no token, not editable
+		]);
 	} else {
 		$this->logger->addInfo('Requested missing page: /dashboard/'.$args['id']);
-		return $response->withStatus(404)->withHeader('Content-Type', 'text/html')
+		return $response->withHeader('Content-Type', 'text/html')
+			->withStatus(404)
 			->write('Page not found');
 	}
-	
-	return $this->view->render($response, $template, [
-		'page' => $page
-	]);
+})->setName('dashboard');
 
-});
-
+// will require authentication and authorization to save edits
 $app->get('/edit/{id}', function ($request, $response, $args) {
+	$this->logger->addInfo('get /edit/'.$args['id']);
 	$whitelist = ['bublin' => '1', 'peercomp' => '2'];
-	if (array_key_exists($args['id'], $whitelist)) {
+	if (array_key_exists($args['id'], $whitelist)) { // avoid database auth lookups on non-whitelisted pages
 		$id = $whitelist[$args['id']];
 		$builder = new PageConfigurator('bublin', $this->db);
 		$page = $builder->loadPage($id);
 		$template = $page['edittemplate'].'.html';
-		$this->logger->addInfo($template);
+		return $this->view->render($response, $template, [
+			'page' => $page,
+			'ses' => $token // without token page is not editable
+		]);
 	} else {
-		$this->logger->addInfo('Requested missing page: '.$args['id']);
-		return $response->withStatus(404)->withHeader('Content-Type', 'text/html')
+		$this->logger->addInfo('Requested missing page: /edit/'.$args['id']);
+		return $response->withHeader('Content-Type', 'text/html')
+			->withStatus(404)
 			->write('Page not found');
 	}
-
-    return $this->view->render($response, $template, [
-        'page' => $page,
-		'ses' => $token
-    ]);
 })->setName('edit');
 
-$app->get('/dump/{id}', function (Request $request, Response $response, $args) {
-	$page_id = (int)$args['id'];
-	$mapper = new PageMapper($this->db);
-	$page = $mapper->getPageById($page_id);
-	$page_str = htmlentities(var_export($page, true));
-	echo $page_str;
-	return $response;
-});
-
-$app->get('/loginto[/{params:.*}]', function (Request $request, Response $response, $args) {
-	$params = $request->getAttribute('params');
-    return $this->view->render($response, 'login.html', [
-        'destination' => '/'.$params
-    ]);
-})->setName('loginto');
-
-$app->post('/login', function (Request $request, Response $response, $args) {
-	$dataraw = $request->getBody();
+$app->post('/register', function (Request $request, Response $response, $args) {
 	$username = $request->getParsedBodyParam('username', $default = null);
 
-	$isAuthenticated = false;
-	$token = false;
+	$auth = new UserLogin($username, $this->db);
+	$hasUser = $auth->hasUser($username); // active or pending
+	if ($hasUser == false) { // not an existing user so go ahead and register
+		$hash = $auth->registerUser($request->getParsedBodyParam('password', $default = null));
+		$this->logger->addInfo('---registration request for: '.$username);
+			$message = 'registration request pending review';
+	} else {
+		$this->logger->addInfo('---registration duplicate for: '.$username);
+		$message = $username.' is unavailable, please choose another username';
+	}
+	$params = '#'; // stay on login page (go to thanks for registering else to home page '/')
+	return $this->view->render($response, 'login.html', [
+		'destination' => '/'.$params,
+		'message' => $message
+	]);
+})->setName('register');
+
+// should only happen via ajax post request from make_editable.js
+$app->post('/login', function (Request $request, Response $response, $args) {
+	$username = $request->getParsedBodyParam('username', $default = null);
+
 	$auth = new UserLogin($username, $this->db);
 	$isAuthenticated = $auth->authenticateUser($request->getParsedBodyParam('password', $default = null));
 	if ($isAuthenticated) {
@@ -157,158 +162,58 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 		return $response->withHeader('Content-Type', 'text/plain')
 			->write($token);
 	}
-	return $response->withStatus(401)->withHeader('Content-Type', 'text/plain')
+	return $response->withHeader('Content-Type', 'text/plain')
+		->withStatus(401)
 		->write('Invalid credentials');
 })->setName('login');
 
-$app->map(['PUT', 'POST'], '/edit[/{params:.*}]', function (Request $request, Response $response, $args) {
-	$dataraw = $request->getBody();
-	$params = $request->getAttribute('params');
-	$this->logger->addInfo($params);
-	$username = $request->getParsedBodyParam('username', $default = null);
-	$password = $request->getParsedBodyParam('password', $default = null);
-	$this->logger->addInfo('---request to login---');
-	$this->logger->addInfo('username: '.$username);
-	$this->logger->addInfo('---xhr---');
-	$this->logger->addInfo(var_export($request->isXhr(), true));
-
-	$auth = new UserLogin($username, $this->db);
-	$hasUser = $auth->hasUser($username);
-	$isAuthenticated = false;
-	if ($hasUser == false) { // not an existing user so reject login
-		$this->logger->addInfo('---not registered---');
-		$this->logger->addInfo(var_export($hasUser, true));
-		$this->logger->addInfo('---done---');
-		//$response = $response->withRedirect($uri, 403);
-		$response = $response->withStatus(401); // not authorized
-		return $this->view->render($response, 'login.html', [
-			'destination' => '/'.$params,
-			'message' => 'invalid credentials'
-		]);
-		//$uri = $request->getUri()->withPath($this->router->pathFor('loginto', [
-		//	'params' => $params
-		//])); // login succeeded, so load the page prevously desired
-	} else { // username valid so check password
-		$this->logger->addInfo('---authenticating---');
-		$isAuthenticated = $auth->authenticateUser($password);
-		$this->logger->addInfo(var_export($isAuthenticated, true));
-		$this->logger->addInfo('---done---');
-
-		//$uri = $request->getUri()->withPath($this->router->pathFor('edit', [
-		//	'id' => $params
-		//])); // login succeeded, so load the page prevously desired
-		//$response = $response->withRedirect($uri, 200); //->withHeader("X-Auth-Token", "JPso76OIYLK5a3knb");
-		if ($isAuthenticated) {
-			$whitelist = ['bublin' => '1', 'peercomp' => '2'];
-			$token = false;
-			if (array_key_exists($params, $whitelist)) {
-				$id = $whitelist[$params];
-				$builder = new PageConfigurator('bublin', $this->db);
-				$page = $builder->loadPage($id);
-				$template = $page['edittemplate'].'.html';
-				$this->logger->addInfo($template);
-				$token = 'askj45yghfafyh23hoer';
-				$token = $auth->getNewToken();
-				$this->logger->addInfo('---new token---');
-				$this->logger->addInfo($token);
-			} else {
-				$this->logger->addInfo('Requested missing page: '.$params);
-				return $response->withStatus(404)->withHeader('Content-Type', 'text/html')
-					->write('Page not found');
-			}
-
-			return $this->view->render($response, $template, [
-				'page' => $page,
-				'ses' => $token
-			]);
-		} else {
-			$response = $response->withStatus(401); // not authorized
-			return $this->view->render($response, 'login.html', [
-				'destination' => '/'.$params,
-				'message' => 'invalid credentials'
-			]);
-		}
-	}
-	return $response;
-});
-
-$app->map(['PUT', 'POST'], '/register[/{params:.*}]', function (Request $request, Response $response, $args) {
-	//$dataraw = $request->getBody();
-	$username = $request->getParsedBodyParam('username', $default = null);
-	//$password = $request->getParsedBodyParam('password', $default = null);
-
-	$auth = new UserLogin($username, $this->db);
-	$hasUser = $auth->hasUser($username);
-	if ($hasUser == false) { // not an existing user so go ahead and register
-		$hash = $auth->registerUser($request->getParsedBodyParam('password', $default = null));
-		$this->logger->addInfo('---registration request for: '.$username);
-			return $this->view->render($response, 'login.html', [
-				'destination' => '/'.$params,
-				'message' => 'registration request pending review'
-			]);
-	} else {
-		$this->logger->addInfo('---registration duplicate for: '.$username);
-			return $this->view->render($response, 'login.html', [
-				'destination' => '/'.$params,
-				'message' => $username.' is unavailable, please choose another username'
-			]);
-	}
-	return $response;
-});
-
+// should only happen via ajax post request from make_editable.js
 $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Response $response, $args) {
-	$dataraw = $request->getBody();
-	$params = $request->getAttribute('params');
-	$method = $request->getMethod();
 	$headerValueArray = $request->getHeader('X-Auth-Token');
-	$token = '';
-	$username = '';
-	$isvalidToken = false;
 	if (is_array($headerValueArray) and isset($headerValueArray[0])) {
 		$jsonToken = $headerValueArray[0];
 		$json_array = json_decode($jsonToken, true);
 		$token = $json_array['token'];
 		$username = $json_array['data'];
 	}
-	if (isset($token) and isset($username)) {
+	$isvalidToken = false;
+	if (isset($token) and isset($username)) { // credentials provided
 		$auth = new UserLogin($username, $this->db);
 		$isvalidToken = $auth->verifyToken($token);
 	}
-	/*if valid token then save changes else notify of failure to save due to invalid credentials, ask to login again*/
-	if ($isvalidToken == true) {
-		//$patterns = ["/\s+/m", "/'/"];
-		//$replacements = [" ", "'"];
-		$patterns = "/\s+/m"; // only one pattern for now
+	if ($isvalidToken == true) { // ok to update the content
+		$patterns = "/\s+/m"; // only one pattern for now, for more use array:  ["/\s+/m", "/'/"];
 		$replacements = " ";
+		$dataraw = $request->getBody();
 		$data = preg_replace($patterns, $replacements, $dataraw);
-		// json_decode fails if quotes not escaped in json obj values
-		// {"content": "<p class=\"ok\">It&apos;s ok</p>"}
-		// {"content": "<p class="notok">It's not ok</p>"}
-		$json_array = json_decode($data, true);
+		// {"content": "<p class=\"ok\">It&apos;s ok</p>"}, {"content": "<p class="notok">It's not ok</p>"}
+		$json_array = json_decode($data, true); // fails if quotes not escaped obj values
 
 		$builder = new PageConfigurator('bublin', $this->db);
+		$params = $request->getAttribute('params');
+		$method = $request->getMethod();
 		$tab_data = $builder->loadEditor($params, $method, $dataraw, $username);
 		$json = json_encode($tab_data);
 
-		$newResponse = $response->withHeader('Content-type', 'application/json');
-		$jsonResponse = $newResponse->withJson($tab_data);
-
-		return $jsonResponse;
-	} else {
-			// for a popup
-			/*
-			$response = $response->withStatus(401); // not authorized
-			return $this->view->render($response, 'login.html', [
-				'destination' => '/'.$params,
-				'message' => 'invalid credentials'
-			]);
-			*/
-			// else redirect
-			// change method to get before redirect and clear request payload
-			$response = $response->withRedirect('/loginto/'.$params, 401);
-			return $response;
-			
+		$response = $response->withHeader('Content-type', 'application/json')
+			->withJson($tab_data); // not necessary
+	} else { // ask to authenticate (via popover)
+		$tab_data = '';
+		$response = $response->withHeader('Content-type', 'application/json')
+			->withStatus(401) // not authorized
+			->withJson($tab_data);
 	}
+	return $response;
+});
+
+// for debugging only
+$app->get('/dump/{id}', function (Request $request, Response $response, $args) {
+	$page_id = (int)$args['id'];
+	$mapper = new PageMapper($this->db);
+	$page = $mapper->getPageById($page_id);
+	$page_str = htmlentities(var_export($page, true));
+	echo $page_str;
+	return $response;
 });
 
 $app->run();
