@@ -167,6 +167,13 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 		->write('Invalid credentials');
 })->setName('login');
 
+$app->get('/login', function (Request $request, Response $response, $args) {
+	return $this->view->render($response, 'login.html', [
+		'destination' => '/login',
+		'message' => ''
+	]);
+});
+
 // should only happen via ajax post request from make_editable.js
 $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$headerValueArray = $request->getHeader('X-Auth-Token');
