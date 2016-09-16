@@ -86,14 +86,13 @@ $(tinymce.init({
 										$('body').attr('data-ses', ses); // set token
 										sendData(content, description, status, ses);
 									} else {
-										$('#loginform .errmsg').text(a.statusText);
-										console.log(JSON.stringify(['Error', a, b, c])); // popup login
+										$('#loginform .errmsg').text(response.responseText);
 									}
 									console.log(response);
 								},
-								error: function (a, b, c) {
-									$('#loginform .errmsg').text(a.statusText);
-									console.log(JSON.stringify(['Error', a, b, c])); // popup login
+								error: function (response) {
+									$('#loginform .errmsg').text(response.responseText);
+									console.log(response); // popup login
 								}
 							});
 						});
