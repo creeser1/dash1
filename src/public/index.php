@@ -144,11 +144,9 @@ $app->post('/register', function (Request $request, Response $response, $args) {
 		$this->logger->addInfo('---registration duplicate for: '.$username);
 		$message = $username.' is unavailable, please choose another username';
 	}
-	$params = '../login'; // stay on login page (go to thanks for registering else to home page '/')
-	return $this->view->render($response, 'login.html', [
-		'destination' => '/'.$params,
-		'message' => $message
-	]);
+	return $response->withHeader('Content-Type', 'text/plain')
+		->withStatus(401)
+		->write($message);
 })->setName('register');
 
 // should only happen via ajax post request from make_editable.js
@@ -162,9 +160,10 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 		return $response->withHeader('Content-Type', 'text/plain')
 			->write($token);
 	}
+	$message = 'invalid credentials';
 	return $response->withHeader('Content-Type', 'text/plain')
 		->withStatus(401)
-		->write('invalid credentials');
+		->write($message);
 })->setName('login');
 
 $app->get('/login', function (Request $request, Response $response, $args) {
