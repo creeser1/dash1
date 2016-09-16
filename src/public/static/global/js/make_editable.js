@@ -90,8 +90,9 @@ $(tinymce.init({
 									}
 									console.log(response);
 								},
-								error: function (a, b) {
-									console.log(JSON.stringify(['Error', a, b])); // popup login
+								error: function (a, b, c) {
+									$('#loginform .errmsg').text('a.statusText');
+									console.log(JSON.stringify(['Error', a, b, c])); // popup login
 								}
 							});
 						});
