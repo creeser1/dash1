@@ -163,6 +163,7 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 			->write($token);
 	}
 	$params = '../login'; // stay on login page (go to thanks for registering else to home page '/')
+	$response = $response->withStatus(401) // not authorized
 	return $this->view->render($response, 'login.html', [
 		'destination' => '/'.$params,
 		'message' => $message
