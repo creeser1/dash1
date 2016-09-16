@@ -119,6 +119,11 @@ $app->get('/edit/{id}', function ($request, $response, $args) {
 		$builder = new PageConfigurator('bublin', $this->db);
 		$page = $builder->loadPage($id);
 		$template = $page['edittemplate'].'.html';
+		$token64 = '';
+		$headerValueArray = $request->getHeader('X-Auth-Token');
+		if (is_array($headerValueArray) and isset($headerValueArray[0])) {
+			$token64 = $headerValueArray[0]; // just pass it along
+		}
 		return $this->view->render($response, $template, [
 			'page' => $page,
 			'ses' => $token // without token page is not editable
