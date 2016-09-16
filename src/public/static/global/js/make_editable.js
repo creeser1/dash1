@@ -25,7 +25,7 @@ $(tinymce.init({
 		var $activetab = $('div.active').attr('id');
 		var $app = $('body').attr('data-app');
 		var path = 'tab/' + $app + '/' + $activetab;
-		var ses = $('body').attr('data-ses');
+		var ses = $('body').attr('data-ses'); //  ********* should convert from base64 string
 		var sendData = function (content, description, status, ses) {
 			var $data = '{"description": "' + description + '", "content": "' + content + '", "status": "' + status + '"}';
 			$.ajax({
@@ -51,7 +51,7 @@ $(tinymce.init({
 			$activetab = $('div.active').attr('id');
 			$app = $('body').attr('data-app');
 			path = 'tab/' + $app + '/' + $activetab;
-			ses = $('body').attr('data-ses');
+			ses = $('body').attr('data-ses'); //  ********* should convert from base64 string
 			if (ses) {
 				sendData(content, description, status, ses); // go ahead and send it
 			} else { // present login overlay
@@ -69,13 +69,15 @@ $(tinymce.init({
 							e.stopPropagation();
 							//console.log(e);
 							var btn = e.target;
+							var destination = $(btn).text().toLowerCase();
+							console.log(destination);
 							$.ajax({
-								url: 'http://dash1.activecampus.org/login',
+								url: 'http://dash1.activecampus.org/' + destination,
 								type: 'POST',
 								data: $('#loginform').serialize(),
 								success: function (response) {
 									//console.log(response);
-									ses = response;									
+									ses = response; //  ********* should convert to base64 string
 									$('body').attr('data-ses', ses); // set token
 									$xbody.remove();
 									sendData(content, description, status, ses);
