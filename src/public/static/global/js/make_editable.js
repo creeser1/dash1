@@ -45,6 +45,11 @@ $(tinymce.init({
 					console.log(response);
 				},
 				error: function (response) {
+					ses = '';
+					if (typeof(Storage) !== "undefined") {
+						localStorage.setItem('ses', ses);
+					}
+					saveData(content, description, status);
 					console.log(JSON.stringify(['Error', response])); // popup login
 				}
 			});
