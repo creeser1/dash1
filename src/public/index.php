@@ -193,8 +193,9 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 		$isvalidToken = $auth->verifyToken($token);
 		$this->logger->addInfo('---authenticating: '.$username);
 		$this->logger->addInfo('---isvalidToken: '.$isvalidToken);
+		$this->logger->addInfo('---equal true: '.($isvalidToken == true));
 	}
-	if ($isvalidToken == true) { // ok to update the content
+	if ($isvalidToken === true) { // ok to update the content Note === since empty arrays are also true
 		$patterns = "/\s+/m"; // only one pattern for now, for more use array:  ["/\s+/m", "/'/"];
 		$replacements = " ";
 		$dataraw = $request->getBody();
