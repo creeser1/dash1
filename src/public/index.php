@@ -162,12 +162,9 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 		return $response->withHeader('Content-Type', 'text/plain')
 			->write($token);
 	}
-	$params = '../login'; // stay on login page (go to thanks for registering else to home page '/')
-	$response = $response->withStatus(401); // not authorized
-	return $this->view->render($response, 'login.html', [
-		'destination' => '/'.$params,
-		'message' => $message
-	]);
+	return $response->withHeader('Content-Type', 'text/plain')
+		->withStatus(401)
+		->write('invalid credentials');
 })->setName('login');
 
 $app->get('/login', function (Request $request, Response $response, $args) {

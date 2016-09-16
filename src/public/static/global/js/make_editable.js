@@ -80,18 +80,19 @@ $(tinymce.init({
 								type: 'POST',
 								data: $('#loginform').serialize(),
 								success: function (response) {
-									$xbody.remove(); // successful login no longer needs login overlay
 									if (destination === 'login') {
+										$xbody.remove(); // successful login no longer needs login overlay
 										ses = response; //  ********* should convert to base64 string
 										$('body').attr('data-ses', ses); // set token
 										sendData(content, description, status, ses);
 									} else {
-										$xbody = showLogin(response); // show with new message
+										$('#loginform .errmsg').text(a.statusText);
+										console.log(JSON.stringify(['Error', a, b, c])); // popup login
 									}
 									console.log(response);
 								},
 								error: function (a, b, c) {
-									$('#loginform .errmsg').text('a.statusText');
+									$('#loginform .errmsg').text(a.statusText);
 									console.log(JSON.stringify(['Error', a, b, c])); // popup login
 								}
 							});
