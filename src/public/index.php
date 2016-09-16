@@ -204,15 +204,15 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 		$params = $request->getAttribute('params');
 		$method = $request->getMethod();
 		$tab_data = $builder->loadEditor($params, $method, $dataraw, $username);
-		$json = json_encode($tab_data);
-
-		$response = $response->withHeader('Content-type', 'application/json')
-			->withJson($tab_data); // not necessary
+		//$json = json_encode($tab_data);
+		$tab_data_str = 'ok'; // no need to return anything
+		$response = $response->withHeader('Content-type', 'text/plain')
+			->write($tab_data_str); // not necessary
 	} else { // ask to authenticate (via popover)
-		$tab_data = '';
-		$response = $response->withHeader('Content-type', 'application/json')
+		$tab_data_str = '';
+		$response = $response->withHeader('Content-type', 'text/plain')
 			->withStatus(401) // not authorized
-			->withJson($tab_data);
+			->write($tab_data_str);
 	}
 	return $response;
 });
