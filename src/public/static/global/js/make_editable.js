@@ -28,6 +28,7 @@ $(tinymce.init({
 		var ses = $('body').attr('data-ses'); //  ********* should convert from base64 string
 		var sendData = function (content, description, status, ses) {
 			var $data = '{"description": "' + description + '", "content": "' + content + '", "status": "' + status + '"}';
+			console.log(ses);
 			$.ajax({
 				url: 'http://dash1.activecampus.org/' + path,
 				type: 'POST',
@@ -67,7 +68,6 @@ $(tinymce.init({
 						$xbody.find('button[type=submit]').on('click', function (e) {
 							e.preventDefault();
 							e.stopPropagation();
-							//console.log(e);
 							var btn = e.target;
 							var destination = $(btn).text().toLowerCase();
 							console.log(destination);
@@ -76,7 +76,7 @@ $(tinymce.init({
 								type: 'POST',
 								data: $('#loginform').serialize(),
 								success: function (response) {
-									//console.log(response);
+									console.log(response);
 									ses = response; //  ********* should convert to base64 string
 									$('body').attr('data-ses', ses); // set token
 									$xbody.remove();
