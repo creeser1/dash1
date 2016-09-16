@@ -82,7 +82,7 @@ $(function () {
 		var destination = $(btn).text().toLowerCase();
 		var ses;
 		$.ajax({
-			url: '//dash1.activecampus.org/' + destination,
+			url: '/' + destination,
 			type: 'POST',
 			data: $('#loginform').serialize(),
 			success: function (response) {
