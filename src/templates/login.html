@@ -74,6 +74,7 @@ padding:0 5px;
 </div>
 <script>
 $(function () {
+	$('button[type=button]').hide();
 	$('button[type=submit]').on('click', function (e) {
 		e.preventDefault();
 		e.stopPropagation();
@@ -92,13 +93,13 @@ $(function () {
 					}
 					$('#loginform .errmsg').text('now logged in').css('color', '#01d10c'); // success
 				} else {
-					$('#loginform .errmsg').text(response.responseText);
+					$('#loginform .errmsg').text(response.responseText).css('color', '#01d10c');
 				}
-				console.log(response);
+				//console.log(response);
 			},
 			error: function (response) {
-				$('#loginform .errmsg').text(response.responseText);
-				console.log(response); // popup login
+				$('#loginform .errmsg').text(response.responseText).css('color', '#d10c01');
+				//console.log(response); // popup login
 			}
 		});
 	});
