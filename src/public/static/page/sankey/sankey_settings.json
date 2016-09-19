@@ -1,0 +1,127 @@
+{
+	"app": "sankey",
+	"htmltitle": "CSU | Faculty Dashboard: What Paths Do They Follow?",
+	"title": "What Paths Do They Follow?",
+	"edittemplate": "tpl_facpath1",
+	"pagetemplate": "tpl_facpath2",
+	"style": "/static/page/sankey/all_style.css",
+	"scripts": [
+		"/static/page/sankey/sankey.js",
+		"/static/page/sankey/sandy3.js"
+	],
+	"controls":[{
+		"type": "select",
+		"id": "fromselector",
+		"details": [{
+			"option_value": "College of Business and Economics",
+			"option_text": "College of Business and Economics"
+		}, {
+			"option_value": "College of Science",
+			"option_text": "College of Science"
+		}, {
+			"option_value": "College of Letters, Arts & Social Science",
+			"option_text": "College of Letters, Arts & Social Science"
+		}, {
+			"option_value": "Other (Undeclared, Special and Pre-majors)",
+			"option_text": "Other (Undeclared, Special and Pre-majors)"
+		}]
+	}, {
+		"type": "select",
+		"id": "toselector",
+		"details": [{
+			"option_value": "Business Administration",
+			"option_text": "Business Administration"
+		}, {
+			"option_value": "Psychology",
+			"option_text": "Psychology"
+		}, {
+			"option_value": "Biology",
+			"option_text": "Biology"
+		}, {
+			"option_value": "Economics",
+			"option_text": "Economics"
+		}, {
+			"option_value": "Engineering",
+			"option_text": "Engineering"
+		}, {
+			"option_value": "Computer Engineering",
+			"option_text": "Computer Engineering"
+		}, {
+			"option_value": "Computer Science",
+			"option_text": "Computer Science"
+		}, {
+			"option_value": "Physics",
+			"option_text": "Physics"
+		}, {
+			"option_value": "Chemistry",
+			"option_text": "Chemistry"
+		}, {
+			"option_value": "Geology",
+			"option_text": "Geology"
+		}]
+	}, {
+		"type": "select",
+		"id": "fromtobothselector",
+		"details": [{
+			"option_value": "both",
+			"option_text": "Both From and To"
+		}, {
+			"option_value": "from",
+			"option_text": "From Only"
+		}, {
+			"option_value": "to",
+			"option_text": "To Only"
+		}]
+	}, {
+		"type": "select",
+		"id": "otherselector",
+		"details": [{
+			"option_value": "0",
+			"option_text": "None"
+		}, {
+			"option_value": "1",
+			"option_text": "Other aggregates majors with less than 9th largest major",
+			"isselected": true
+		}, {
+			"option_value": "2",
+			"option_text": "Other aggregates majors with less than 2 students"
+		}, {
+			"option_value": "3",
+			"option_text": "Other aggregates majors with less than 3 students"
+		}, {
+			"option_value": "4",
+			"option_text": "Other aggregates majors with less than 4 students"
+		}, {
+			"option_value": "5",
+			"option_text": "Other aggregates majors with less than 5 students"
+		}]
+	}],
+	"tabs": [{
+		"isactive": true,
+		"label": "Migration Chart",
+		"anchor": "chart",
+		"embed": "sankey/chart"
+	}, {
+		"label": "Data Table",
+		"anchor": "table",
+		"embed": "sankey/table"
+	}, {
+		"iseditable": true,
+		"label": "Chart Explanation",
+		"anchor": "explanations",
+		"embed": "sankey/explanations"
+	}, {
+		"iseditable": true,
+		"label": "Methodology",
+		"anchor": "method",
+		"embed": "sankey/method"
+	}, {
+		"label": "Applying This Data",
+		"anchor": "applying",
+		"embed": "sankey/applying"
+	}, {
+		"label": "Further Resources",
+		"anchor": "further",
+		"embed": "sankey/further"
+	}]
+}
