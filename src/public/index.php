@@ -160,7 +160,7 @@ $app->post('/register', function (Request $request, Response $response, $args) {
 		$auth = new UserLogin($username, $this->db);
 		$hasUser = $auth->hasUser($username); // active or pending
 		if ($hasUser === false) { // not an existing user so go ahead and register
-			$hash = $auth->registerUser();
+			$hash = $auth->registerUser($password);
 			$this->logger->addInfo('---registered: '.$username.' with hash: '.$hash);
 			$this->logger->addInfo('---registration request for: '.$username);
 				$message = 'registration request pending review';
@@ -186,7 +186,7 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 	$isAuthenticated = false;
 	if (strlen($password) >= $minPasswordLength) {
 		$auth = new UserLogin($username, $this->db);
-		$isAuthenticated = $auth->authenticateUser();
+		$isAuthenticated = $auth->authenticateUser($password);
 		$this->logger->addInfo('---Auth: '.$isAuthenticated);
 	}
 	if ($isAuthenticated !== false) {
