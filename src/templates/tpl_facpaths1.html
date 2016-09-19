@@ -1,19 +1,15 @@
 {% extends "base1.html" %}
 
 {% block header %}
-<header id="top" class="banner" role="banner">
-	<a class="offscreen" href="#maincontent">skip to content</a>
-	<img src="/static/global/img/branding.png" width="803" height="108" alt="" /> 
-</header>
 {% endblock %}
 
 {% block sitenav %}
+<div class="title-bar"><h1>{{ page.title }}</h1></div>
 {% endblock %}
 {% block subnav %}
 {% endblock %}
 
 {% block contentheader %}
-<div class="title-bar"><h1>{{ page.title }}</h1></div>
 {% endblock %}
 
 {% block control %}
