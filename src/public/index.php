@@ -182,10 +182,12 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 	$password = substr(trim($password), 0, 127); // some reasonable max
 	$this->logger->addInfo('---test usr: '.$username);
 	$this->logger->addInfo('---test pwd: '.$password);
-
-	$auth = new UserLogin($username, $this->db);
-	$isAuthenticated = $auth->authenticateUser();
-	$this->logger->addInfo('---Auth: '.$isAuthenticated);
+	$isAuthenticated = false;
+	if (strlen($password) >= $minPasswordLength) {
+		$auth = new UserLogin($username, $this->db);
+		$isAuthenticated = $auth->authenticateUser();
+		$this->logger->addInfo('---Auth: '.$isAuthenticated);
+	}
 	if ($isAuthenticated !== false) {
 		$this->logger->addInfo('---Authenticated User: '.$username.' ---');
 		$token = base64_encode($auth->getNewToken());
