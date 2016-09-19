@@ -1,0 +1,41 @@
+{% extends "base1.html" %}
+
+{% block header %}
+<header id="top" class="banner" role="banner">
+	<a class="offscreen" href="#maincontent">skip to content</a>
+</header>
+{% endblock %}
+
+{% block sitenav %}
+{% endblock %}
+{% block subnav %}
+{% endblock %}
+
+{% block contentheader %}
+<div class="title-bar"><h1>{{ page.title }}</h1></div>
+{% endblock %}
+
+{% block control %}
+{% if page.controls|length > 0 %}
+<form class="page-controls"><fieldset class="controls"><legend class="offscreen">For accessibility devices</legend>
+{% for control in page.controls %}
+{% if control.type == 'select' %}
+	<select id="{{ control.id }}">
+{% for detail in control.details %}
+		<option value="{{ detail.option_value }}"{{detail.isselected ? ' selected'}}>{{ detail.option_text }}</option>
+{% endfor %}
+	</select>
+{% endif %}
+{% endfor %}
+</fieldset></form>
+{% endif %}
+{% endblock %}
+
+{% block pagescripts %}
+<script src="/static/global/js/all_gcore.js"></script>
+{% if page.scripts|length > 0 %}
+{% for scriptsrc in page.scripts %}
+<script src="{{ scriptsrc }}"></script>
+{% endfor %}
+{% endif %}
+{% endblock %}
