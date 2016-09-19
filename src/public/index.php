@@ -159,7 +159,7 @@ $app->post('/register', function (Request $request, Response $response, $args) {
 	if ($ok) { // no point in adding too short username/password
 		$auth = new UserLogin($username, $this->db);
 		$hasUser = $auth->hasUser($username); // active or pending
-		if ($hasUser == false) { // not an existing user so go ahead and register
+		if ($hasUser === false) { // not an existing user so go ahead and register
 			$hash = $auth->registerUser();
 			$this->logger->addInfo('---registered: '.$username.' with hash: '.$hash);
 			$this->logger->addInfo('---registration request for: '.$username);

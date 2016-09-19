@@ -31,8 +31,8 @@ class UserMapper extends Mapper
     }
 
     public function getUserByUsername($username) { /* to edit the most recent version published or not */
-    		$sql = "select * from pguser as m
-    			where m.username = :username";
+		$sql = "select * from pguser as m
+			where m.username = :username";
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute(["username" => $username]);
 		/*return $result;*/
@@ -44,6 +44,7 @@ class UserMapper extends Mapper
 				return false;
 			}
         }
+		return false;
     }
 
     public function remove($user_id) {
