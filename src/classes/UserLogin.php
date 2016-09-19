@@ -17,6 +17,9 @@ class UserLogin
     }
 
 	public function registerUser($password) {
+		if (!isset($password) or strlen($password) < 6) { // replace with policy
+			return false;
+		}
 		$user_mapper = new UserMapper($this->db);
 		/*hash the password and add record to database if unique username*/
 		/*
@@ -42,6 +45,9 @@ class UserLogin
 
 	public function authenticateUser($password) {
 		/*hash the password and verify it matches existing user record*/
+		if (!isset($password) or strlen($password) < 6) { // replace with policy
+			return false;
+		}
 		$user_mapper = new UserMapper($this->db);
 		$user = $user_mapper->getUserByUsername($this->username);
 		if ($user != false) {
