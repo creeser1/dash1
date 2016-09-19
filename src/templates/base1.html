@@ -8,14 +8,17 @@
 <script src="/static/global/js/all_pcore.js"></script>
 </head><body data-app="{{ page.app }}" data-ses="{{ ses }}">
 
-<header id="top" class="banner" role="banner">
-	<a class="offscreen" href="#maincontent">skip to content</a>
-	<img src="/static/global/img/branding.png" width="803" height="108" alt="" /> 
-</header>
+{% block header %}
+{% endblock %}
+{% block sitenav %}
+{% endblock %}
+{% block subnav %}
+{% endblock %}
 
 <section id="maincontent" class="container" role="main">
 
-<div class="title-bar"><h1>{{ page.title }}</h1></div>
+{% block contentheader %}
+{% endblock %}
 
 {% block control %}
 	<!-- various controls go here -->
@@ -38,17 +41,6 @@
 </div><!-- end of tab area  -->
 {% endfor %}
 </div><!--./tab-content-->
-{% endif %}
-
-
-
-</section><!-- ./container #maincontent -->
-
-{% block footer %}
-{% endblock %}
-
-<script src="/static/global/js/all_gcore.js"></script>
-{% block pagescripts %}
 <script type="application/javascript">
 	$('.nav-tabs a').click(function (e) {
 		e.preventDefault();
@@ -56,6 +48,14 @@
 		$(this).tab('show');
 	});
 </script>
+{% endif %}
+
+</section><!-- ./container #maincontent -->
+
+{% block footer %}
+{% endblock %}
+
+{% block pagescripts %}
 {% endblock %}
 
 {% block analytics %}
