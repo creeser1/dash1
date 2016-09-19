@@ -91,7 +91,7 @@ $app->get('/data/{dataset:.*}', function ($request, $response, $args) {
 
 // normal read only access
 $app->get('/dashboard/{id}', function ($request, $response, $args) {
-	$whitelist = ['bublin' => '1', 'peercomp' => '2', 'facsankey' => '144'];
+	$whitelist = ['bublin' => '1', 'peercomp' => '2', 'sankey' => '144'];
 	if (array_key_exists($args['id'], $whitelist)) {
 		$id = $whitelist[$args['id']];
 		$builder = new PageConfigurator('bublin', $this->db);
