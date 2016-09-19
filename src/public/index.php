@@ -161,6 +161,7 @@ $app->post('/register', function (Request $request, Response $response, $args) {
 		$hasUser = $auth->hasUser($username); // active or pending
 		if ($hasUser == false) { // not an existing user so go ahead and register
 			$hash = $auth->registerUser();
+			$this->logger->addInfo('---registered: '.$username.' with hash: '.$hash);
 			$this->logger->addInfo('---registration request for: '.$username);
 				$message = 'registration request pending review';
 		} else {
