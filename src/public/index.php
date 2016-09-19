@@ -110,6 +110,7 @@ $app->get('/dashboard/{id}', function ($request, $response, $args) {
 	}
 })->setName('dashboard');
 
+//REMOVE FOR PROD
 // will require authentication and authorization to save edits
 $app->get('/edit/{id}', function ($request, $response, $args) {
 	$this->logger->addInfo('get /edit/'.$args['id']);
@@ -136,6 +137,7 @@ $app->get('/edit/{id}', function ($request, $response, $args) {
 	}
 })->setName('edit');
 
+//REMOVE FOR PROD
 $app->post('/register', function (Request $request, Response $response, $args) {
 	$ok = true;
 	$username = $request->getParsedBodyParam('username', $default = null);
@@ -171,6 +173,7 @@ $app->post('/register', function (Request $request, Response $response, $args) {
 		->write($message);
 })->setName('register');
 
+//REMOVE FOR PROD
 // should only happen via ajax post request from make_editable.js
 $app->post('/login', function (Request $request, Response $response, $args) {
 	$username = $request->getParsedBodyParam('username', $default = null);
@@ -183,11 +186,13 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 	$auth = new UserLogin($username, $this->db);
 	$isAuthenticated = $auth->authenticateUser();
 	$this->logger->addInfo('---Auth: '.$isAuthenticated);
-	if ($isAuthenticated) {
+	if ($isAuthenticated !== false) {
+		$this->logger->addInfo('---Authenticated User: '.$username.' ---');
 		$token = base64_encode($auth->getNewToken());
 		return $response->withHeader('Content-Type', 'text/plain')
 			->write($token);
 	} else {
+		$this->logger->addInfo('---Auth-Failed User: '.$username.' ---');
 		$message = 'invalid credentials';
 		return $response->withHeader('Content-Type', 'text/plain')
 			->withStatus(401)
@@ -195,6 +200,7 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 	}
 })->setName('login');
 
+//REMOVE FOR PROD
 $app->get('/login', function (Request $request, Response $response, $args) {
 	return $this->view->render($response, 'login.html', [
 		'destination' => '/../login',
@@ -202,6 +208,7 @@ $app->get('/login', function (Request $request, Response $response, $args) {
 	]);
 });
 
+//REMOVE FOR PROD
 // should only happen via ajax post request from make_editable.js
 $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Response $response, $args) {
 	$headerValueArray = $request->getHeader('X-Auth-Token');
@@ -249,6 +256,7 @@ $app->map(['PUT', 'POST'], '/tab[/{params:.*}]', function (Request $request, Res
 	return $response;
 });
 
+//REMOVE FOR PROD
 // for debugging only
 $app->get('/dump/{id}', function (Request $request, Response $response, $args) {
 	$page_id = (int)$args['id'];

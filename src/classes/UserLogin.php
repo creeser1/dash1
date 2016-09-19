@@ -50,9 +50,8 @@ class UserLogin
 				return false;
 			}
 			$hash = $user->getHash();
-			if (password_verify($password, $hash)) {
-				return true;
-			}
+			$isVerified = password_verify($password, $hash);
+			return $isVerified;
 		}
 		return false;
 	}
