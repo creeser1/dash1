@@ -34,8 +34,8 @@
 			.style('text-align', source.length ? 'left' : 'right')
 			.style('background-color', 'rgba(255,255,255,0.0)')
 			.style('position','absolute')
-			.style('left', function () {if (source.length) {return '75px'} else {return '408px'}})
-			.style('top', function () {return (264 + dy + y) + 'px'})
+			.style('left', function () {if (source.length) {return '95px'} else {return '428px'}})
+			.style('top', function () {return (244 + dy + y) + 'px'})
 			.html(function(d) {return '<span>' + name + '</span>'; });		
 	};
 
