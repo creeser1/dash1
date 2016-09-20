@@ -36,7 +36,7 @@
 			.style('font-size', '14px')
 			.style('text-align', source.length ? 'left' : 'right')
 			.style('text-shadow', '1px 1px 1px #dddddd')
-			.style('background-color', 'rgba(255,255,255,0.05)')
+			//.style('background-color', 'rgba(255,255,255,0.05)')
 			.style('position','absolute')
 			.style('left', function () {if (source.length) {return '100px'} else {return '660px'}})
 			.style('top', function () {return (dy + y - 2) + 'px'})
