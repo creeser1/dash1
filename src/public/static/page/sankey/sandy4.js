@@ -35,7 +35,7 @@
 			.style('font-family', 'sans-serif')
 			.style('font-size', '16px')
 			.style('text-align', source.length ? 'left' : 'right')
-			.style('text-shadow', '1px 1px 1px #ffffff')
+			.style('text-shadow', '2px 2px 2px #ffffff')
 			.style('background-color', 'rgba(255,255,255,0.0)')
 			.style('position','absolute')
 			.style('left', function () {if (source.length) {return '155px'} else {return '718px'}})
@@ -98,7 +98,7 @@
 			.style('stroke', function (d) { 
 				//return color(d.ty || d.sy); // by position
 				var c = color(d.target.name === base ? hasher(d.source.name) : hasher(d.target.name)); // by name hash
-				return d3.rgb(c);
+				return d3.rgb(c).brighter(2);
 			})
 			.on("mouseover", function (d) {
 				var c = color(d.target.name === base ? hasher(d.source.name) : hasher(d.target.name)); // by name hash
