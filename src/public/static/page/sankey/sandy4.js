@@ -96,7 +96,15 @@
 				var c = color(d.target.name === base ? hasher(d.source.name) : hasher(d.target.name)); // by name hash
 				return d3.rgb(c);
 			})
-			.style("stroke-width", function(d) {
+			.on("mouseover", function (d) {
+				var c = color(d.target.name === base ? hasher(d.source.name) : hasher(d.target.name)); // by name hash
+				this.style.stroke = d3.rgb(c).darker(1);
+			})
+			.on("mouseout", function (d) {
+				var c = color(d.target.name === base ? hasher(d.source.name) : hasher(d.target.name)); // by name hash
+				this.style.stroke = d3.rgb(c);
+			})
+				.style("stroke-width", function(d) {
 				return Math.max(1, d.dy);
 			})
 			.sort(function(a, b) {
