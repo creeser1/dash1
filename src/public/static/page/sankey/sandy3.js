@@ -353,7 +353,7 @@ var path = sankey.link();
 	};
 
 	var create_campus_list = function (callback) {
-		var config = {'data_url': 'data/migrationsjson/crr_campuses_by_name.json'};
+		var config = {'data_url': '/data/sankey/data/migrationsjson/crr_campuses_by_name.json'};
 		load_data(config, function (result, config) {
 			//console.log(JSON.stringify(result));
 			var out = {};
@@ -366,14 +366,14 @@ var path = sankey.link();
 	};
 
 	var get_major_map = function (campus, callback) {
-		var config = {'data_url': 'data/migrationsjson/crr_majorcode2desc.json'};
+		var config = {'data_url': '/data/sankey/data/migrationsjson/crr_majorcode2desc.json'};
 		load_data(config, function (result, config) {
 			callback(result[campus], config);
 		});
 	};
 
 	var get_college_map = function (campus, callback) {
-		var config = {'data_url': 'data/migrationsjson/crr_colleges_by_major_code.json'};
+		var config = {'data_url': '/data/sankey/data/migrationsjson/crr_colleges_by_major_code.json'};
 		if (cs.retained_data) {
 			callback(cs.retained_data[campus], config);
 			return;
@@ -385,7 +385,7 @@ var path = sankey.link();
 	};
 	
 	var get_migrations = function (campus, callback) {
-		var config = {'data_url': 'data/migrationsjson/crr_migration_col_ftf.json'};
+		var config = {'data_url': '/data/sankey/data/migrationsjson/crr_migration_col_ftf.json'};
 		load_data(config, function (result, config) {
 			callback(result[campus], config);
 		});
