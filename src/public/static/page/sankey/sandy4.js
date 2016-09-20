@@ -38,8 +38,8 @@
 			.style('text-shadow', '2px 2px 2px #ffffff')
 			.style('background-color', 'rgba(255,255,255,0.0)')
 			.style('position','absolute')
-			.style('left', function () {if (source.length) {return '155px'} else {return '718px'}})
-			.style('top', function () {return (240 + dy + y) + 'px'})
+			.style('left', function () {if (source.length) {return '105px'} else {return '668px'}})
+			.style('top', function () {return (20 + dy + y) + 'px'})
 			.html(function(d) {return '<span>' + name + '</span>'; });		
 	};
 
