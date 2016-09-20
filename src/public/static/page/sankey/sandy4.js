@@ -35,7 +35,7 @@
 			.style('background-color', 'rgba(255,255,255,0.0)')
 			.style('position','absolute')
 			.style('left', function () {if (source.length) {return '75px'} else {return '408px'}})
-			.style('top', function () {return (64 + dy + y) + 'px'})
+			.style('top', function () {return (264 + dy + y) + 'px'})
 			.html(function(d) {return '<span>' + name + '</span>'; });		
 	};
 
