@@ -24,7 +24,7 @@
 
 	var create_chart = function (results) {
 
-	$('#chart').append('<div id="chart_panel"></div>');
+	$('#chart').append('<div id="chart_panel" style="position:relative"></div>');
 	$('#chart_panel').empty();
 	var label_nodes = function (name, source, target, y, dy) {
 		d3.selectAll('#chart_panel').append('div')
