@@ -90,7 +90,7 @@
 			.enter().append("path")
 			.attr("class", "link")
 			.attr("d", path)
-			.style('fill', '#ffffff') 
+			.style('fill', 'transparent') 
 			.style('stroke', function (d) { 
 				//return color(d.ty || d.sy); // by position
 				var c = color(d.target.name === base ? hasher(d.source.name) : hasher(d.target.name)); // by name hash
