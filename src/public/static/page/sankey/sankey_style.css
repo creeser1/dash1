@@ -4,7 +4,7 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 
 .title-bar {margin:0 auto; height:94px; position:relative;}
 .title-bar h1 {margin:0 auto; line-height:90px}
-.title-bar a {position:absolute; left:10px; top:5px;}
+.title-bar a {position:absolute; left:10px; top:10px;}
 .controls{display:block;max-height:150px;padding:0 0 10px 0}
 
 
