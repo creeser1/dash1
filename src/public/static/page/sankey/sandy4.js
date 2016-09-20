@@ -34,7 +34,7 @@
 			.style('text-align', source.length ? 'left' : 'right')
 			.style('background-color', 'rgba(255,255,255,0.0)')
 			.style('position','absolute')
-			.style('left', function () {if (source.length) {return '95px'} else {return '428px'}})
+			.style('left', function () {if (source.length) {return '105px'} else {return '628px'}})
 			.style('top', function () {return (244 + dy + y) + 'px'})
 			.html(function(d) {return '<span>' + name + '</span>'; });		
 	};
@@ -55,7 +55,7 @@
 		}
 
 		var margin = {top: 10, right: 10, bottom: 10, left: 10},
-			width = 795 - margin.left - margin.right,
+			width = 995 - margin.left - margin.right,
 			height = 320 + totstudents - margin.top - margin.bottom;
 
 		var formatNumber = d3.format(",.0f"),    // zero decimal places
