@@ -90,6 +90,7 @@
 			.enter().append("path")
 			.attr("class", "link")
 			.attr("d", path)
+			.style('fill', '#ffffff') 
 			.style('stroke', function (d) { 
 				//return color(d.ty || d.sy); // by position
 				var c = color(d.target.name === base ? hasher(d.source.name) : hasher(d.target.name)); // by name hash
@@ -173,7 +174,7 @@
 		sankey.relayout();
 		link.attr("d", path);
 		}
-		$('.svg_chart_container').css({"background-color": "#ffd"})
+		$('.svg_chart_container').css({"background-color": "#ffffff"})
 	}; // end create_chart
 
 	var init = function () { // initially and on change of campus
