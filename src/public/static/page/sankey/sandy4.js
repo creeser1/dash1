@@ -98,7 +98,7 @@
 			.style('stroke', function (d) { 
 				//return color(d.ty || d.sy); // by position
 				var c = color(d.target.name === base ? hasher(d.source.name) : hasher(d.target.name)); // by name hash
-				return d3.rgb(c).brighter(2);
+				return d3.rgb(c);
 			})
 			.on("mouseover", function (d) {
 				var c = color(d.target.name === base ? hasher(d.source.name) : hasher(d.target.name)); // by name hash
