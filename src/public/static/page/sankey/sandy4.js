@@ -65,6 +65,7 @@
 		svg = d3.select("#chart").append("svg")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
+			.attr("class", "svg_chart_container")
 		  .append("g")
 			.attr("transform", 
 				  "translate(" + margin.left + "," + margin.top + ")");
@@ -153,7 +154,7 @@
 		.attr("width", sankey.nodeWidth())
 		.style('fill', '#ddd')
 		.style("stroke", function(d) { 
-			return d3.rgb(d.color).darker(1);
+			return d3.rgb(d.color);
 		})
 		.append("title")
 		.text(function(d) { 
@@ -171,6 +172,7 @@
 		sankey.relayout();
 		link.attr("d", path);
 		}
+		$('.svg_chart_container').css({"background-color": "#ffd"})
 	}; // end create_chart
 
 	var init = function () { // initially and on change of campus
