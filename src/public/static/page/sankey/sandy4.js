@@ -59,7 +59,7 @@
 		}
 
 		var margin = {top: 10, right: 30, bottom: 10, left: 30},
-			width = 1100 - margin.left - margin.right,
+			width = 1090 - margin.left - margin.right,
 			height = 320 + totstudents - margin.top - margin.bottom;
 
 		var formatNumber = d3.format(",.0f"),    // zero decimal places
