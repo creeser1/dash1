@@ -91,7 +91,7 @@
 			.style('stroke', function (d) { 
 				//return color(d.ty || d.sy); // by position
 				var c = color(d.target.name === base ? hasher(d.source.name) : hasher(d.target.name)); // by name hash
-				return d3.rgb(c).darker(1);
+				return d3.rgb(c);
 			})
 			.style("stroke-width", function(d) {
 				return Math.max(1, d.dy);
