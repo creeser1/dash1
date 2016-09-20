@@ -149,7 +149,8 @@
 			.attr("transform", function(d) { 
 				label_nodes(d.name, d.sourceLinks, d.targetLinks, d.y, d.dy/2);
 				return "translate(" + d.x + "," + d.y + ")";
-			})
+			});
+/*
 			.call(d3.behavior.drag()
 				.origin(function(d) {
 					return d;
@@ -159,7 +160,7 @@
 				})
 				.on("drag", dragmove)
 			);
-
+*/
 		// add the rectangles for the nodes
 		node.append("rect")
 		.attr("height", function(d) {
@@ -176,7 +177,7 @@
 		});
 
 		// add in the title for the nodes
-
+/*
 		// the function for moving the nodes
 		function dragmove(d) {
 		d3.select(this).attr("transform", 
@@ -186,7 +187,8 @@
 		sankey.relayout();
 		link.attr("d", path);
 		}
-		$('.svg_chart_container').css({"background-color": "#ffffff"})
+*/
+		//$('.svg_chart_container').css({"background-color": "#ffffff"})
 	}; // end create_chart
 
 	var init = function () { // initially and on change of campus
