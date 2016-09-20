@@ -34,7 +34,7 @@
 			.style('text-align', source.length ? 'left' : 'right')
 			.style('background-color', 'rgba(255,255,255,0.0)')
 			.style('position','absolute')
-			.style('left', function () {if (source.length) {return '105px'} else {return '628px'}})
+			.style('left', function () {if (source.length) {return '145px'} else {return '688px'}})
 			.style('top', function () {return (244 + dy + y) + 'px'})
 			.html(function(d) {return '<span>' + name + '</span>'; });		
 	};
@@ -54,7 +54,7 @@
 				totstudents = results[4];
 		}
 
-		var margin = {top: 10, right: 10, bottom: 10, left: 10},
+		var margin = {top: 10, right: 30, bottom: 10, left: 30},
 			width = 995 - margin.left - margin.right,
 			height = 320 + totstudents - margin.top - margin.bottom;
 
