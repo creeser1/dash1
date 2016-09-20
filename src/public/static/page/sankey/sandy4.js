@@ -32,6 +32,7 @@
 			.style('padding','1px')
 			.style('width', '324px')
 			.style('text-align', source.length ? 'left' : 'right')
+			.style('text-shadow', '1px 1px 1px #ffffff')
 			.style('background-color', 'rgba(255,255,255,0.0)')
 			.style('position','absolute')
 			.style('left', function () {if (source.length) {return '155px'} else {return '718px'}})
