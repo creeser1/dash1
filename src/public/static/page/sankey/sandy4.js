@@ -24,9 +24,10 @@
 
 	var create_chart = function (results) {
 
-	$('#chart').empty();
+	$('#chart').append('<div id="chart_panel"></div>');
+	$('#chart_panel').empty();
 	var label_nodes = function (name, source, target, y, dy) {
-		d3.selectAll('#chart').append('div')
+		d3.selectAll('#chart_panel').append('div')
 			.attr('class','nodelabel')
 			.style('padding','1px')
 			.style('width', '324px')
@@ -62,7 +63,7 @@
 			color = function (n) {return palette[n%palette.length];};//d3.scale.category20();
 
 		// append the svg canvas to the page
-		svg = d3.select("#chart").append("svg")
+		svg = d3.select("#chart_panel").append("svg")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
 			.attr("class", "svg_chart_container")
