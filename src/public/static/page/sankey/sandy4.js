@@ -33,13 +33,13 @@
 			.style('width', '324px')
 			.style('font-weight', '600')
 			.style('font-family', 'sans-serif')
-			.style('font-size', '16px')
+			.style('font-size', '14px')
 			.style('text-align', source.length ? 'left' : 'right')
-			.style('text-shadow', '2px 2px 2px #ffffff')
-			.style('background-color', 'rgba(255,255,255,0.0)')
+			.style('text-shadow', '1px 1px 1px #dddddd')
+			.style('background-color', 'rgba(255,255,255,0.1)')
 			.style('position','absolute')
-			.style('left', function () {if (source.length) {return '105px'} else {return '668px'}})
-			.style('top', function () {return (20 + dy + y) + 'px'})
+			.style('left', function () {if (source.length) {return '100px'} else {return '660px'}})
+			.style('top', function () {return (dy + y) + 'px'})
 			.html(function(d) {return '<span>' + name + '</span>'; });		
 	};
 
@@ -59,7 +59,7 @@
 		}
 
 		var margin = {top: 10, right: 30, bottom: 10, left: 30},
-			width = 1065 - margin.left - margin.right,
+			width = 1100 - margin.left - margin.right,
 			height = 320 + totstudents - margin.top - margin.bottom;
 
 		var formatNumber = d3.format(",.0f"),    // zero decimal places
