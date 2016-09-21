@@ -269,7 +269,7 @@
 	};
 
 	var config_chart = function (filter_campus, filter_college, filter_major, callback) { // initially and on change of campus
-		log = {'value': '', 'listto': [], 'listfrom': [], 'pivot': null, 'list': []};
+		var log = {'value': '', 'listto': [], 'listfrom': [], 'pivot': null, 'list': []};
 
 		create_campus_list(function (result, config) {
 		});
