@@ -23,6 +23,9 @@
 {% endfor %}
 	</select>
 {% endif %}
+{% if control.type == 'button' %}
+	<button id="{{ control.id }}">{{ control.text }}</button>
+{% endif %}
 {% endfor %}
 </fieldset></form>
 {% endif %}
