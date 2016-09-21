@@ -103,6 +103,8 @@ $(tinymce.init({
 										}
 										// use current state of content
 										content = tinymce.activeEditor.getContent();
+										content = content.replace(/"/g,'\\\"');
+										content = content.replace(/'/g,'&apos;');
 										sendData(content, description, status, ses);
 									} else {
 										$('#loginform .errmsg').text(response.responseText);
