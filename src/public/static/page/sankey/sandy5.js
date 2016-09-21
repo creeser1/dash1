@@ -392,7 +392,8 @@
 			e.preventDefault();
 			e.stopPropagation();
 			config_chart(cs.filter_campus, cs.filter_college, cs.filter_major, function (chart_config) {
-				create_chart(chart_config);
+				$('body').trigger('create_chart', {chart_config});
+				//create_chart(chart_config);
 			});
 		});
 	};
