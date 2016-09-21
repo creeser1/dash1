@@ -1,35 +1,35 @@
 (function () {
+	'use strict';
 
 	var units = "Students";
 	var palette = ['#aa6', '#f90', '#d6a', '#a6d', '#f0f', '#6da', '#ad6', '#a66', '#a6a', '#66a', '#6ad', '#0dc', '#b3a', '#0df', '#6a0', '#f3a', '#6a6', '#6aa', '#da6', '#00f', '#0af', '#f00', '#0f3', '#60f', '#fe0', '#06a'];
 	var svg;
+	
+	// a helper function for consistently coloring nodes by using a hashing of their text label
 	var hasher = function (str) {
 		var offset = 104;
-		var slope = 17.0/7.0;
+		var slope = 17.0 / 7.0;
 		var cycle = palette.length;
-		var normal = str.toUpperCase().replace(/^[A-Z]/g,'');
+		var normal = str.toUpperCase().replace(/^[A-Z]/g, '');
 		var scores = [];
 		var score = 0;
 		normal.split('').forEach(function (el, i, a) {
-			scores.unshift(normal.charCodeAt(i)<<2);
-			if (i>1) {
-				scores.push(((normal.charCodeAt(i))^(normal.charCodeAt(i-1)<<1))^normal.charCodeAt(i-2)<<2);
+			scores.unshift(normal.charCodeAt(i) << 2);
+			if (i > 1) {
+				scores.push(((normal.charCodeAt(i)) ^ (normal.charCodeAt(i-1) << 1)) ^ normal.charCodeAt(i - 2) << 2);
 			}
 		});
 		scores.forEach(function (el, i) {
 			score += el * i * slope;
 		});
-		return Math.round(score+offset)%cycle;
+		return Math.round(score + offset) % cycle;
 	};
 
-	var create_chart = function (results) {
-
-	$('#chart').append('<div id="chart_panel" style="position:relative"></div>');
-	$('#chart_panel').empty();
+	// a helper function for creating node labels
 	var label_nodes = function (name, source, target, y, dy) {
 		d3.selectAll('#chart_panel').append('div')
-			.attr('class','nodelabel')
-			.style('padding','1px')
+			.attr('class', 'nodelabel')
+			.style('padding', '1px')
 			.style('width', '324px')
 			.style('font-weight', '600')
 			.style('font-family', 'sans-serif')
@@ -37,34 +37,53 @@
 			.style('text-align', source.length ? 'left' : 'right')
 			.style('text-shadow', '1px 1px 1px #dddddd')
 			.style('background-color', 'rgba(255,255,255,0.0)')
-			.style('position','absolute')
-			.style('left', function () {if (source.length) {return '100px'} else {return '660px'}})
-			.style('top', function () {return (dy + y - 2) + 'px'})
-			.html(function(d) {return '<span>' + name + '</span>'; });		
+			.style('position', 'absolute')
+			.style('left', function () {
+				if (source.length) {
+					return '100px';
+				} else {
+					return '660px';
+				}
+			})
+			.style('top', function () {
+				return (dy + y - 2) + 'px';
+			})
+			.html(function(d) {
+				return '<span>' + name + '</span>';
+			});
 	};
 
-		var graph = results[0];
-		var base = results[1];
+	// create the chart given a node/link map
+	var create_chart = function (chartconfig) {
+		// first get rid of the old chart if there already is one
+		$('#chart_panel').empty();
+
+		var graph = chartconfig[0];
+		var base = chartconfig[1];
 		var totstudents;
 		var fromtoboth = 'both';
 		switch (fromtoboth) {
 			case 'from':
-				totstudents = results[2];
+				totstudents = chartconfig[2];
 				break;
 			case 'to':
-				totstudents = results[3];
+				totstudents = chartconfig[3];
 				break;
 			default:
-				totstudents = results[4];
+				totstudents = chartconfig[4];
 		}
 
 		var margin = {top: 10, right: 30, bottom: 10, left: 30},
 			width = 1090 - margin.left - margin.right,
 			height = 320 + totstudents - margin.top - margin.bottom;
 
-		var formatNumber = d3.format(",.0f"),    // zero decimal places
-			format = function(d) { return formatNumber(d) + " " + units; },
-			color = function (n) {return palette[n%palette.length];};//d3.scale.category20();
+		var formatNumber = d3.format(",.0f");	// zero decimal places
+		var format = function(d) {
+			return formatNumber(d) + " " + units;
+		};
+		var color = function (n) {
+			return palette[n % palette.length];
+		};	//d3.scale.category20();
 
 		// append the svg canvas to the page
 		svg = d3.select("#chart_panel").append("svg")
@@ -115,9 +134,9 @@
 				return b.dy - a.dy;
 			});
 
-		// add the link titles
+		// add the link tooltip (titles)
 		var totemplate = '{v} of students graduating in {t}\nbegan as {s} students';
-		var fromtemplate = '{v} of students who began in {s}\ngraduated in {t}';
+		var fromtemplate = '{v} of graduating students who began in {s}\ngraduated in {t}';
 		link.append("title")
 			.text(function(d) {
 				if (d.source.name === d.target.name) {
@@ -141,57 +160,38 @@
 				}
 			});
 
-		// add in the nodes
+		// add in the nodes and their labels
 		var node = svg.append("g").selectAll(".node")
 			.data(graph.nodes)
 			.enter().append("g")
 			.attr("class", "node")
 			.attr("transform", function(d) { 
-				label_nodes(d.name, d.sourceLinks, d.targetLinks, d.y, d.dy/2);
+				label_nodes(d.name, d.sourceLinks, d.targetLinks, d.y, d.dy / 2);
 				return "translate(" + d.x + "," + d.y + ")";
 			});
-/*
-			.call(d3.behavior.drag()
-				.origin(function(d) {
-					return d;
-				})
-				.on("dragstart", function() { 
-					this.parentNode.appendChild(this); 
-				})
-				.on("drag", dragmove)
-			);
-*/
-		// add the rectangles for the nodes
-		node.append("rect")
-		.attr("height", function(d) {
-			return d.dy;
-		})
-		.attr("width", sankey.nodeWidth())
-		.style('fill', '#ddd')
-		.style("stroke", function(d) { 
-			return d3.rgb(d.color);
-		})
-		.append("title")
-		.text(function(d) { 
-			return d.name + "\n" + format(d.value);
-		});
 
-		// add in the title for the nodes
-/*
-		// the function for moving the nodes
-		function dragmove(d) {
-		d3.select(this).attr("transform", 
-			"translate(" + d.x + "," + (
-					d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))
-				) + ")");
-		sankey.relayout();
-		link.attr("d", path);
-		}
-*/
+		// add the rectangles and tooltip (titles) for the nodes
+		node.append("rect")
+			.attr("height", function(d) {
+				return d.dy;
+			})
+			.attr("width", sankey.nodeWidth())
+			.style('fill', '#ddd')
+			.style("stroke", function(d) { 
+				return d3.rgb(d.color);
+			})
+			.append("title")
+			.text(function(d) { 
+				return d.name + "\n" + format(d.value);
+			});
+
 		//$('.svg_chart_container').css({"background-color": "#ffffff"})
 	}; // end create_chart
 
 	var init = function () { // initially and on change of campus
+		// assuming it does not already exist
+		$('#chart').append('<div id="chart_panel" style="position:relative"></div>');
+
 		var results = [
 			{"nodes":[
 				{"node":0,"name":"Undeclared"},
