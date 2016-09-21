@@ -1,6 +1,8 @@
 (function () {
 	'use strict';
 
+	var campusname, fromcode, tocode, threshold, fromtoboth, log, cs, campus_list;
+
 	var ingest = function (nodelist, threshold) {
 		var gnodes = [];
 		var glinks = []
@@ -269,7 +271,7 @@
 	};
 
 	var config_chart = function (filter_campus, filter_college, filter_major, callback) { // initially and on change of campus
-		var log = {'value': '', 'listto': [], 'listfrom': [], 'pivot': null, 'list': []};
+		log = {'value': '', 'listto': [], 'listfrom': [], 'pivot': null, 'list': []};
 
 		create_campus_list(function (result, config) {
 		});
@@ -338,13 +340,13 @@
 	};
 
 	var init = function () {
-		var campusname = 'East Bay';
-		var fromcode = 'buseco';
-		var tocode = 'busadm';
-		var threshold = 1;
-		var fromtoboth = 'both';
-		var log = {'value': '', 'listto': [], 'listfrom': [], 'pivot': null, 'list': []};
-		var cs = {
+		campusname = 'East Bay';
+		fromcode = 'buseco';
+		tocode = 'busadm';
+		threshold = 1;
+		fromtoboth = 'both';
+		log = {'value': '', 'listto': [], 'listfrom': [], 'pivot': null, 'list': []};
+		cs = {
 			'college_map': {},
 			'major_map': {},
 			'filter_campus': 'East Bay',
@@ -352,7 +354,7 @@
 			'filter_major': 'Business Administration',
 			'retained_data': null
 		};
-		var campus_list = [];
+		campus_list = [];
 
 		$('#campusselector').on('change', function (e) {
 			campusname = e.target.value;
