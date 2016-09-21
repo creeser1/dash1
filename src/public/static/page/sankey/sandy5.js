@@ -388,7 +388,7 @@
 		});
 
 		// create the chart on request, using current filter settings
-		$('#create_chart').on('click', function (e) {
+		$('#gobtn').on('click', function (e) {
 			e.preventDefault();
 			e.stopPropagation();
 			config_chart(cs.filter_campus, cs.filter_college, cs.filter_major, function (chart_config) {
