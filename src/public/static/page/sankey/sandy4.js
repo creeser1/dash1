@@ -254,7 +254,8 @@
 		];
 		create_chart(results);
 		$('body').on('create_chart', function (e, obj) {
-			console.log(JSON.stringify([e, obj]));
+			console.log(JSON.stringify(obj));
+			create_chart(obj.chart_config);
 		});
 	};
 	init();
