@@ -101,6 +101,8 @@ $(tinymce.init({
 										if (typeof(Storage) !== "undefined") {
 											localStorage.setItem('ses', ses);
 										}
+										// use current state of content
+										content = tinymce.activeEditor.getContent();
 										sendData(content, description, status, ses);
 									} else {
 										$('#loginform .errmsg').text(response.responseText);
