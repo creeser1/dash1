@@ -19,7 +19,7 @@ class PageConfigurator
 		$json = $page_settings->getContent();
 		$page = json_decode($json, true);
 		$json_err = json_last_error();
-		if ($json_err != 0) {
+		if ($json_err !== 0) {
 			$this->logger->addInfo($json_err);
 		} /* else */
 			/* assert $page has at least one of tabs and each has content */
@@ -49,7 +49,7 @@ class PageConfigurator
 		$json = $page_settings->getContent();
 		$page = json_decode($json, true);
 		$json_err = json_last_error();
-		if ($json_err != 0) {
+		if ($json_err !== 0) {
 			$this->logger->addInfo($json_err);
 		} /* else */
 			/* assert $page has at least one of tabs and each has content */
@@ -97,12 +97,12 @@ class PageConfigurator
 		$tab_data['handle'] = $tab_obj->getHandle();
 		$tab_data['locator'] = $tab_obj->getLocator();
 		$tab_data['version'] = $tab_obj->getVersion(); /* get latest version and increment */
-		if (array_key_exists('status', $json_array) and $json_array['status'] == 'published') {
-			$tab_data['status'] = 1; /* 1,2,... or draft, published, ... */;
+		if (array_key_exists('status', $json_array) and $json_array['status'] === 'published') {
+			$tab_data['status'] = 1; /* 1-published, 2-draft, ... */;
 		} else {
-			$tab_data['status'] = 2; /* 1,2,... or draft, published, ... */;
+			$tab_data['status'] = 2; /* 1-published, 2-draft, ... */;
 		}
-		$dirty = ($tab_data['content'] != $tab_obj->getContent() or $tab_data['status'] != $tab_obj->getStatus());
+		$dirty = ($tab_data['content'] !== $tab_obj->getContent() or $tab_data['status'] !== $tab_obj->getStatus());
 		/*$tab_data['status'] = $tab_obj->getStatus();*/ /* 1,2,... or draft, published, ... */;
 		$tab_data['editor'] = $username; 
 		//$tab_obj->getEditor(); /* current authenticated username */
