@@ -329,7 +329,7 @@
 					log.list = list;
 					var results = ingest(log.list, threshold);
 					console.log(JSON.stringify(log.list));
-					callback(results);
+					callback([results, log.list]);
 				});
 			});
 		});
@@ -340,38 +340,16 @@
 		console.log(JSON.stringify(config));
 	};
 
-	var build_table = function (data, major_map, college_map) {
+	var build_table = function (data) {
 		var row_tpl = '\n\n<tr><td>{enrolled}</td><td>{graduated}</td><td>{count}</td></tr>';
 		var rows = [];		
 		rows.push('<table class="data1">');
-
-		// add rows for enrolled as
-		var enrolled_majors = Object.keys(data.enrolled);
-		enrolled_majors.forEach(function (code) {
-			var item = data.enrolled[code];
-			item.forEach(function (major) {
-				if (major_map[major[1]] === cs.filter_major && college_map[major[1]] === cs.filter_college) {
-					rows.push(
-						row_tpl.replace('{enrolled}', major_map[major[1]])
-							.replace('{graduated}', major_map[major[0]])
-							.replace('{count}', major[2])
-					);
-					//rows.push('\n\n<tr><td> enrolled as </td><td>' +  major_map[major[1]] + '</td><td>' + college_map[major[1]] +  '</td><td> graduated as </td><td>' + major_map[major[0]] + '</td><td>' + college_map[major[0]] + '</td><td>' + major[2] + '</td></tr>');
-				}
-			});
-		});
-
-		// add rows for graduated as (except where a repeat of above having enrolled = graduated)
-		var graduation_majors = Object.keys(data.graduation);
-		graduation_majors.forEach(function (code) {
-			var item = data.graduation[code];
-			item.forEach(function (major) {
-				if (major_map[major[0]] === cs.filter_major && college_map[major[0]] === cs.filter_college) {
-					if (major_map[major[1]] !== major_map[major[0]]) {
-						rows.push(row_tpl.replace('{enrolled}', major_map[major[1]]).replace('{graduated}', major_map[major[0]]).replace('{count}', major[2]));
-					}
-				}
-			});
+		data.forEach(function (row) {
+			rows.push(
+				row_tpl.replace('{enrolled}', row.Source)
+					.replace('{graduated}', row.Destination)
+					.replace('{count}', row.Students)
+			
 		});
 
 		rows.push('</table>');
@@ -423,7 +401,8 @@
 
 		// create the chart initially, using default filters
 		config_chart(cs.filter_campus, cs.filter_college, cs.filter_major, function (chart_config) {
-			create_chart(chart_config);
+			console.log(build_table(chart_config[1]));
+			create_chart(chart_config[0]);
 		});
 
 		// create the chart on request, using current filter settings
@@ -431,7 +410,8 @@
 			e.preventDefault();
 			e.stopPropagation();
 			config_chart(cs.filter_campus, cs.filter_college, cs.filter_major, function (chart_config) {
-				$('body').trigger('create_chart', {'chart_config': chart_config});
+				console.log(build_table(chart_config[1]));
+				$('body').trigger('create_chart', {'chart_config': chart_config[0]});
 				//create_chart(chart_config);
 			});
 		});
