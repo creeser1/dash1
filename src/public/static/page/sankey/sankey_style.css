@@ -87,7 +87,7 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 	width:400px;
 }
 
-#migration_table tr td:nth-child(3) {
+#migration_table tr td:nth-child(3), #migration_table tr th:nth-child(3) {
 	text-align: right;
 	width:100px;
 }
