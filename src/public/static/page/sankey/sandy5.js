@@ -349,7 +349,7 @@
 				row_tpl.replace('{enrolled}', row.Source)
 					.replace('{graduated}', row.Destination)
 					.replace('{count}', row.Students)
-			
+			);
 		});
 
 		rows.push('</table>');
