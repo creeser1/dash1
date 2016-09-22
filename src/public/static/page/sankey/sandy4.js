@@ -40,9 +40,9 @@
 			.style('position', 'absolute')
 			.style('left', function () {
 				if (source.length) {
-					return '105px'; // left labels
+					return '100px'; // left labels
 				} else {
-					return '670px'; // right labels
+					return '668px'; // right labels
 				}
 			})
 			.style('top', function () {
