@@ -13,13 +13,13 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 }
 
 #migrations_chart .node rect {
-  cursor: move;
-  fill-opacity: .9;
-  shape-rendering: crispEdges;
+	cursor: move;
+	fill-opacity: .9;
+	shape-rendering: crispEdges;
 }
 
 #migrations_chart .nodelabel {
-  pointer-events: none;
+	pointer-events: none;
   font-weight:600;
   display:inline-block;
   background:#fff;
@@ -27,13 +27,13 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 }
 
 #migrations_chart .link {
-  fill: none;
-  stroke: #000;
-  stroke-opacity: .4;
+	fill: none;
+	stroke: #000;
+	stroke-opacity: .4;
 }
 
 #migrations_chart .link:hover {
-  stroke-opacity: .8;
+	stroke-opacity: .8;
 }
 
 
@@ -68,5 +68,5 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 }
 
 #migration_table table tr:nth-child(odd) {
-	backgound-color:#ddd;
+	background: #ddd;
 }
