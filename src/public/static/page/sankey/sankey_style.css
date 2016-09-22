@@ -35,3 +35,7 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 #chart_panel p {
 	height:1500px;
 }
+
+#migrations_chart {
+	position:relative;
+}

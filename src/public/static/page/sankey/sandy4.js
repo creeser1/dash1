@@ -190,7 +190,7 @@
 
 	var init = function () { // initially and on change of campus
 		// assuming it does not already exist
-		$('#chart').append('<div id="chart_panel" style="position:relative"></div>');
+		$('#migrations_chart').append('<div id="chart_panel" style="position:relative"></div>');
 		/*
 		var results = [
 			{"nodes":[
