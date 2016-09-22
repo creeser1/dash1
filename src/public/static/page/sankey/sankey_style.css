@@ -41,12 +41,10 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 
 #migration_chart_labels {
 	position: relative;
-	background-color:#fdd;
 	width:100%:
 }
 
 #migration_chart_labels span {
-	background-color:#ddd;
 	display: inline-block;
 	position: absolute;
 	width: 150px;
@@ -63,6 +61,6 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 }
 
 #migration_chart_labels span:nth-child(2) {
-	right: 35px;
+	right: 38px;
 	text-align: right;
 }
