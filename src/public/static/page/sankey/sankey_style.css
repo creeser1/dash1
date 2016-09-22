@@ -69,9 +69,8 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 	margin: 15px auto;
 }
 
-#migration_table body {
+#migration_table table body {
 	height: 300px;
-	max-height: 300px;
 	overflow: auto;
 }
 
