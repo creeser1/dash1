@@ -65,8 +65,9 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 
 #migration_table table {
 	width:90%;
+	border-collapse: collapse;
 }
 
 #migration_table table tr:nth-child(odd) {
-	background: #ddd;
+	border: 1px solid #111;
 }
