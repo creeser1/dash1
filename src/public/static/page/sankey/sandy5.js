@@ -400,12 +400,12 @@
 		});
 
 		// create the chart initially, using default filters
-		//config_chart(cs.filter_campus, cs.filter_college, cs.filter_major, function (chart_config) {
-		//	$('#table').empty();
-		//	$('<div id="migration_table">' + build_table(chart_config[1]) + '</div>').appendTo('#table');
-		//	//create_chart(chart_config[0]);
-		//	$('body').trigger('create_chart', {'chart_config': chart_config[0]});
-		//});
+		config_chart(cs.filter_campus, cs.filter_college, cs.filter_major, function (chart_config) {
+			$('#table').empty();
+			$('<div id="migration_table">' + build_table(chart_config[1]) + '</div>').appendTo('#table');
+			//create_chart(chart_config[0]);
+			$('body').trigger('create_chart', {'chart_config': chart_config[0]});
+		});
 
 		// create the chart on request, using current filter settings
 		$('#gobtn').on('click', function (e) {

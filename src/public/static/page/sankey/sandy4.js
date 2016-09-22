@@ -258,6 +258,6 @@
 			create_chart(obj.chart_config);
 		});
 	};
-	//init();
+	init();
 
 }());
