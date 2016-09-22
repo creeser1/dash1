@@ -83,9 +83,14 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 }
 
 #migration_table tr td, #migration_table tr th {
-	border: 2px solid #aaa;
+	border: 2px solid #ddd;
+	border-top:none;
 	padding: 2px 7px;
 	width: 400px;
+}
+
+#migration_table tr th {
+	border-top: 2px solid #ddd;
 }
 
 #migration_table tr td:nth-child(3), #migration_table tr th:nth-child(3) {
