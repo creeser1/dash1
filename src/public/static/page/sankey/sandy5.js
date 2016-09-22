@@ -328,7 +328,7 @@
 
 					log.list = list;
 					var results = ingest(log.list, threshold);
-					console.log(JSON.stringify(results));
+					console.log(JSON.stringify(log.list));
 					callback(results);
 				});
 			});
