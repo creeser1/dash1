@@ -335,10 +335,10 @@
 		});
 	};
 
-	var create_chart = function (config) {
+	//var create_chart = function (config) {
 		// stub for chart creation
-		console.log(JSON.stringify(config));
-	};
+	//	console.log(JSON.stringify(config));
+	//};
 
 	var build_table = function (data) {
 		var row_tpl = '\n\n<tr><td>{enrolled}</td><td>{graduated}</td><td>{count}</td></tr>';
@@ -416,7 +416,7 @@
 				$('#table').empty();
 				$('<div id="migration_table">' + build_table(chart_config[1]) + '</div>').appendTo('#table');
 				$('body').trigger('create_chart', {'chart_config': chart_config[0]});
-				//create_chart(chart_config);
+				//create_chart(chart_config[0]);
 			});
 		});
 		$('#gobtn').click();

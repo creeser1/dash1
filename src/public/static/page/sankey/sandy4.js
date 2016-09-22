@@ -1,6 +1,7 @@
 (function () {
 	'use strict';
 
+	var chart_target = '#migrations_chart';
 	var units = "Students";
 	var palette = ['#aa6', '#f90', '#d6a', '#a6d', '#f0f', '#6da', '#ad6', '#a66', '#a6a', '#66a', '#6ad', '#0dc', '#b3a', '#0df', '#6a0', '#f3a', '#6a6', '#6aa', '#da6', '#00f', '#0af', '#f00', '#0f3', '#60f', '#fe0', '#06a'];
 	var svg;
@@ -56,7 +57,7 @@
 	// create the chart given a node/link map
 	var create_chart = function (chartconfig) {
 		// first get rid of the old chart if there already is one
-		$('#chart_panel').empty();
+		$(chart_target).empty();
 
 		var graph = chartconfig[0];
 		var base = chartconfig[1];
@@ -86,7 +87,7 @@
 		};	//d3.scale.category20();
 
 		// append the svg canvas to the page
-		svg = d3.select("#chart_panel").append("svg")
+		svg = d3.select(chart_target).append("svg")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
 			.attr("class", "svg_chart_container")
@@ -190,73 +191,75 @@
 
 	var init = function () { // initially and on change of campus
 		// assuming it does not already exist
-		$('#chart').append('<div id="chart_panel" style="position:relative"></div>');
-		/*
-		var results = [
-			{"nodes":[
-				{"node":0,"name":"Undeclared"},
-				{"node":1,"name":"Computer Science"},
-				{"node":2,"name":"Engineering"},
-				{"node":3,"name":"Pre-Nursing"},
-				{"node":4,"name":"Economics"},
-				{"node":5,"name":"Biology"},
-				{"node":6,"name":"Kinesiology, Physical Education"},
-				{"node":7,"name":"Criminal Justice"},
-				{"node":8,"name":"Mathematics"},
-				{"node":9,"name":"Art"},
-				{"node":10,"name":"Other"},
-				{"node":11,"name":"Business Administration"},
-				{"node":12,"name":"Business Administration"},
-				{"node":13,"name":"Criminal Justice"},
-				{"node":14,"name":"Communications"},
-				{"node":15,"name":"Recreation Management"},
-				{"node":16,"name":"Health Science"},
-				{"node":17,"name":"Human Development"},
-				{"node":18,"name":"Art"},
-				{"node":19,"name":"International Studies, Global Studies"},
-				{"node":20,"name":"Environmental Studies, Environmental Science"},
-				{"node":21,"name":"Political Science, Government"},
-				{"node":22,"name":"Liberal Studies"},
-				{"node":23,"name":"Economics"},
-				{"node":24,"name":"Psychology"},
-				{"node":25,"name":"Other"}
-				],"links":[
-				{"source":0,"target":12,"value":120,"fmt":"36%"},
-				{"source":1,"target":12,"value":11,"fmt":"3%"},
-				{"source":2,"target":12,"value":10,"fmt":"3%"},
-				{"source":3,"target":12,"value":9,"fmt":"3%"},
-				{"source":4,"target":12,"value":7,"fmt":"2%"},
-				{"source":5,"target":12,"value":5,"fmt":"1%"},
-				{"source":6,"target":12,"value":4,"fmt":"1%"},
-				{"source":7,"target":12,"value":4,"fmt":"1%"},
-				{"source":8,"target":12,"value":3,"fmt":"< 1%"},
-				{"source":9,"target":12,"value":3,"fmt":"< 1%"},
-				{"source":10,"target":12,"value":11,"fmt":"3%"},
-				{"source":11,"target":12,"value":150,"fmt":"45%,67%"},
-				{"source":11,"target":13,"value":10,"fmt":"4%"},
-				{"source":11,"target":14,"value":9,"fmt":"4%"},
-				{"source":11,"target":15,"value":9,"fmt":"4%"},
-				{"source":11,"target":16,"value":6,"fmt":"3%"},
-				{"source":11,"target":17,"value":5,"fmt":"2%"},
-				{"source":11,"target":18,"value":4,"fmt":"2%"},
-				{"source":11,"target":19,"value":3,"fmt":"1%"},
-				{"source":11,"target":20,"value":3,"fmt":"1%"},
-				{"source":11,"target":21,"value":3,"fmt":"1%"},
-				{"source":11,"target":22,"value":3,"fmt":"1%"},
-				{"source":11,"target":23,"value":3,"fmt":"1%"},
-				{"source":11,"target":24,"value":3,"fmt":"1%"},
-				{"source":11,"target":25,"value":13,"fmt":"6%"}
-			]},
-			"Business Administration",
-			224,
-			337,
-			561
-		];
-		create_chart(results);*/
-		$('body').on('create_chart', function (e, obj) {
-			//console.log(JSON.stringify(obj));
-			create_chart(obj.chart_config);
-		});
+		//$('#chart').append('<div id="chart_panel" style="position:relative"></div>');
+		if ($(chart_target)) {
+			/*
+			var results = [
+				{"nodes":[
+					{"node":0,"name":"Undeclared"},
+					{"node":1,"name":"Computer Science"},
+					{"node":2,"name":"Engineering"},
+					{"node":3,"name":"Pre-Nursing"},
+					{"node":4,"name":"Economics"},
+					{"node":5,"name":"Biology"},
+					{"node":6,"name":"Kinesiology, Physical Education"},
+					{"node":7,"name":"Criminal Justice"},
+					{"node":8,"name":"Mathematics"},
+					{"node":9,"name":"Art"},
+					{"node":10,"name":"Other"},
+					{"node":11,"name":"Business Administration"},
+					{"node":12,"name":"Business Administration"},
+					{"node":13,"name":"Criminal Justice"},
+					{"node":14,"name":"Communications"},
+					{"node":15,"name":"Recreation Management"},
+					{"node":16,"name":"Health Science"},
+					{"node":17,"name":"Human Development"},
+					{"node":18,"name":"Art"},
+					{"node":19,"name":"International Studies, Global Studies"},
+					{"node":20,"name":"Environmental Studies, Environmental Science"},
+					{"node":21,"name":"Political Science, Government"},
+					{"node":22,"name":"Liberal Studies"},
+					{"node":23,"name":"Economics"},
+					{"node":24,"name":"Psychology"},
+					{"node":25,"name":"Other"}
+					],"links":[
+					{"source":0,"target":12,"value":120,"fmt":"36%"},
+					{"source":1,"target":12,"value":11,"fmt":"3%"},
+					{"source":2,"target":12,"value":10,"fmt":"3%"},
+					{"source":3,"target":12,"value":9,"fmt":"3%"},
+					{"source":4,"target":12,"value":7,"fmt":"2%"},
+					{"source":5,"target":12,"value":5,"fmt":"1%"},
+					{"source":6,"target":12,"value":4,"fmt":"1%"},
+					{"source":7,"target":12,"value":4,"fmt":"1%"},
+					{"source":8,"target":12,"value":3,"fmt":"< 1%"},
+					{"source":9,"target":12,"value":3,"fmt":"< 1%"},
+					{"source":10,"target":12,"value":11,"fmt":"3%"},
+					{"source":11,"target":12,"value":150,"fmt":"45%,67%"},
+					{"source":11,"target":13,"value":10,"fmt":"4%"},
+					{"source":11,"target":14,"value":9,"fmt":"4%"},
+					{"source":11,"target":15,"value":9,"fmt":"4%"},
+					{"source":11,"target":16,"value":6,"fmt":"3%"},
+					{"source":11,"target":17,"value":5,"fmt":"2%"},
+					{"source":11,"target":18,"value":4,"fmt":"2%"},
+					{"source":11,"target":19,"value":3,"fmt":"1%"},
+					{"source":11,"target":20,"value":3,"fmt":"1%"},
+					{"source":11,"target":21,"value":3,"fmt":"1%"},
+					{"source":11,"target":22,"value":3,"fmt":"1%"},
+					{"source":11,"target":23,"value":3,"fmt":"1%"},
+					{"source":11,"target":24,"value":3,"fmt":"1%"},
+					{"source":11,"target":25,"value":13,"fmt":"6%"}
+				]},
+				"Business Administration",
+				224,
+				337,
+				561
+			];
+			create_chart(results);*/
+			$('body').on('create_chart', function (e, obj) {
+				//console.log(JSON.stringify(obj));
+				create_chart(obj.chart_config);
+			});
+		}
 	};
 	init();
 
