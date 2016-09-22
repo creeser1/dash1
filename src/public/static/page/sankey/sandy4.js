@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var chart_target = '#migrations_chart figure';
+	var chart_target = $('#migrations_chart figure').get(0);
 	var units = "Students";
 	var palette = ['#aa6', '#f90', '#d6a', '#a6d', '#f0f', '#6da', '#ad6', '#a66', '#a6a', '#66a', '#6ad', '#0dc', '#b3a', '#0df', '#6a0', '#f3a', '#6a6', '#6aa', '#da6', '#00f', '#0af', '#f00', '#0f3', '#60f', '#fe0', '#06a'];
 	var svg;
@@ -193,7 +193,7 @@
 		// assuming it does not already exist
 		//$('#chart').append('<div id="chart_panel" style="position:relative"></div>');
 		if ($(chart_target)) {
-			console.log($(chart_target));
+			console.log(chart_target);
 			/*
 			var results = [
 				{"nodes":[
