@@ -345,7 +345,7 @@
 		var row_tpl = '\n\n<tr><td>{enrolled}</td><td>{graduated}</td><td>{count}</td></tr>';
 		var rows = [];		
 		rows.push('<table class="data1">');
-		rows.push('<thead><th>Major at Entry</th><th>Major at Graduation</th><th># Students</th></thead><tbody>');
+		rows.push('<thead><tr><th>Major at Entry</th><th>Major at Graduation</th><th># Students</th></tr></thead><tbody>');
 		data.forEach(function (row) {
 			rows.push(
 				row_tpl.replace('{enrolled}', row.Source)
