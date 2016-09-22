@@ -27,7 +27,7 @@
 
 	// a helper function for creating node labels
 	var label_nodes = function (name, source, target, y, dy) {
-		d3.selectAll('#chart_panel').append('div')
+		d3.selectAll('#migrations_chart').append('div')
 			.attr('class', 'nodelabel')
 			.style('padding', '1px')
 			.style('width', '324px')
@@ -56,7 +56,7 @@
 	// create the chart given a node/link map
 	var create_chart = function (chartconfig) {
 		// first get rid of the old chart if there already is one
-		$('#chart_panel').empty();
+		$('#migrations_chart').empty();
 
 		var graph = chartconfig[0];
 		var base = chartconfig[1];
@@ -86,7 +86,7 @@
 		};	//d3.scale.category20();
 
 		// append the svg canvas to the page
-		svg = d3.select("#chart_panel").append("svg")
+		svg = d3.select("#migrations_chart").append("svg")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
 			.attr("class", "svg_chart_container")
@@ -190,7 +190,7 @@
 
 	var init = function () { // initially and on change of campus
 		// assuming it does not already exist
-		$('#migrations_chart').append('<div id="chart_panel" style="position:relative"></div>');
+		//$('#migrations_chart').append('<div id="chart_panel" style="position:relative"></div>');
 		/*
 		var results = [
 			{"nodes":[
