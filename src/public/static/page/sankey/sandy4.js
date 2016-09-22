@@ -193,6 +193,7 @@
 		// assuming it does not already exist
 		//$('#chart').append('<div id="chart_panel" style="position:relative"></div>');
 		if ($(chart_target)) {
+			console.log($(chart_target));
 			/*
 			var results = [
 				{"nodes":[
