@@ -4,6 +4,7 @@
 	var campusname, fromcode, tocode, threshold, fromtoboth, log, cs, campus_list;
 
 	var ingest = function (nodelist, threshold) {
+		threshold = 1; // remove user choice, just use count of 9th ranked as threshold
 		var gnodes = [];
 		var glinks = []
 		var map = {};
@@ -391,9 +392,9 @@
 			create_fromtoboth_selector();
 		});
 			
-		$('#otherselector').on('change', function (e) {
-			threshold = parseInt(e.target.value, 10);
-		});
+		//$('#otherselector').on('change', function (e) {
+		//	threshold = parseInt(e.target.value, 10);
+		//});
 
 		$('#fromtobothselector').on('change', function (e) {
 			fromtoboth = e.target.value;
