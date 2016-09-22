@@ -7,17 +7,14 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 .title-bar a {position:absolute; left:10px; top:10px;}
 .controls{display:block;max-height:150px;padding:0 0 10px 0}
 
-#migrations_chart {
-	position:relative;
-}
 
-#migrations_chart .node rect {
+#chart_panel .node rect {
   cursor: move;
   fill-opacity: .9;
   shape-rendering: crispEdges;
 }
 
-#migrations_chart .nodelabel {
+#chart_panel .nodelabel {
   pointer-events: none;
   font-weight:600;
   display:inline-block;
@@ -25,31 +22,16 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
   line-height:20px;
 }
 
-#migrations_chart .link {
+#chart_panel .link {
   fill: none;
   stroke: #000;
   stroke-opacity: .4;
 }
 
-#migrations_chart .link:hover {
+#chart_panel .link:hover {
   stroke-opacity: .8;
 }
 
-#migrations_chart figure {
+#chart_panel p {
 	height:1500px;
-}
-
-#migrations_chart p.migrations_chart_labels {
-	height:20px;
-}
-
-#migrations_chart p.migrations_chart_labels span {
-	width: 100px;
-	background-color:#eee;
-	display: inline-block;
-	text-align:left;
-}
-
-#migrations_chart p.migrations_chart_labels span:nth-child(2) {
-	text-align:right;
 }
