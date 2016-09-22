@@ -66,9 +66,14 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 #migration_table table {
 	width:90%;
 	border-collapse: collapse;
+	margin: 15px auto;
 }
 
 #migration_table table tr, #migration_table tr td {
 	border: 1px solid #111;
 	padding: 2px 7px;
+}
+
+#migration_table tr td:nth-child(3) {
+	text-align: right;
 }
