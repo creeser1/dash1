@@ -8,7 +8,7 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 .controls{display:block;max-height:150px;padding:0 0 10px 0}
 
 #migrations_chart {
-	margin:30px 0 20px 0;
+	margin:25px 0 15px 0;
 	position:relative;
 }
 
@@ -50,7 +50,7 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 	font-family: sans-serif;
 	font-weight: 600;
 	font-size: 14px;
-	top: -15px;
+	top: -20px;
 }
 
 #migration_chart_labels span:nth-child(1) {
