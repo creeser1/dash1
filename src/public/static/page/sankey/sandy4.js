@@ -191,7 +191,7 @@
 	var init = function () { // initially and on change of campus
 		// assuming it does not already exist
 		$('#chart').append('<div id="chart_panel" style="position:relative"></div>');
-
+		/*
 		var results = [
 			{"nodes":[
 				{"node":0,"name":"Undeclared"},
@@ -252,9 +252,9 @@
 			337,
 			561
 		];
-		create_chart(results);
+		create_chart(results);*/
 		$('body').on('create_chart', function (e, obj) {
-			console.log(JSON.stringify(obj));
+			//console.log(JSON.stringify(obj));
 			create_chart(obj.chart_config);
 		});
 	};
