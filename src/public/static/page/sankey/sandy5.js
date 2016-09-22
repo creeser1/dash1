@@ -401,7 +401,8 @@
 
 		// create the chart initially, using default filters
 		config_chart(cs.filter_campus, cs.filter_college, cs.filter_major, function (chart_config) {
-			console.log(build_table(chart_config[1]));
+			$('#table').empty();
+			$('<div id="migration_table">' + build_table(chart_config[1]) + '</div>').appendTo('#table');
 			create_chart(chart_config[0]);
 		});
 
@@ -410,7 +411,9 @@
 			e.preventDefault();
 			e.stopPropagation();
 			config_chart(cs.filter_campus, cs.filter_college, cs.filter_major, function (chart_config) {
-				console.log(build_table(chart_config[1]));
+				//console.log(build_table(chart_config[1]));
+				$('#table').empty();
+				$('<div id="migration_table">' + build_table(chart_config[1]) + '</div>').appendTo('#table');
 				$('body').trigger('create_chart', {'chart_config': chart_config[0]});
 				//create_chart(chart_config);
 			});
