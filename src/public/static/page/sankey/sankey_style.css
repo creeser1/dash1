@@ -44,7 +44,7 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 	background-color:#fdd;
 }
 
-#migration_chart_labels span {
+#migration_chart_labels span:nth-child(2) {
 	background-color:#ddd;
 	display: inline-block;
 	position: absolute;
