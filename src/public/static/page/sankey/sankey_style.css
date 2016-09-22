@@ -45,22 +45,24 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 	width:100%:
 }
 
-#migration_chart_labels span:nth-child(1) {
+#migration_chart_labels span {
 	background-color:#ddd;
 	display: inline-block;
 	position: absolute;
 	width: 150px;
 	height: 20px;
-	left: 25px;
+	font-family: sans-serif;
+	font-weight: 600;
+	font-size: 14px;
+	top: -5px;
+}
+
+#migration_chart_labels span:nth-child(1) {
+	left: 20px;
 	text-align: left;
 }
 
 #migration_chart_labels span:nth-child(2) {
-	background-color:#ddd;
-	display: inline-block;
-	position: absolute;
-	width: 150px;
-	height: 20px;
-	right: 25px;
+	right: 30px;
 	text-align: right;
 }
