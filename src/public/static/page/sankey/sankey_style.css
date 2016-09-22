@@ -50,7 +50,6 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 	font-family: sans-serif;
 	font-weight: 600;
 	font-size: 14px;
-	line-height:2em;
 	top: -20px;
 }
 
@@ -85,7 +84,7 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 #migration_table tr td, #migration_table tr th {
 	border: 2px solid #ddd;
 	border-top:none;
-	padding: 2px 7px;
+	padding: 5px 10px;
 	width: 400px;
 }
 
