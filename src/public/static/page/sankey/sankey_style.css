@@ -38,3 +38,12 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 #migrations_chart p {
 	height:1500px;
 }
+
+#migration_chart_labels span {
+	background-color:#ddd;
+	display: inline-block;
+	width: 150px;
+	height: 20px;
+	margin:0 10px;
+	text-align: left;
+}
