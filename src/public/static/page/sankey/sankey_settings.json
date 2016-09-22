@@ -2,14 +2,49 @@
 	"app": "sankey",
 	"htmltitle": "CSU | Faculty Dashboard: What Paths Do They Follow?",
 	"title": "What Paths Do They Follow?",
-	"edittemplate": "tpl_facpath1",
-	"pagetemplate": "tpl_facpath2",
-	"style": "/static/page/sankey/all_style.css",
+	"edittemplate": "tpl_facpaths1",
+	"pagetemplate": "tpl_facpaths2",
+	"style": "/static/page/sankey/sankey_style.css",
 	"scripts": [
-		"/static/page/sankey/sankey.js",
-		"/static/page/sankey/sandy3.js"
+		"/static/global/js/sankey.js",
+		"/static/page/sankey/sandy4.js",
+		"/static/page/sankey/sandy5.js"
 	],
 	"controls":[{
+		"type": "select",
+		"id": "campusselector",
+		"details": [{
+			"option_value": "Dominguez Hills",
+			"option_text": "Dominguez Hills"
+		}, {
+			"option_value": "East Bay",
+			"option_text": "East Bay"
+		}, {
+			"option_value": "Long Beach",
+			"option_text": "Long Beach"
+		}, {
+			"option_value": "Los Angeles",
+			"option_text": "Los Angeles"
+		}, {
+			"option_value": "Monterey Bay",
+			"option_text": "Monterey Bay"
+		}, {
+			"option_value": "Northridge",
+			"option_text": "Northridge"
+		}, {
+			"option_value": "Pomona",
+			"option_text": "Pomona"
+		}, {
+			"option_value": "San Francisco",
+			"option_text": "San Francisco"
+		}, {
+			"option_value": "San Jose",
+			"option_text": "San Jose"
+		}, {
+			"option_value": "Sonoma",
+			"option_text": "Sonoma"
+		}]
+	}, {
 		"type": "select",
 		"id": "fromselector",
 		"details": [{
@@ -95,6 +130,10 @@
 			"option_value": "5",
 			"option_text": "Other aggregates majors with less than 5 students"
 		}]
+	}, {
+		"type": "button",
+		"id": "gobtn",
+		"text": "Go"
 	}],
 	"tabs": [{
 		"isactive": true,
@@ -116,10 +155,12 @@
 		"anchor": "method",
 		"embed": "sankey/method"
 	}, {
+		"iseditable": true,
 		"label": "Applying This Data",
 		"anchor": "applying",
 		"embed": "sankey/applying"
 	}, {
+		"iseditable": true,
 		"label": "Further Resources",
 		"anchor": "further",
 		"embed": "sankey/further"
