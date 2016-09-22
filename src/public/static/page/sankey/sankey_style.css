@@ -35,7 +35,7 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
   stroke-opacity: .8;
 }
 
-#migrations_chart p {
+#migrations_chart figure {
 	height:1500px;
 }
 

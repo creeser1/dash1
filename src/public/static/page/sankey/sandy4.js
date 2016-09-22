@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var chart_target = '#migrations_chart';
+	var chart_target = '#migrations_chart figure';
 	var units = "Students";
 	var palette = ['#aa6', '#f90', '#d6a', '#a6d', '#f0f', '#6da', '#ad6', '#a66', '#a6a', '#66a', '#6ad', '#0dc', '#b3a', '#0df', '#6a0', '#f3a', '#6a6', '#6aa', '#da6', '#00f', '#0af', '#f00', '#0f3', '#60f', '#fe0', '#06a'];
 	var svg;
@@ -28,7 +28,7 @@
 
 	// a helper function for creating node labels
 	var label_nodes = function (name, source, target, y, dy) {
-		d3.selectAll('#chart_panel').append('div')
+		d3.selectAll(chart_target).append('div')
 			.attr('class', 'nodelabel')
 			.style('padding', '1px')
 			.style('width', '324px')
