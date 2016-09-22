@@ -71,23 +71,23 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 
 #migration_table table thead {
 	display: block;
-	width:900px;
+	width: 900px;
 }
 
 #migration_table table tbody {
 	display: block;
 	max-height: 300px;
 	overflow: auto;
-	width:921px;
+	width: 921px;
 }
 
-#migration_table tr td , #migration_table tr th {
+#migration_table tr td, #migration_table tr th {
 	border: 1px solid #111;
 	padding: 2px 7px;
-	width:400px;
+	width: 400px;
 }
 
 #migration_table tr td:nth-child(3), #migration_table tr th:nth-child(3) {
 	text-align: right;
-	width:100px;
+	width: 100px;
 }
