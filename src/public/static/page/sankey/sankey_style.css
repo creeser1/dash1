@@ -70,8 +70,9 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 }
 
 #migration_table body {
+	height: 300px;
 	max-height: 300px;
-	overflow:auto;
+	overflow: auto;
 }
 
 #migration_table table tr, #migration_table tr td , #migration_table tr th {
