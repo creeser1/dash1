@@ -71,21 +71,21 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 
 #migration_table table thead {
 	display: block;
-	width: 900px;
+	width: 1050px;
 }
 
 #migration_table table tbody {
 	display: block;
 	max-height: 310px;
 	overflow: auto;
-	width: 921px;
+	width: 1071px;
 }
 
 #migration_table tr td, #migration_table tr th {
 	border: 2px solid #ddd;
 	border-top:none;
 	padding: 5px 10px;
-	width: 400px;
+	width: 450px;
 }
 
 #migration_table tr th {
@@ -94,5 +94,5 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 
 #migration_table tr td:nth-child(3), #migration_table tr th:nth-child(3) {
 	text-align: right;
-	width: 100px;
+	width: 150px;
 }
