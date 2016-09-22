@@ -39,11 +39,27 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 	height:1500px;
 }
 
+#migration_chart_labels {
+	position: relative;
+	background-color:#fdd;
+}
+
 #migration_chart_labels span {
 	background-color:#ddd;
 	display: inline-block;
+	position: absolute;
 	width: 150px;
 	height: 20px;
-	margin:0 10px;
+	left: 20px;
 	text-align: left;
+}
+
+#migration_chart_labels span:nth-child(2) {
+	background-color:#ddd;
+	display: inline-block;
+	position: absolute;
+	width: 150px;
+	height: 20px;
+	left: 20px;
+	text-align: right;
 }
