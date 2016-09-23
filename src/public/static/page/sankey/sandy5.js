@@ -210,7 +210,7 @@
 		return sel;
 	};
 
-	var create_migration_selector = function (list, selected) {
+	var create_migrations_selector = function (list, selected) {
 		var sel = selected;
 		if (!_.contains(list, selected)) {
 			sel = list[0];
