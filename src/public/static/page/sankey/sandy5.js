@@ -263,8 +263,8 @@
 								option_list.push('To Only');
 							}
 							console.log(JSON.stringify(option_list));
-							var selected_migrations = create_migrations_selector(option_list, cs.filter_migrations);
-							cs.filter_migrations = selected_migrations;
+							var selected_migrations = create_migrations_selector(option_list, cs.filter_migration);
+							cs.filter_migration = selected_migrations;
 							fromtoboth = selected_migrations; // Redundant?
 
 							console.log(selected_migrations);
