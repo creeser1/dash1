@@ -243,7 +243,9 @@
 					var selected_major = create_major_selector(major_name_list, cs.filter_major);
 					cs.filter_major = selected_major;
 					console.log(selected_major);
-					var major_code = _.find(major_map, selected_major);
+					var major_code = _.find(major_map, function (el) {
+						return el === selected_major;
+					});
 					console.log(JSON.stringify(major_map));
 					console.log(selected_major);
 					if (_.size(major_name_list)) {
