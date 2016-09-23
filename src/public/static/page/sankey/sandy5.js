@@ -227,7 +227,7 @@
 			if (_.size(college_map)) {
 				// populate the dropdown and return the item selected (same as before change of campus if possible)
 				var college_list = _.toArray(college_map);
-				console.log(JSON.stringify(college_list));
+				//console.log(JSON.stringify(college_list));
 				var selected_college = create_college_selector(college_list, cs.filter_college);
 				cs.filter_college = selected_college;
 				// given a campus and college_of at that campus, populate dropdown with majors
@@ -235,29 +235,33 @@
 					var major_code_list = _.filter(Object.keys(major_map), function (key) {
 						return (college_map[key] === selected_college);
 					});
-					console.log(JSON.stringify(major_code_list)); // the major codes
+					//console.log(JSON.stringify(major_code_list)); // the major codes
 					var major_name_list = _.filter(major_map, function (val, key) {
 						return (college_map[key] === selected_college);
 					});
-					console.log(JSON.stringify(major_name_list)); // the major codes
+					//console.log(JSON.stringify(major_name_list)); // the major codes
 					var selected_major = create_major_selector(major_name_list, cs.filter_major);
+					var major_code = _.find(major_map, selected_major);
 					cs.filter_major = selected_major;
+					console.log(selected_major);
 					if (_.size(major_name_list)) {
 						get_migrations(cs.filter_campus, function (migrations) {
 							var option_list = [];
-							if (_.size(migrations['enrolled'])) {
+							if (_.size(migrations.enrolled[major_code])) {
 								option_list.push('From Only');
-								if (_.size(migrations['graduation'])) {
+								if (_.size(migrations.graduation[major_code])) {
 									option_list.push('To Only');
 									option_list.push('Both From and To');
 								}
-							} else if (_.size(migrations['graduation'])) {
+							} else if (_.size(migrations.graduation[major_code])) {
 								option_list.push('To Only');
 							}
 							var selected_migrations = create_migrations_selector(option_list, cs.filter_migrations);
 							cs.filter_migrations = selected_migrations;
 							fromtoboth = selected_migrations; // Redundant?
-							console.log(JSON.stringify(migrations));
+							console.log(major_code);
+							console.log(JSON.stringify(migrations.enrolled[major_code]));
+							console.log(JSON.stringify(migrations.graduation[major_code]));
 							if (callback) {
 								callback(college_map, major_map, migrations);
 							}
