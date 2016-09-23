@@ -243,11 +243,11 @@
 					var selected_major = create_major_selector(major_name_list, cs.filter_major);
 					cs.filter_major = selected_major;
 					console.log(selected_major);
-					var major_code = _.find(major_map, function (el) {
-						return el === selected_major;
+					var major_code = _.find(Object.keys(major_map), function (key) {
+						return major_map[key] === selected_major;
 					});
 					console.log(JSON.stringify(major_map));
-					console.log(selected_major);
+					console.log(major_code);
 					if (_.size(major_name_list)) {
 						get_migrations(cs.filter_campus, function (migrations) {
 							var option_list = [];
