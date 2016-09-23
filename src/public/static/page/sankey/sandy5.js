@@ -256,6 +256,7 @@
 							}
 							var selected_migrations = create_migrations_selector(option_list, cs.filter_migrations);
 							cs.filter_migrations = selected_migrations;
+							fromtoboth = selected_migrations; // Redundant?
 							console.log(JSON.stringify(migrations));
 							if (callback) {
 								callback(college_map, major_map, migrations);
@@ -373,7 +374,8 @@
 			'major_map': {},
 			'filter_campus': 'East Bay',
 			'filter_college': 'College of Business and Economics',
-			'filter_major': 'Business Administration'
+			'filter_major': 'Business Administration',
+			'filter_migration': 'Both From and To'
 		};
 		campus_list = [];
 
