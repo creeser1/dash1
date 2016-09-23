@@ -59,7 +59,7 @@
 		var otherto = {'Source': 'Other', 'Destination': pivot, 'Students': 0, 'Formatted': '%', 'Flow': 'to'};
 		var otherfrom = {'Source': pivot, 'Destination': 'Other', 'Students': 0, 'Formatted': '%', 'Flow': 'from'};
 		nodelist.forEach(function (node, i, list) {
-			if (node.Flow === 'to' && (fromtoboth !== 'from' || node.Source === pivot)) {
+			if (node.Flow === 'to' && (fromtoboth !== 'From Only' || node.Source === pivot)) {
 				if (node.Students >= thresholdto) {
 					node.Formatted = Math.round(node.Students * 100.0 / totalto) + '%';
 					if ((node.Students * 100.0 / totalto) <= 0.95) { // find out how close to 1% to call 1% or <1%
@@ -83,7 +83,7 @@
 			otherlist.splice(-1, 0, otherto); // place 'Other' prior to last item (so far) which is the pivot item
 		}
 		nodelist.forEach(function (node, i, list) {
-			if (node.Flow === 'from' && fromtoboth !== 'to') {
+			if (node.Flow === 'from' && fromtoboth !== 'To Only') {
 				if (node.Students >= thresholdfrom) {
 					node.Formatted = Math.round(node.Students * 100.0 / totalfrom) + '%';
 					if ((node.Students * 100.0 / totalfrom) <= 0.95) { // find out how close to 1% to call 1% or <1%
@@ -366,22 +366,20 @@
 		fromcode = 'buseco';
 		tocode = 'busadm';
 		threshold = 1;
-		fromtoboth = 'both';
+		fromtoboth = 'Both From and To';
 		log = {'value': '', 'listto': [], 'listfrom': [], 'pivot': null, 'list': []};
 		cs = {
 			'college_map': {},
 			'major_map': {},
 			'filter_campus': 'East Bay',
 			'filter_college': 'College of Business and Economics',
-			'filter_major': 'Business Administration',
-			'retained_data': null
+			'filter_major': 'Business Administration'
 		};
 		campus_list = [];
 
 		$('#campusselector').on('change', function (e) {
 			campusname = e.target.value;
 			cs.filter_campus = campusname;
-			//create_college_selector(cs.major_map, cs.college_map, fromcode);
 			config_controls();
 		});
 
