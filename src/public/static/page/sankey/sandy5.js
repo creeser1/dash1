@@ -321,9 +321,9 @@
 					var studentsort1 = function (a, b) {
 						var cmp = parseInt(b.Students, 10) - parseInt(a.Students, 10);
 						if (cmp === 0) {
-							if (b.Source === a.Source) {
+							if (a.Source === b.Source) {
 								return 0;
-							} else if (b.Source > a.Source) {
+							} else if (a.Source > b.Source) {
 								return 1;
 							} else {
 								return -1;
@@ -334,9 +334,9 @@
 					var studentsort2 = function (a, b) {
 						var cmp = parseInt(b.Students, 10) - parseInt(a.Students, 10);
 						if (cmp === 0) {
-							if (b.Destination === a.Destination) {
+							if (a.Destination === b.Destination) {
 								return 0;
-							} else if (b.Destination > a.Destination) {
+							} else if (a.Destination > b.Destination) {
 								return 1;
 							} else {
 								return -1;
