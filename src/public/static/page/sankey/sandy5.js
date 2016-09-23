@@ -363,7 +363,7 @@
 		data.forEach(function (row) {
 			if ((cs.filter_migration === 'To Only' && row.Destination === cs.filter_major) ||
 			(cs.filter_migration === 'From Only' && row.Source === cs.filter_major) ||
-			(cs.filter_migration === 'Both From and To') {
+			(cs.filter_migration === 'Both From and To')) {
 				rows.push(
 					row_tpl.replace('{enrolled}', row.Source)
 						.replace('{graduated}', row.Destination)
