@@ -246,10 +246,12 @@
 					var major_code = _.find(Object.keys(major_map), function (key) {
 						return major_map[key] === selected_major;
 					});
-					console.log(JSON.stringify(major_map));
+					//console.log(JSON.stringify(major_map));
 					console.log(major_code);
-					if (_.size(major_name_list)) {
+					if (major_code !== undefined) {
 						get_migrations(cs.filter_campus, function (migrations) {
+							console.log(JSON.stringify(migrations.enrolled[major_code]));
+							console.log(JSON.stringify(migrations.graduation[major_code]));
 							var option_list = [];
 							if (_.size(migrations.enrolled[major_code])) {
 								option_list.push('From Only');
@@ -260,12 +262,12 @@
 							} else if (_.size(migrations.graduation[major_code])) {
 								option_list.push('To Only');
 							}
+							console.log(JSON.stringify(option_list));
 							var selected_migrations = create_migrations_selector(option_list, cs.filter_migrations);
 							cs.filter_migrations = selected_migrations;
 							fromtoboth = selected_migrations; // Redundant?
-							console.log(major_code);
-							console.log(JSON.stringify(migrations.enrolled[major_code]));
-							console.log(JSON.stringify(migrations.graduation[major_code]));
+
+							console.log(selected_migrations);
 							if (callback) {
 								callback(college_map, major_map, migrations);
 							}
