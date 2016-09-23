@@ -128,7 +128,7 @@
 			.on("mouseover", function (d) {
 				//console.log(d);
 				var c = color(d.target.name === base ? hasher(d.source.name, base) : hasher(d.target.name, base)); // by name hash
-				//console.log(c);
+				console.log(c);
 				this.style.stroke = d3.rgb(c).darker(1);
 			})
 			.on("mouseout", function (d) {
