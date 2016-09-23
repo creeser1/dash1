@@ -402,7 +402,7 @@
 		});
 
 		// create the chart initially, using default filters
-		config_controls(function (campus_map, majors_map, migrations) {
+		config_controls(function (college_map, majors_map, migrations) {
 			config_chart(college_map, major_map, migrations, function (chart_config) {
 				$('#table').empty();
 				$('<div id="migration_table">' + build_table(chart_config[1]) + '</div>').appendTo('#table');
@@ -414,7 +414,7 @@
 		$('#gobtn').on('click', function (e) {
 			e.preventDefault();
 			e.stopPropagation();
-			config_controls(function (campus_map, majors_map, migrations) {
+			config_controls(function (college_map, majors_map, migrations) {
 				config_chart(college_map, major_map, migrations, function (chart_config) {
 					$('#table').empty();
 					$('<div id="migration_table">' + build_table(chart_config[1]) + '</div>').appendTo('#table');
