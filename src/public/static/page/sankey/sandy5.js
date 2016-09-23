@@ -409,6 +409,7 @@
 
 		$('#fromtobothselector').on('change', function (e) {
 			fromtoboth = e.target.value;
+			cs.filter_migration = fromtoboth;
 		});
 
 		// create the chart initially, using default filters
