@@ -437,7 +437,7 @@
 				$('body').trigger('create_chart', {'chart_config': chart_config[0]});
 			});
 		});
-		$('#gobtn').click();
+		//$('#gobtn').click();
 	};
 	init();
 }());
