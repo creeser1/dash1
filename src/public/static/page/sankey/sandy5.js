@@ -318,16 +318,41 @@
 					});
 
 					var list = [];
-					var studentsort = function (a,b) {return parseInt(b.Students,10) - parseInt(a.Students,10);};
+					var studentsort1 = function (a, b) {
+						var cmp = parseInt(b.Students, 10) - parseInt(a.Students, 10);
+						if (cmp === 0) {
+							if (b.Source === a.Source) {
+								return 0;
+							} else if (b.Source > a.Source) {
+								return 1;
+							} else {
+								return -1;
+							}
+						}
+						return cmp;
+					};
+					var studentsort2 = function (a, b) {
+						var cmp = parseInt(b.Students, 10) - parseInt(a.Students, 10);
+						if (cmp === 0) {
+							if (b.Destination === a.Destination) {
+								return 0;
+							} else if (b.Destination > a.Destination) {
+								return 1;
+							} else {
+								return -1;
+							}
+						}
+						return cmp;
+					};
 					if (!!listto) {
-						listto.sort(studentsort);
+						listto.sort(studentsort1);
 						list = list.concat(listto);
 					}
 					if (!!pivot) {
 						list = list.concat(pivot);
 					}
 					if (!!listfrom) {
-						listfrom.sort(studentsort);
+						listfrom.sort(studentsort2);
 						list = list.concat(listfrom);
 					}
 
