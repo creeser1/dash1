@@ -242,16 +242,16 @@
 					//console.log(JSON.stringify(major_name_list)); // the major codes
 					var selected_major = create_major_selector(major_name_list, cs.filter_major);
 					cs.filter_major = selected_major;
-					console.log(selected_major);
+					//console.log(selected_major);
 					var major_code = _.find(Object.keys(major_map), function (key) {
 						return major_map[key] === selected_major;
 					});
 					//console.log(JSON.stringify(major_map));
-					console.log(major_code);
+					//console.log(major_code);
 					if (major_code !== undefined) {
 						get_migrations(cs.filter_campus, function (migrations) {
-							console.log(JSON.stringify(migrations.enrolled[major_code]));
-							console.log(JSON.stringify(migrations.graduation[major_code]));
+							//console.log(JSON.stringify(migrations.enrolled[major_code]));
+							//console.log(JSON.stringify(migrations.graduation[major_code]));
 							var option_list = [];
 							if (_.size(migrations.enrolled[major_code])) {
 								option_list.push('From Only');
@@ -262,12 +262,12 @@
 							} else if (_.size(migrations.graduation[major_code])) {
 								option_list.push('To Only');
 							}
-							console.log(JSON.stringify(option_list));
+							//console.log(JSON.stringify(option_list));
 							var selected_migrations = create_migrations_selector(option_list, cs.filter_migration);
 							cs.filter_migration = selected_migrations;
 							fromtoboth = selected_migrations; // Redundant?
 
-							console.log(selected_migrations);
+							//console.log(selected_migrations);
 							if (callback) {
 								callback(college_map, major_map, migrations);
 							}
