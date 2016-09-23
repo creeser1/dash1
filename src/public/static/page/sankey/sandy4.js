@@ -2,7 +2,7 @@
 	'use strict';
 
 	var units = "Students";
-	var palette = ['#aa6', '#f90', '#d6a', '#a6d', '#f0f', '#6da', '#a66', '#a6a', '#6ad', '#0dc', '#b3a', '#0df', '#6a0', '#f3a', '#6a6', '#6aa', '#da6', '#00f', '#0af', '#f00', '#0f3', '#60f', '#fe0', '#06a', '#66a', '#ad6', '#aaa'];
+	var palette = ['#aa6', '#ad6', '#d6a', '#a6d', '#f0f', '#6da', '#a66', '#a6a', '#6ad', '#0dc', '#b3a', '#0df', '#6a0', '#f3a', '#6a6', '#6aa', '#da6', '#00f', '#66a', '#f00', '#0f3', '#60f', '#fe0', '#06a', '#0af', '#f90', '#aaa'];
 	var svg;
 	
 	// a helper function for consistently coloring nodes by using a hashing of their text label
@@ -126,9 +126,9 @@
 				return d3.rgb(c);
 			})
 			.on("mouseover", function (d) {
-				console.log(d);
+				//console.log(d);
 				var c = color(d.target.name === base ? hasher(d.source.name, base) : hasher(d.target.name, base)); // by name hash
-				console.log(c);
+				//console.log(c);
 				this.style.stroke = d3.rgb(c).darker(1);
 			})
 			.on("mouseout", function (d) {
