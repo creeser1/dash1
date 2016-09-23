@@ -30,15 +30,15 @@
 				totalto += node.Students;
 				countto += 1;
 				if (countto === topten) {
-					tenthto = Math.max(2, countto);
-					thresholdto = node.Students;
+					tenthto = countto;
+					thresholdto = Math.max(2, node.Students);
 				}
 			} else if (node.Source !== node.Destination) {
 				totalfrom += node.Students;
 				countfrom += 1;
 				if (countfrom === topten) {
-					tenthfrom = Math.max(2, countfrom);
-					thresholdfrom = node.Students;
+					tenthfrom = countfrom;
+					thresholdfrom = Math.max(2, node.Students);
 				}
 			}
 			if (node.Source === node.Destination) {
