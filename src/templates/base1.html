@@ -57,6 +57,10 @@
 
 {% block pagescripts %}
 {% endblock %}
+{% if page.iseditable %}
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script src="/static/global/js/make_editable.js"></script>
+{% endif %}
 
 {% block analytics %}
 {% endblock %}
