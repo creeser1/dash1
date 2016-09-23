@@ -361,11 +361,15 @@
 		rows.push('<table class="data1">');
 		rows.push('<thead><tr><th>Major at Entry</th><th>Major at Graduation</th><th># Students</th></tr></thead><tbody>');
 		data.forEach(function (row) {
-			rows.push(
-				row_tpl.replace('{enrolled}', row.Source)
-					.replace('{graduated}', row.Destination)
-					.replace('{count}', row.Students)
-			);
+			if ((cs.filter_migration === 'To Only' && row.Destination === cs.filter_major) ||
+			(cs.filter_migration === 'From Only' && row.Source === cs.filter_major) ||
+			(cs.filter_migration === 'Both From and To') {
+				rows.push(
+					row_tpl.replace('{enrolled}', row.Source)
+						.replace('{graduated}', row.Destination)
+						.replace('{count}', row.Students)
+				);
+			}
 		});
 
 		rows.push('</tbody></table>');
