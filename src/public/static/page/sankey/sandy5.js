@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var campusname, fromcode, tocode, threshold, fromtoboth, log, cs, campus_list;
+	var campusname, fromcode, tocode, threshold, fromtoboth, log, cs, campus_list, datacache = {};
 
 	var ingest = function (nodelist, threshold) {
 		threshold = 1; // remove user choice, just use count of 9th ranked as threshold
@@ -30,14 +30,14 @@
 				totalto += node.Students;
 				countto += 1;
 				if (countto === topten) {
-					tenthto = countto;
+					tenthto = Math.max(2, countto);
 					thresholdto = node.Students;
 				}
 			} else if (node.Source !== node.Destination) {
 				totalfrom += node.Students;
 				countfrom += 1;
 				if (countfrom === topten) {
-					tenthfrom = countfrom;
+					tenthfrom = Math.max(2, countfrom);
 					thresholdfrom = node.Students;
 				}
 			}
@@ -51,7 +51,6 @@
 			thresholdto = threshold;
 			thresholdfrom = threshold;
 		}
-		//console.log(JSON.stringify([countto, countfrom, countpivot, tenthto, tenthfrom, thresholdto, thresholdfrom, threshold]));
 		if (nodelist[0].Flow === 'to') {
 			pivot = nodelist[0].Destination;
 		} else {
@@ -62,12 +61,12 @@
 		nodelist.forEach(function (node, i, list) {
 			if (node.Flow === 'to' && (fromtoboth !== 'from' || node.Source === pivot)) {
 				if (node.Students >= thresholdto) {
-					node.Formatted = Math.round(node.Students*100.0/totalto) + '%';
+					node.Formatted = Math.round(node.Students * 100.0 / totalto) + '%';
 					if ((node.Students * 100.0 / totalto) <= 0.95) { // find out how close to 1% to call 1% or <1%
 						node.Formatted = '< 1%';
 					}
 					if (node.Source === pivot) {
-						var nf = Math.round(node.Students*100.0/totalfrom) + '%';
+						var nf = Math.round(node.Students * 100.0 / totalfrom) + '%';
 						if ((node.Students * 100.0 / totalfrom) <= 0.95) { // find out how close to 1% to call 1% or <1%
 							nf = '< 1%';
 						}
@@ -76,24 +75,24 @@
 					otherlist.push(node);
 				} else {
 					otherto.Students += node.Students;
-					otherto.Formatted = Math.round(otherto.Students*100.0/totalto) + '%';
+					otherto.Formatted = Math.round(otherto.Students * 100.0 / totalto) + '%';
 				}
 			}
 		});
 		if (otherto.Students) {
-			otherlist.splice(-1,0,otherto); // place 'Other' prior to last item (so far) which is the pivot item
+			otherlist.splice(-1, 0, otherto); // place 'Other' prior to last item (so far) which is the pivot item
 		}
 		nodelist.forEach(function (node, i, list) {
 			if (node.Flow === 'from' && fromtoboth !== 'to') {
 				if (node.Students >= thresholdfrom) {
-					node.Formatted = Math.round(node.Students*100.0/totalfrom) + '%';
+					node.Formatted = Math.round(node.Students * 100.0 / totalfrom) + '%';
 					if ((node.Students * 100.0 / totalfrom) <= 0.95) { // find out how close to 1% to call 1% or <1%
 						node.Formatted = '< 1%';
 					}
 					otherlist.push(node);
 				} else {
 					otherfrom.Students += node.Students;
-					otherfrom.Formatted = Math.round(otherfrom.Students*100.0/totalfrom) + '%';
+					otherfrom.Formatted = Math.round(otherfrom.Students * 100.0 / totalfrom) + '%';
 				}
 			}
 		});
@@ -133,6 +132,9 @@
 
 
 	var load_data = function (config, callback) {
+		if (datacache.hasOwnProperty(config.data_url)) {
+			callback(datacache[config.data_url], config);
+		} else {
 			$.ajax({
 				url: config.data_url,
 				datatype: "json",
@@ -140,9 +142,11 @@
 					var json_object = (typeof result === 'string')
 						? JSON.parse(result)
 						: result;
+					datacache[config.data_url] = json_object;
 					callback(json_object, config);
 				}
 			});
+		}
 	};
 
 	var create_campus_list = function (callback) {
@@ -259,13 +263,13 @@
 			});
 			var template = '<option value="{v}">{t}</option>';
 			if (hasfrom && hasto) {
-				out3.push(template.replace('{v}', 'both').replace('{t}','Both From and To'));
+				out3.push(template.replace('{v}', 'both').replace('{t}', 'Both From and To'));
 			}
 			if (hasfrom) {
-				out3.push(template.replace('{v}', 'from').replace('{t}','From Only'));
+				out3.push(template.replace('{v}', 'from').replace('{t}', 'From Only'));
 			}
 			if (hasto) {
-				out3.push(template.replace('{v}', 'to').replace('{t}','To Only'));
+				out3.push(template.replace('{v}', 'to').replace('{t}', 'To Only'));
 			}
 			$('#fromtobothselector').html(out3.join(''));
 		});
@@ -329,17 +333,11 @@
 
 					log.list = list;
 					var results = ingest(log.list, threshold);
-					//console.log(JSON.stringify(log.list));
 					callback([results, log.list]);
 				});
 			});
 		});
 	};
-
-	//var create_chart = function (config) {
-		// stub for chart creation
-	//	console.log(JSON.stringify(config));
-	//};
 
 	var build_table = function (data) {
 		var row_tpl = '\n\n<tr><td>{enrolled}</td><td>{graduated}</td><td>{count}</td></tr>';
@@ -392,10 +390,6 @@
 			cs.filter_major = tocode;
 			create_fromtoboth_selector();
 		});
-			
-		//$('#otherselector').on('change', function (e) {
-		//	threshold = parseInt(e.target.value, 10);
-		//});
 
 		$('#fromtobothselector').on('change', function (e) {
 			fromtoboth = e.target.value;
@@ -405,7 +399,6 @@
 		config_chart(cs.filter_campus, cs.filter_college, cs.filter_major, function (chart_config) {
 			$('#table').empty();
 			$('<div id="migration_table">' + build_table(chart_config[1]) + '</div>').appendTo('#table');
-			//create_chart(chart_config[0]);
 			$('body').trigger('create_chart', {'chart_config': chart_config[0]});
 		});
 
@@ -414,11 +407,9 @@
 			e.preventDefault();
 			e.stopPropagation();
 			config_chart(cs.filter_campus, cs.filter_college, cs.filter_major, function (chart_config) {
-				//console.log(build_table(chart_config[1]));
 				$('#table').empty();
 				$('<div id="migration_table">' + build_table(chart_config[1]) + '</div>').appendTo('#table');
 				$('body').trigger('create_chart', {'chart_config': chart_config[0]});
-				//create_chart(chart_config[0]);
 			});
 		});
 		$('#gobtn').click();
