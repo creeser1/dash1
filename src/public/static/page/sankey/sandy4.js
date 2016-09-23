@@ -119,6 +119,7 @@
 				return d3.rgb(c);
 			})
 			.on("mouseover", function (d) {
+				console.log(d);
 				var c = color(d.target.name === base ? hasher(d.source.name) : hasher(d.target.name)); // by name hash
 				this.style.stroke = d3.rgb(c).darker(1);
 			})
