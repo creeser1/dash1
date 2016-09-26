@@ -204,18 +204,12 @@
 
 		// load all the data pertaining to selected campus
 		get_migrations(cs.filter_campus, function (migrations) {
-			console.log('loaded: get_migrations for ' + cs.filter_campus);
 			var college_list = _.toArray(migrations.major_colleges);
-			console.log(JSON.stringify(college_list));
 			var selected_college = create_college_selector(college_list, cs.filter_college);
 			cs.filter_college = selected_college;
-			console.log('selected college: ' + cs.filter_college);
 			var college_map = migrations.major_colleges;
 			var major_map = migrations.major_names;
-			console.log(JSON.stringify(college_map));
-			console.log(JSON.stringify(major_map));
-			//console.log(JSON.stringify(migrations.enrolled));
-			//console.log(JSON.stringify(migrations.graduation));
+
 			var major_code_list = _.filter(Object.keys(major_map), function (key) {
 				return (college_map[key] === selected_college);
 			});
@@ -254,14 +248,9 @@
 		var pivot = null;
 		var listfrom = [];
 		var listto = [];
-		console.log(JSON.stringify(migrations));
-		console.log(JSON.stringify(migrations.enrolled));
 		var enrolled_majors = Object.keys(migrations.enrolled);
-		console.log(JSON.stringify(enrolled_majors));
 		var graduation_majors = Object.keys(migrations.graduation);
 		enrolled_majors.forEach(function (code) {
-			console.log(code);
-			console.log(migrations.enrolled[code]);
 			var item = migrations.enrolled[code];
 			item.forEach(function (major) {
 				if (major_map[major[1]] === cs.filter_major && college_map[major[1]] === cs.filter_college) {
@@ -371,7 +360,6 @@
 		$('#campusselector').on('change', function (e) {
 			campusname = e.target.value;
 			cs.filter_campus = campusname;
-			console.log(JSON.stringify(cs));
 			config_controls();
 		});
 
