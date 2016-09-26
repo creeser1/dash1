@@ -318,8 +318,8 @@
 		var results = ingest(log.list, threshold);
 
 		$('#table').empty();
-		$('<div id="migration_table">' + build_table(chart_config[1]) + '</div>').appendTo('#table');
-		$('body').trigger('create_chart', {'chart_config': chart_config[0]});
+		$('<div id="migration_table">' + build_table(log.list) + '</div>').appendTo('#table');
+		$('body').trigger('create_chart', {'chart_config': results});
 	};
 
 	var build_table = function (data) {
