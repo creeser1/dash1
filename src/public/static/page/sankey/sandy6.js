@@ -363,24 +363,33 @@
 		$('#campusselector').on('change', function (e) {
 			campusname = e.target.value;
 			cs.filter_campus = campusname;
-			config_controls();
+			config_controls(function (college_map, majors_map, migrations) {
+				config_chart(college_map, majors_map, migrations);
+			});
 		});
 
 		$('#fromselector').on('change', function (e) {
 			fromcode = e.target.value;
 			cs.filter_college = fromcode;
-			config_controls();
+			config_controls(function (college_map, majors_map, migrations) {
+				config_chart(college_map, majors_map, migrations);
+			});
 		});
 			
 		$('#toselector').on('change', function (e) {
 			tocode = e.target.value;
 			cs.filter_major = tocode;
-			config_controls();
+			config_controls(function (college_map, majors_map, migrations) {
+				config_chart(college_map, majors_map, migrations);
+			});
 		});
 
 		$('#fromtobothselector').on('change', function (e) {
 			fromtoboth = e.target.value;
 			cs.filter_migration = fromtoboth;
+			config_controls(function (college_map, majors_map, migrations) {
+				config_chart(college_map, majors_map, migrations);
+			});
 		});
 
 		// create the chart initially, using default filters
