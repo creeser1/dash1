@@ -242,7 +242,7 @@
 		});
 	};
 
-	var config_chart = function (college_map, major_map, migrations, callback) { // initially and on change of campus
+	var config_chart = function (college_map, major_map, migrations) { // initially and on change of campus
 		log = {'value': '', 'listto': [], 'listfrom': [], 'pivot': null, 'list': []};
 
 		var pivot = null;
@@ -316,7 +316,10 @@
 
 		log.list = list;
 		var results = ingest(log.list, threshold);
-		callback([results, log.list]);
+
+		$('#table').empty();
+		$('<div id="migration_table">' + build_table(chart_config[1]) + '</div>').appendTo('#table');
+		$('body').trigger('create_chart', {'chart_config': chart_config[0]});
 	};
 
 	var build_table = function (data) {
@@ -382,24 +385,7 @@
 
 		// create the chart initially, using default filters
 		config_controls(function (college_map, majors_map, migrations) {
-			config_chart(college_map, majors_map, migrations, function (chart_config) {
-				$('#table').empty();
-				$('<div id="migration_table">' + build_table(chart_config[1]) + '</div>').appendTo('#table');
-				$('body').trigger('create_chart', {'chart_config': chart_config[0]});
-			});
-		});
-
-		// create the chart on request, using current filter settings
-		$('#gobtn').on('click', function (e) {
-			e.preventDefault();
-			e.stopPropagation();
-			config_controls(function (college_map, majors_map, migrations) {
-				config_chart(college_map, majors_map, migrations, function (chart_config) {
-					$('#table').empty();
-					$('<div id="migration_table">' + build_table(chart_config[1]) + '</div>').appendTo('#table');
-					$('body').trigger('create_chart', {'chart_config': chart_config[0]});
-				});
-			});
+			config_chart(college_map, majors_map, migrations);
 		});
 	};
 	init();
