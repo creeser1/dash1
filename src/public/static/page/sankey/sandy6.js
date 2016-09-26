@@ -147,34 +147,11 @@
 			});
 		}
 	};
-/*
-	var create_campus_list = function (callback) {
-		var config = {'data_url': '/data/sankey/data/migrationsjson/crr_campuses_by_name.json'};
-		load_data(config, function (result) {
-			callback(Object.keys(result));
-		});
-	};
 
-	var get_major_map = function (campus, callback) {
-		var config = {'data_url': '/data/sankey/data/migrationsjson/crr_majorcode2desc.json'};
-		load_data(config, function (result) {
-			callback(result[campus]);
-		});
-	};
-
-	var get_college_map = function (campus, callback) {
-		var config = {'data_url': '/data/sankey/data/migrationsjson/crr_colleges_by_major_code.json'};
-		load_data(config, function (result) {
-			callback(result[campus]);
-		});
-	};
-*/	
 	var get_migrations = function (campus, callback) {
 		var url = campus.replace(' ', '_') + '_migrations_ftf.json';
-		//var config = {'data_url': '/data/sankey/data/migrationsjson/crr_migration_col_ftf.json'};
 		var config = {'data_url': '/data/sankey/newsankeydata/' + url}
 		load_data(config, function (result) {
-			//callback(result[campus]);
 			callback(result);
 		});
 	};
@@ -232,10 +209,10 @@
 			cs.filter_college = selected_college;
 			var college_map = migrations.major_colleges;
 			var major_map = migrations.major_names;
-			console.log(college_map);
-			console.log(major_map);
-			console.log(migrations.enrolled);
-			console.log(migrations.graduation);
+			console.log(JSON.stringify(college_map));
+			console.log(JSON.stringify(major_map));
+			//console.log(JSON.stringify(migrations.enrolled));
+			//console.log(JSON.stringify(migrations.graduation));
 			var major_code_list = _.filter(Object.keys(major_map), function (key) {
 				return (college_map[key] === selected_college);
 			});
@@ -386,6 +363,7 @@
 		$('#campusselector').on('change', function (e) {
 			campusname = e.target.value;
 			cs.filter_campus = campusname;
+			console.log(JSON.stringify(cs));
 			config_controls();
 		});
 
