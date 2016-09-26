@@ -255,8 +255,11 @@
 		var listfrom = [];
 		var listto = [];
 		var enrolled_majors = Object.keys(migrations.enrolled);
+		console.log(JSON.stringify(enrolled_majors));
 		var graduation_majors = Object.keys(migrations.graduation);
 		enrolled_majors.forEach(function (code) {
+			console.log(code);
+			console.log(migrations.enrolled[code]);
 			var item = migrations.enrolled[code];
 			item.forEach(function (major) {
 				if (major_map[major[1]] === cs.filter_major && college_map[major[1]] === cs.filter_college) {
