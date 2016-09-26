@@ -204,9 +204,12 @@
 
 		// load all the data pertaining to selected campus
 		get_migrations(cs.filter_campus, function (migrations) {
+			console.log('loaded: get_migrations for ' + cs.filter_campus);
 			var college_list = _.toArray(migrations.major_colleges);
+			console.log(JSON.stringify(college_list));
 			var selected_college = create_college_selector(college_list, cs.filter_college);
 			cs.filter_college = selected_college;
+			console.log('selected college: ' + cs.filter_college);
 			var college_map = migrations.major_colleges;
 			var major_map = migrations.major_names;
 			console.log(JSON.stringify(college_map));
