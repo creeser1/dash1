@@ -254,6 +254,8 @@
 		var pivot = null;
 		var listfrom = [];
 		var listto = [];
+		console.log(JSON.stringify(migrations));
+		console.log(JSON.stringify(migrations.enrolled));
 		var enrolled_majors = Object.keys(migrations.enrolled);
 		console.log(JSON.stringify(enrolled_majors));
 		var graduation_majors = Object.keys(migrations.graduation);
