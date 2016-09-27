@@ -124,7 +124,7 @@
 
 	var load_data = (function (config, callback) {
 		var datacache = {}; // in closure
-		return (function (config, callback) {
+		return function (config, callback) {
 			if (datacache.hasOwnProperty(config.data_url)) {
 				callback(datacache[config.data_url], config);
 			} else {
@@ -140,7 +140,6 @@
 					}
 				});
 			}
-		};
 	}());
 
 	var get_migrations = function (campus, callback) {
