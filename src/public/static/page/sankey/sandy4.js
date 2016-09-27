@@ -37,19 +37,19 @@
 		d3.selectAll('#migrations_chart').append('div')
 			.attr('class', 'nodelabel')
 			.style('padding', '1px')
-			.style('width', '324px')
+			.style('width', '374px')
 			.style('font-weight', '600')
 			.style('font-family', 'sans-serif')
-			.style('font-size', '14px')
+			.style('font-size', '12px')
 			.style('text-align', source.length ? 'left' : 'right')
 			.style('text-shadow', '1px 1px 1px #dddddd')
 			.style('background-color', 'rgba(255, 255, 255, 0.0)')
 			.style('position', 'absolute')
 			.style('left', function () {
 				if (source.length) {
-					return '100px'; // left labels
+					return '95px'; // left labels
 				} else {
-					return '668px'; // right labels
+					return '672px'; // right labels
 				}
 			})
 			.style('top', function () {
