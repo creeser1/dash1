@@ -37,7 +37,7 @@
 		d3.selectAll('#migrations_chart').append('div')
 			.attr('class', 'nodelabel')
 			.style('padding', '1px')
-			.style('width', '324px')
+			.style('width', '374px')
 			.style('font-weight', '600')
 			.style('font-family', 'sans-serif')
 			.style('font-size', '14px')
@@ -49,7 +49,7 @@
 				if (source.length) {
 					return '95px'; // left labels
 				} else {
-					return '672px'; // right labels
+					return '622px'; // right labels
 				}
 			})
 			.style('top', function () {
