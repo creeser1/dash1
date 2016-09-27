@@ -84,7 +84,7 @@
 		totstudents = chartconfig[4];
 		var margin = {top: 10, right: 30, bottom: 10, left: 30};
 		var width = 1090 - margin.left - margin.right;
-		var height = 300 + totstudents / 100;
+		var height = 200 + totstudents / 50 / Math.log(totstudents);
 
 		var formatNumber = d3.format(",.0f");	// zero decimal places
 		var format = function(d) {
