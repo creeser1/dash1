@@ -1,10 +1,9 @@
 (function () {
 	'use strict';
 
-	var cs;
 	var datacache = {};
 
-	var ingest = function (nodelist) {
+	var ingest = function (filter, nodelist) {
 		var gnodes = [];
 		var glinks = [];
 		var map = {};
@@ -22,9 +21,8 @@
 		var countto = 0;
 		var countfrom = 0;
 		var countpivot = 0;
-		//var tenthto = 0;
-		//var tenthfrom = 0;
 		var topten = 9;
+
 		nodelist.forEach(function (node) {
 			if (node.Flow === 'to' && node.Source !== node.Destination) {
 				totalto += node.Students;
@@ -55,7 +53,7 @@
 		var otherto = {'Source': 'Other', 'Destination': pivot, 'Students': 0, 'Formatted': '%', 'Flow': 'to'};
 		var otherfrom = {'Source': pivot, 'Destination': 'Other', 'Students': 0, 'Formatted': '%', 'Flow': 'from'};
 		nodelist.forEach(function (node) {
-			if (node.Flow === 'to' && (cs.filter_migration !== 'From Only' || node.Source === pivot)) {
+			if (node.Flow === 'to' && (filter !== 'From Only' || node.Source === pivot)) {
 				if (node.Students >= thresholdto) {
 					node.Formatted = Math.round(node.Students * 100.0 / totalto) + '%';
 					if ((node.Students * 100.0 / totalto) <= 0.95) { // find out how close to 1% to call 1% or <1%
@@ -79,7 +77,7 @@
 			otherlist.splice(-1, 0, otherto); // place 'Other' prior to last item (so far) which is the pivot item
 		}
 		nodelist.forEach(function (node) {
-			if (node.Flow === 'from' && cs.filter_migration !== 'To Only') {
+			if (node.Flow === 'from' && filter !== 'To Only') {
 				if (node.Students >= thresholdfrom) {
 					node.Formatted = Math.round(node.Students * 100.0 / totalfrom) + '%';
 					if ((node.Students * 100.0 / totalfrom) <= 0.95) { // find out how close to 1% to call 1% or <1%
@@ -103,10 +101,8 @@
 				gnodes.push({'node': j, 'name': node.Source});
 				j += 1;
 				jj += 1;
-				//last = node.Source;
 			}
 		});
-		//var transition = j - 1;
 		otherlist.forEach(function (node) {
 			if (!map.hasOwnProperty(node.Destination)) {
 				map[node.Destination] = jj;
@@ -126,23 +122,26 @@
 		return [sankeydata, pivot, totalfrom, totalto, totalto + totalfrom];
 	};
 
-	var load_data = function (config, callback) {
-		if (datacache.hasOwnProperty(config.data_url)) {
-			callback(datacache[config.data_url], config);
-		} else {
-			$.ajax({
-				url: config.data_url,
-				datatype: "json",
-				success: function (result) {
-					var json_object = (typeof result === 'string')
-						? JSON.parse(result)
-						: result;
-					datacache[config.data_url] = json_object;
-					callback(json_object, config);
-				}
-			});
-		}
-	};
+	var load_data = (function (config, callback) {
+		var datacache = {}; // in closure
+		return (function (config, callback) {
+			if (datacache.hasOwnProperty(config.data_url)) {
+				callback(datacache[config.data_url], config);
+			} else {
+				$.ajax({
+					url: config.data_url,
+					datatype: "json",
+					success: function (result) {
+						var json_object = (typeof result === 'string')
+							? JSON.parse(result)
+							: result;
+						datacache[config.data_url] = json_object;
+						callback(json_object, config);
+					}
+				});
+			}
+		};
+	}());
 
 	var get_migrations = function (campus, callback) {
 		var url = campus.replace(' ', '_') + '_migrations_ftf.json';
@@ -195,7 +194,7 @@
 		return sel;
 	};
 
-	var build_table = function (data) {
+	var build_table = function (cs, data) {
 		var row_tpl = '\n\n<tr><td>{enrolled}</td><td>{graduated}</td><td>{count}</td></tr>';
 		var rows = [];		
 		rows.push('<table class="data1">');
@@ -216,7 +215,7 @@
 		return rows.join('');
 	};
 
-	var config_chart = function (college_map, major_map, migrations) { // initially and on change of campus
+	var config_chart = function (cs, college_map, major_map, migrations) { // initially and on change of campus
 		var pivot = null;
 		var listfrom = [];
 		var listto = [];
@@ -286,14 +285,14 @@
 			list = list.concat(listfrom);
 		}
 
-		var results = ingest(list);
+		var results = ingest(cs.filter_migration, list);
 
 		$('#table').empty();
 		$('<div id="migration_table">' + build_table(list) + '</div>').appendTo('#table');
 		$('body').trigger('create_chart', {'chart_config': results});
 	};
 
-	var config_controls = function () { // only load data once, but reconfigure cascading controls as needed
+	var config_controls = function (cs) { // only load data once, but reconfigure cascading controls as needed
 		//cascade controls based on various settings of cs.filter_campus, cs.filter_college, cs.filter_major
 
 		// load all the data pertaining to selected campus
@@ -304,9 +303,6 @@
 			var college_map = migrations.major_colleges;
 			var major_map = migrations.major_names;
 
-			//var major_code_list = _.filter(Object.keys(major_map), function (key) {
-			//	return (college_map[key] === selected_college);
-			//});
 			var major_name_list = _.filter(major_map, function (val, key) {
 				return (college_map[key] === selected_college);
 			});
@@ -335,7 +331,7 @@
 	};
 
 	var init = function () {
-		cs = {
+		var cs = {
 			'college_map': {},
 			'major_map': {},
 			'filter_campus': 'East Bay',
@@ -346,22 +342,22 @@
 
 		$('#campusselector').on('change', function (e) {
 			cs.filter_campus = e.target.value;
-			config_controls();
+			config_controls(cs);
 		});
 
 		$('#fromselector').on('change', function (e) {
 			cs.filter_college = e.target.value;
-			config_controls();
+			config_controls(cs);
 		});
 			
 		$('#toselector').on('change', function (e) {
 			cs.filter_major = e.target.value;
-			config_controls();
+			config_controls(cs);
 		});
 
 		$('#fromtobothselector').on('change', function (e) {
 			cs.filter_migration =  e.target.value;
-			config_controls();
+			config_controls(cs);
 		});
 
 		// create the chart initially, using default filters
