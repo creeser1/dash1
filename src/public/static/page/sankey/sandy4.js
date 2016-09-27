@@ -81,7 +81,7 @@
 		}
 		var margin = {top: 10, right: 30, bottom: 10, left: 30};
 		var width = 1090 - margin.left - margin.right;
-		var height = 300 + Math.round(totstudents * Math.log(totstudents) / 10);
+		var height = 300 + Math.round(totstudents * Math.log(totstudents) / 15);
 
 		var formatNumber = d3.format(",.0f");	// zero decimal places
 		var format = function(d) {
