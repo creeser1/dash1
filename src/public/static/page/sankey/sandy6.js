@@ -45,7 +45,7 @@
 		return out;
 	};
 
-	var build_sankeydata = function (otherlist) {
+	var build_sankeydata = function (dataset) {
 		var gnodes = [];
 		var glinks = [];
 		var map = {};
@@ -53,7 +53,7 @@
 		var mapdest = {};
 		var j = 0;
 		var jj = 0;
-		otherlist.forEach(function (node) {
+		dataset.forEach(function (node) {
 			if (!mapfrom.hasOwnProperty(node.Source)) {
 				mapfrom[node.Source] = j;
 				map[node.Source] = jj;
@@ -62,7 +62,7 @@
 				jj += 1;
 			}
 		});
-		otherlist.forEach(function (node) {
+		dataset.forEach(function (node) {
 			if (!map.hasOwnProperty(node.Destination)) {
 				map[node.Destination] = jj;
 				jj += 1;
@@ -73,7 +73,7 @@
 				j += 1;
 			}
 		});
-		otherlist.forEach(function (node) {
+		dataset.forEach(function (node) {
 			var link = {'source': mapfrom[node.Source], 'target': mapdest[node.Destination], 'value': node.Students, 'fmt': node.Formatted};
 			glinks.push(link);
 		});
@@ -120,7 +120,7 @@
 
 		var otherto = {'Source': 'Other', 'Destination': pivot, 'Students': 0, 'Formatted': '%', 'Flow': 'to'};
 		var otherfrom = {'Source': pivot, 'Destination': 'Other', 'Students': 0, 'Formatted': '%', 'Flow': 'from'};
-		var otherlist = [];
+		var otherlist = []; // nodelist with other aggregated
 		nodelist.forEach(function (node) {
 			if (node.Flow === 'to' && (filter !== 'From Only' || node.Source === pivot)) {
 				if (node.Students >= thresholdto) {
