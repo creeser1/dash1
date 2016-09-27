@@ -1,10 +1,10 @@
 (function () {
 	'use strict';
 
-	var campusname, fromcode, tocode, threshold, fromtoboth, log, cs, campus_list, datacache = {};
+	var cs, datacache = {};
 
-	var ingest = function (nodelist, threshold) {
-		threshold = 1; // remove user choice, just use count of 9th ranked as threshold
+	var ingest = function (nodelist) {
+		var threshold = 1; // remove user choice, just use count of 9th ranked as threshold
 		var gnodes = [];
 		var glinks = []
 		var map = {};
@@ -59,7 +59,7 @@
 		var otherto = {'Source': 'Other', 'Destination': pivot, 'Students': 0, 'Formatted': '%', 'Flow': 'to'};
 		var otherfrom = {'Source': pivot, 'Destination': 'Other', 'Students': 0, 'Formatted': '%', 'Flow': 'from'};
 		nodelist.forEach(function (node, i, list) {
-			if (node.Flow === 'to' && (fromtoboth !== 'From Only' || node.Source === pivot)) {
+			if (node.Flow === 'to' && (cs.filter_migration !== 'From Only' || node.Source === pivot)) {
 				if (node.Students >= thresholdto) {
 					node.Formatted = Math.round(node.Students * 100.0 / totalto) + '%';
 					if ((node.Students * 100.0 / totalto) <= 0.95) { // find out how close to 1% to call 1% or <1%
@@ -83,7 +83,7 @@
 			otherlist.splice(-1, 0, otherto); // place 'Other' prior to last item (so far) which is the pivot item
 		}
 		nodelist.forEach(function (node, i, list) {
-			if (node.Flow === 'from' && fromtoboth !== 'To Only') {
+			if (node.Flow === 'from' && cs.filter_migration !== 'To Only') {
 				if (node.Students >= thresholdfrom) {
 					node.Formatted = Math.round(node.Students * 100.0 / totalfrom) + '%';
 					if ((node.Students * 100.0 / totalfrom) <= 0.95) { // find out how close to 1% to call 1% or <1%
@@ -199,7 +199,7 @@
 		return sel;
 	};
 
-	var config_controls = function (callback) { // only load data once, but reconfigure cascading controls as needed
+	var config_controls = function () { // only load data once, but reconfigure cascading controls as needed
 		//cascade controls based on various settings of cs.filter_campus, cs.filter_college, cs.filter_major
 
 		// load all the data pertaining to selected campus
@@ -235,16 +235,12 @@
 			var selected_migrations = create_migrations_selector(option_list, cs.filter_migration);
 			cs.filter_migration = selected_migrations;
 
-			fromtoboth = selected_migrations; // Redundant?
-			if (callback) {
-				callback(college_map, major_map, migrations);
-			}
+			// use the new settings to redraw the chart
+			config_chart(college_map, major_map, migrations);
 		});
 	};
 
 	var config_chart = function (college_map, major_map, migrations) { // initially and on change of campus
-		log = {'value': '', 'listto': [], 'listfrom': [], 'pivot': null, 'list': []};
-
 		var pivot = null;
 		var listfrom = [];
 		var listto = [];
@@ -314,11 +310,10 @@
 			list = list.concat(listfrom);
 		}
 
-		log.list = list;
-		var results = ingest(log.list, threshold);
+		var results = ingest(list);
 
 		$('#table').empty();
-		$('<div id="migration_table">' + build_table(log.list) + '</div>').appendTo('#table');
+		$('<div id="migration_table">' + build_table(list) + '</div>').appendTo('#table');
 		$('body').trigger('create_chart', {'chart_config': results});
 	};
 
@@ -344,12 +339,6 @@
 	};
 
 	var init = function () {
-		campusname = 'East Bay';
-		fromcode = 'buseco';
-		tocode = 'busadm';
-		threshold = 1;
-		fromtoboth = 'Both From and To';
-		log = {'value': '', 'listto': [], 'listfrom': [], 'pivot': null, 'list': []};
 		cs = {
 			'college_map': {},
 			'major_map': {},
@@ -358,44 +347,29 @@
 			'filter_major': 'Business Administration',
 			'filter_migration': 'Both From and To'
 		};
-		campus_list = [];
 
 		$('#campusselector').on('change', function (e) {
-			campusname = e.target.value;
-			cs.filter_campus = campusname;
-			config_controls(function (college_map, majors_map, migrations) {
-				config_chart(college_map, majors_map, migrations);
-			});
+			cs.filter_campus = e.target.value;
+			config_controls();
 		});
 
 		$('#fromselector').on('change', function (e) {
-			fromcode = e.target.value;
-			cs.filter_college = fromcode;
-			config_controls(function (college_map, majors_map, migrations) {
-				config_chart(college_map, majors_map, migrations);
-			});
+			cs.filter_college = e.target.value;
+			config_controls();
 		});
 			
 		$('#toselector').on('change', function (e) {
-			tocode = e.target.value;
-			cs.filter_major = tocode;
-			config_controls(function (college_map, majors_map, migrations) {
-				config_chart(college_map, majors_map, migrations);
-			});
+			cs.filter_major = e.target.value;
+			config_controls();
 		});
 
 		$('#fromtobothselector').on('change', function (e) {
-			fromtoboth = e.target.value;
-			cs.filter_migration = fromtoboth;
-			config_controls(function (college_map, majors_map, migrations) {
-				config_chart(college_map, majors_map, migrations);
-			});
+			cs.filter_migration =  e.target.value;
+			config_controls();
 		});
 
 		// create the chart initially, using default filters
-		config_controls(function (college_map, majors_map, migrations) {
-			config_chart(college_map, majors_map, migrations);
-		});
+		config_controls();
 	};
 	init();
 }());
