@@ -288,7 +288,7 @@
 		var results = ingest(cs.filter_migration, list);
 
 		$('#table').empty();
-		$('<div id="migration_table">' + build_table(list) + '</div>').appendTo('#table');
+		$('<div id="migration_table">' + build_table(cs, list) + '</div>').appendTo('#table');
 		$('body').trigger('create_chart', {'chart_config': results});
 	};
 
