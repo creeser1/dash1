@@ -140,6 +140,7 @@
 					}
 				});
 			}
+		};
 	}());
 
 	var get_migrations = function (campus, callback) {
