@@ -69,7 +69,6 @@
 		var base = chartconfig[1];
 		var totstudents;
 		var fromtoboth = 'both';
-		/*
 		switch (fromtoboth) {
 			case 'from':
 				totstudents = chartconfig[2];
@@ -80,8 +79,6 @@
 			default:
 				totstudents = chartconfig[4];
 		}
-		*/
-		totstudents = chartconfig[4];
 		var margin = {top: 10, right: 30, bottom: 10, left: 30};
 		var width = 1090 - margin.left - margin.right;
 		var height = 250 + totstudents * Math.abs(Math.log(totstudents)) / 10;
