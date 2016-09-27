@@ -1,7 +1,51 @@
 (function () {
 	'use strict';
 
-	var ingest = function (filter, nodelist) {
+	var load_data = (function () {
+		var datacache = {}; // in closure
+		return function (config, callback) {
+			if (datacache.hasOwnProperty(config.data_url)) {
+				callback(datacache[config.data_url], config);
+			} else {
+				$.ajax({
+					url: config.data_url,
+					datatype: "json",
+					success: function (result) {
+						var json_object = (typeof result === 'string')
+							? JSON.parse(result)
+							: result;
+						datacache[config.data_url] = json_object;
+						callback(json_object, config);
+					}
+				});
+			}
+		};
+	}());
+
+	var get_migrations = function (campus, callback) {
+		var url = campus.replace(' ', '_') + '_migrations_ftf.json';
+		var config = {'data_url': '/data/sankey/newsankeydata/' + url};
+		load_data(config, function (result) {
+			callback(result);
+		});
+	};
+
+	/*
+	************************************************************
+	* Transform loaded data appropriate to driving sankey chart
+	*
+	************************************************************
+	*/
+
+	var formatStudentPercent = function (count, total) {
+		var out = Math.round(count * 100.0 / total) + '%';
+		if ((count * 100.0 / total) <= 0.95) { // find out how close to 1% to call 1% or <1%
+			out = '< 1%';
+		}
+		return out;
+	};
+
+	var build_sankeydata = function (otherlist) {
 		var gnodes = [];
 		var glinks = [];
 		var map = {};
@@ -9,7 +53,34 @@
 		var mapdest = {};
 		var j = 0;
 		var jj = 0;
-		var otherlist = [];
+		otherlist.forEach(function (node) {
+			if (!mapfrom.hasOwnProperty(node.Source)) {
+				mapfrom[node.Source] = j;
+				map[node.Source] = jj;
+				gnodes.push({'node': j, 'name': node.Source});
+				j += 1;
+				jj += 1;
+			}
+		});
+		otherlist.forEach(function (node) {
+			if (!map.hasOwnProperty(node.Destination)) {
+				map[node.Destination] = jj;
+				jj += 1;
+			}
+			if (!mapdest.hasOwnProperty(node.Destination)) {
+				mapdest[node.Destination] = j;
+				gnodes.push({'node': j, 'name': node.Destination});
+				j += 1;
+			}
+		});
+		otherlist.forEach(function (node) {
+			var link = {'source': mapfrom[node.Source], 'target': mapdest[node.Destination], 'value': node.Students, 'fmt': node.Formatted};
+			glinks.push(link);
+		});
+		return {'nodes': gnodes, 'links': glinks};
+	};
+
+	var ingest = function (filter, nodelist) {
 		var pivot;
 		var totalto = 0;
 		var totalfrom = 0;
@@ -20,6 +91,11 @@
 		var countpivot = 0;
 		var topten = 9;
 
+		if (nodelist[0].Flow === 'to') {
+			pivot = nodelist[0].Destination;
+		} else {
+			pivot = nodelist[0].Source;
+		}
 		nodelist.forEach(function (node) {
 			if (node.Flow === 'to' && node.Source !== node.Destination) {
 				totalto += node.Students;
@@ -38,22 +114,13 @@
 				totalto += node.Students;
 				totalfrom += node.Students;
 				countpivot += 1;
+				pivot = node.Source; // proved to be pivot
 			}
 		});
-		if (nodelist[0].Flow === 'to') {
-			pivot = nodelist[0].Destination;
-		} else {
-			pivot = nodelist[0].Source;
-		}
-		var formatStudentPercent = function (count, total) {
-			var out = Math.round(count * 100.0 / total) + '%';
-			if ((count * 100.0 / total) <= 0.95) { // find out how close to 1% to call 1% or <1%
-				out = '< 1%';
-			}
-			return out;
-		};
+
 		var otherto = {'Source': 'Other', 'Destination': pivot, 'Students': 0, 'Formatted': '%', 'Flow': 'to'};
 		var otherfrom = {'Source': pivot, 'Destination': 'Other', 'Students': 0, 'Formatted': '%', 'Flow': 'from'};
+		var otherlist = [];
 		nodelist.forEach(function (node) {
 			if (node.Flow === 'to' && (filter !== 'From Only' || node.Source === pivot)) {
 				if (node.Students >= thresholdto) {
@@ -85,106 +152,17 @@
 		if (otherfrom.Students) {
 			otherlist.push(otherfrom);
 		}
-
-		otherlist.forEach(function (node) {
-			if (!mapfrom.hasOwnProperty(node.Source)) {
-				mapfrom[node.Source] = j;
-				map[node.Source] = jj;
-				gnodes.push({'node': j, 'name': node.Source});
-				j += 1;
-				jj += 1;
-			}
-		});
-		otherlist.forEach(function (node) {
-			if (!map.hasOwnProperty(node.Destination)) {
-				map[node.Destination] = jj;
-				jj += 1;
-			}
-			if (!mapdest.hasOwnProperty(node.Destination)) {
-				mapdest[node.Destination] = j;
-				gnodes.push({'node': j, 'name': node.Destination});
-				j += 1;
-			}
-		});
-		otherlist.forEach(function (node) {
-			var link = {'source': mapfrom[node.Source], 'target': mapdest[node.Destination], 'value': node.Students, 'fmt': node.Formatted};
-			glinks.push(link);
-		});
-		var sankeydata = {'nodes': gnodes, 'links': glinks};
+		var sankeydata = build_sankeydata(otherlist);
 		return [sankeydata, pivot, totalfrom, totalto, totalto + totalfrom];
-	};
+	}; // end ingest function
 
-	var load_data = (function () {
-		var datacache = {}; // in closure
-		return function (config, callback) {
-			if (datacache.hasOwnProperty(config.data_url)) {
-				callback(datacache[config.data_url], config);
-			} else {
-				$.ajax({
-					url: config.data_url,
-					datatype: "json",
-					success: function (result) {
-						var json_object = (typeof result === 'string')
-							? JSON.parse(result)
-							: result;
-						datacache[config.data_url] = json_object;
-						callback(json_object, config);
-					}
-				});
-			}
-		};
-	}());
-
-	var get_migrations = function (campus, callback) {
-		var url = campus.replace(' ', '_') + '_migrations_ftf.json';
-		var config = {'data_url': '/data/sankey/newsankeydata/' + url};
-		load_data(config, function (result) {
-			callback(result);
-		});
-	};
-
-	var create_selector = function (list, selected) {
-		var options = list.slice();
-		options.sort();
-		options = _.uniq(options, true);
-		var template = '<option value="{v}"{s}>{t}</option>';
-		var out = _.map(options, function (el) {
-			var tpl = template.replace('{v}', el).replace('{t}', el);
-			if (el === selected) {
-				return tpl.replace('{s}', ' selected');
-			} else {
-				return tpl.replace('{s}', '');
-			}
-		});
-		return out.join('');
-	};
-	
-	var create_college_selector = function (list, selected) {
-		var sel = selected;
-		if (!_.contains(list, selected)) {
-			sel = list[0];
-		}
-		$('#fromselector').html(create_selector(list, sel));
-		return sel;
-	};
-
-	var create_major_selector = function (list, selected) {
-		var sel = selected;
-		if (!_.contains(list, selected)) {
-			sel = list[0];
-		}
-		$('#toselector').html(create_selector(list, sel));
-		return sel;
-	};
-
-	var create_migrations_selector = function (list, selected) {
-		var sel = selected;
-		if (!_.contains(list, selected)) {
-			sel = list[0];
-		}
-		$('#fromtobothselector').html(create_selector(list, sel));
-		return sel;
-	};
+	/*
+	************************************************************
+	* Create data table and chart configuration/data series 
+	* from the data which has been loaded and transformed
+	*
+	************************************************************
+	*/
 
 	var build_table = function (cs, data) {
 		var row_tpl = '\n\n<tr><td>{enrolled}</td><td>{graduated}</td><td>{count}</td></tr>';
@@ -284,6 +262,56 @@
 		$('body').trigger('create_chart', {'chart_config': results});
 	};
 
+	/*
+	************************************************************
+	* Create and populate the control elements from data loaded
+	*
+	************************************************************
+	*/
+	
+	var create_selector = function (list, selected) {
+		var options = list.slice();
+		options.sort();
+		options = _.uniq(options, true);
+		var template = '<option value="{v}"{s}>{t}</option>';
+		var out = _.map(options, function (el) {
+			var tpl = template.replace('{v}', el).replace('{t}', el);
+			if (el === selected) {
+				return tpl.replace('{s}', ' selected');
+			} else {
+				return tpl.replace('{s}', '');
+			}
+		});
+		return out.join('');
+	};
+	
+	var create_college_selector = function (list, selected) {
+		var sel = selected;
+		if (!_.contains(list, selected)) {
+			sel = list[0];
+		}
+		$('#fromselector').html(create_selector(list, sel));
+		return sel;
+	};
+
+	var create_major_selector = function (list, selected) {
+		var sel = selected;
+		if (!_.contains(list, selected)) {
+			sel = list[0];
+		}
+		$('#toselector').html(create_selector(list, sel));
+		return sel;
+	};
+
+	var create_migrations_selector = function (list, selected) {
+		var sel = selected;
+		if (!_.contains(list, selected)) {
+			sel = list[0];
+		}
+		$('#fromtobothselector').html(create_selector(list, sel));
+		return sel;
+	};
+
 	var config_controls = function (cs) { // only load data once, but reconfigure cascading controls as needed
 		//cascade controls based on various settings of cs.filter_campus, cs.filter_college, cs.filter_major
 
@@ -322,6 +350,13 @@
 		});
 	};
 
+	/*
+	************************************************************
+	* Initialize the page using default settings and
+	* set up control change event handlers
+	*
+	************************************************************
+	*/
 	var init = function () {
 		var cs = {
 			'college_map': {},
