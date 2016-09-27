@@ -326,7 +326,7 @@
 			cs.filter_migration = selected_migrations;
 
 			// use the new settings to redraw the chart
-			config_chart(college_map, major_map, migrations);
+			config_chart(cs, college_map, major_map, migrations);
 		});
 	};
 
