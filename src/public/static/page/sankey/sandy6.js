@@ -45,7 +45,7 @@
 		} else {
 			pivot = nodelist[0].Source;
 		}
-		var formatStudentPercent = function (total, count) {
+		var formatStudentPercent = function (count, total) {
 			var out = Math.round(count * 100.0 / total) + '%';
 			if ((count * 100.0 / total) <= 0.95) { // find out how close to 1% to call 1% or <1%
 				out = '< 1%';
@@ -58,22 +58,12 @@
 			if (node.Flow === 'to' && (filter !== 'From Only' || node.Source === pivot)) {
 				if (node.Students >= thresholdto) {
 					node.Formatted = formatStudentPercent(node.Students, totalto);
-					//node.Formatted = Math.round(node.Students * 100.0 / totalto) + '%';
-					//if ((node.Students * 100.0 / totalto) <= 0.95) { // find out how close to 1% to call 1% or <1%
-					//	node.Formatted = '< 1%';
-					//}
 					if (node.Source === pivot) {
-						//var nf = Math.round(node.Students * 100.0 / totalfrom) + '%';
-						//if ((node.Students * 100.0 / totalfrom) <= 0.95) { // find out how close to 1% to call 1% or <1%
-						//	nf = '< 1%';
-						//}
-						//node.Formatted += ',' + nf;
 						node.Formatted += ',' + formatStudentPercent(node.Students, totalfrom);
 					}
 					otherlist.push(node);
 				} else {
 					otherto.Students += node.Students;
-					//otherto.Formatted = Math.round(otherto.Students * 100.0 / totalto) + '%';
 					otherto.Formatted = formatStudentPercent(otherto.Students, totalto);
 				}
 			}
@@ -84,15 +74,10 @@
 		nodelist.forEach(function (node) {
 			if (node.Flow === 'from' && filter !== 'To Only') {
 				if (node.Students >= thresholdfrom) {
-					//node.Formatted = Math.round(node.Students * 100.0 / totalfrom) + '%';
-					//if ((node.Students * 100.0 / totalfrom) <= 0.95) { // find out how close to 1% to call 1% or <1%
-					//	node.Formatted = '< 1%';
-					//}
 					node.Formatted = formatStudentPercent(node.Students, totalfrom);
 					otherlist.push(node);
 				} else {
 					otherfrom.Students += node.Students;
-					//otherfrom.Formatted = Math.round(otherfrom.Students * 100.0 / totalfrom) + '%';
 					otherfrom.Formatted = formatStudentPercent(otherfrom.Students, totalfrom);
 				}
 			}
