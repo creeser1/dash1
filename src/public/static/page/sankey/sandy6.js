@@ -1,43 +1,43 @@
 (function () {
 	'use strict';
 
-	var cs, datacache = {};
+	var cs;
+	var datacache = {};
 
 	var ingest = function (nodelist) {
-		var threshold = 1; // remove user choice, just use count of 9th ranked as threshold
 		var gnodes = [];
-		var glinks = []
+		var glinks = [];
 		var map = {};
 		var mapfrom = {};
 		var mapdest = {};
 		var j = 0;
 		var jj = 0;
-		var last;
+		//var last;
 		var otherlist = [];
 		var pivot;
 		var totalto = 0;
 		var totalfrom = 0;
-		var thresholdto = threshold; // both to/from same for now
-		var thresholdfrom = threshold;
+		var thresholdto = 1; // both to/from same for now
+		var thresholdfrom = 1;
 		var countto = 0;
 		var countfrom = 0;
 		var countpivot = 0;
-		var tenthto = 0;
-		var tenthfrom = 0;
+		//var tenthto = 0;
+		//var tenthfrom = 0;
 		var topten = 9;
 		nodelist.forEach(function (node) {
 			if (node.Flow === 'to' && node.Source !== node.Destination) {
 				totalto += node.Students;
 				countto += 1;
 				if (countto === topten) {
-					tenthto = countto;
+					//tenthto = countto;
 					thresholdto = Math.max(2, node.Students);
 				}
 			} else if (node.Source !== node.Destination) {
 				totalfrom += node.Students;
 				countfrom += 1;
 				if (countfrom === topten) {
-					tenthfrom = countfrom;
+					//tenthfrom = countfrom;
 					thresholdfrom = Math.max(2, node.Students);
 				}
 			}
@@ -47,10 +47,6 @@
 				countpivot += 1;
 			}
 		});
-		if (threshold !== 1) {
-			thresholdto = threshold;
-			thresholdfrom = threshold;
-		}
 		if (nodelist[0].Flow === 'to') {
 			pivot = nodelist[0].Destination;
 		} else {
@@ -58,7 +54,7 @@
 		}
 		var otherto = {'Source': 'Other', 'Destination': pivot, 'Students': 0, 'Formatted': '%', 'Flow': 'to'};
 		var otherfrom = {'Source': pivot, 'Destination': 'Other', 'Students': 0, 'Formatted': '%', 'Flow': 'from'};
-		nodelist.forEach(function (node, i, list) {
+		nodelist.forEach(function (node) {
 			if (node.Flow === 'to' && (cs.filter_migration !== 'From Only' || node.Source === pivot)) {
 				if (node.Students >= thresholdto) {
 					node.Formatted = Math.round(node.Students * 100.0 / totalto) + '%';
@@ -82,7 +78,7 @@
 		if (otherto.Students) {
 			otherlist.splice(-1, 0, otherto); // place 'Other' prior to last item (so far) which is the pivot item
 		}
-		nodelist.forEach(function (node, i, list) {
+		nodelist.forEach(function (node) {
 			if (node.Flow === 'from' && cs.filter_migration !== 'To Only') {
 				if (node.Students >= thresholdfrom) {
 					node.Formatted = Math.round(node.Students * 100.0 / totalfrom) + '%';
@@ -100,18 +96,18 @@
 			otherlist.push(otherfrom);
 		}
 
-		otherlist.forEach(function (node, i, list) {
+		otherlist.forEach(function (node) {
 			if (!mapfrom.hasOwnProperty(node.Source)) {
 				mapfrom[node.Source] = j;
 				map[node.Source] = jj;
 				gnodes.push({'node': j, 'name': node.Source});
 				j += 1;
 				jj += 1;
-				last = node.Source;
+				//last = node.Source;
 			}
 		});
-		var transition = j - 1;
-		otherlist.forEach(function (node, i, list) {
+		//var transition = j - 1;
+		otherlist.forEach(function (node) {
 			if (!map.hasOwnProperty(node.Destination)) {
 				map[node.Destination] = jj;
 				jj += 1;
@@ -122,7 +118,7 @@
 				j += 1;
 			}
 		});
-		otherlist.forEach(function (node, i, list) {
+		otherlist.forEach(function (node) {
 			var link = {'source': mapfrom[node.Source], 'target': mapdest[node.Destination], 'value': node.Students, 'fmt': node.Formatted};
 			glinks.push(link);
 		});
@@ -150,7 +146,7 @@
 
 	var get_migrations = function (campus, callback) {
 		var url = campus.replace(' ', '_') + '_migrations_ftf.json';
-		var config = {'data_url': '/data/sankey/newsankeydata/' + url}
+		var config = {'data_url': '/data/sankey/newsankeydata/' + url};
 		load_data(config, function (result) {
 			callback(result);
 		});
@@ -199,45 +195,25 @@
 		return sel;
 	};
 
-	var config_controls = function () { // only load data once, but reconfigure cascading controls as needed
-		//cascade controls based on various settings of cs.filter_campus, cs.filter_college, cs.filter_major
-
-		// load all the data pertaining to selected campus
-		get_migrations(cs.filter_campus, function (migrations) {
-			var college_list = _.toArray(migrations.major_colleges);
-			var selected_college = create_college_selector(college_list, cs.filter_college);
-			cs.filter_college = selected_college;
-			var college_map = migrations.major_colleges;
-			var major_map = migrations.major_names;
-
-			var major_code_list = _.filter(Object.keys(major_map), function (key) {
-				return (college_map[key] === selected_college);
-			});
-			var major_name_list = _.filter(major_map, function (val, key) {
-				return (college_map[key] === selected_college);
-			});
-			var selected_major = create_major_selector(major_name_list, cs.filter_major);
-			cs.filter_major = selected_major;
-			var major_code = _.find(Object.keys(major_map), function (key) {
-				return major_map[key] === selected_major;
-			});
-
-			var option_list = [];
-			if (_.size(migrations.enrolled[major_code])) {
-				option_list.push('From Only');
-				if (_.size(migrations.graduation[major_code])) {
-					option_list.push('To Only');
-					option_list.push('Both From and To');
-				}
-			} else if (_.size(migrations.graduation[major_code])) {
-				option_list.push('To Only');
+	var build_table = function (data) {
+		var row_tpl = '\n\n<tr><td>{enrolled}</td><td>{graduated}</td><td>{count}</td></tr>';
+		var rows = [];		
+		rows.push('<table class="data1">');
+		rows.push('<thead><tr><th>Major at Entry</th><th>Major at Graduation</th><th># Students</th></tr></thead><tbody>');
+		data.forEach(function (row) {
+			if ((cs.filter_migration === 'To Only' && row.Destination === cs.filter_major) ||
+			(cs.filter_migration === 'From Only' && row.Source === cs.filter_major) ||
+			(cs.filter_migration === 'Both From and To')) {
+				rows.push(
+					row_tpl.replace('{enrolled}', row.Source)
+						.replace('{graduated}', row.Destination)
+						.replace('{count}', row.Students)
+				);
 			}
-			var selected_migrations = create_migrations_selector(option_list, cs.filter_migration);
-			cs.filter_migration = selected_migrations;
-
-			// use the new settings to redraw the chart
-			config_chart(college_map, major_map, migrations);
 		});
+
+		rows.push('</tbody></table>');
+		return rows.join('');
 	};
 
 	var config_chart = function (college_map, major_map, migrations) { // initially and on change of campus
@@ -317,25 +293,45 @@
 		$('body').trigger('create_chart', {'chart_config': results});
 	};
 
-	var build_table = function (data) {
-		var row_tpl = '\n\n<tr><td>{enrolled}</td><td>{graduated}</td><td>{count}</td></tr>';
-		var rows = [];		
-		rows.push('<table class="data1">');
-		rows.push('<thead><tr><th>Major at Entry</th><th>Major at Graduation</th><th># Students</th></tr></thead><tbody>');
-		data.forEach(function (row) {
-			if ((cs.filter_migration === 'To Only' && row.Destination === cs.filter_major) ||
-			(cs.filter_migration === 'From Only' && row.Source === cs.filter_major) ||
-			(cs.filter_migration === 'Both From and To')) {
-				rows.push(
-					row_tpl.replace('{enrolled}', row.Source)
-						.replace('{graduated}', row.Destination)
-						.replace('{count}', row.Students)
-				);
-			}
-		});
+	var config_controls = function () { // only load data once, but reconfigure cascading controls as needed
+		//cascade controls based on various settings of cs.filter_campus, cs.filter_college, cs.filter_major
 
-		rows.push('</tbody></table>');
-		return rows.join('');
+		// load all the data pertaining to selected campus
+		get_migrations(cs.filter_campus, function (migrations) {
+			var college_list = _.toArray(migrations.major_colleges);
+			var selected_college = create_college_selector(college_list, cs.filter_college);
+			cs.filter_college = selected_college;
+			var college_map = migrations.major_colleges;
+			var major_map = migrations.major_names;
+
+			//var major_code_list = _.filter(Object.keys(major_map), function (key) {
+			//	return (college_map[key] === selected_college);
+			//});
+			var major_name_list = _.filter(major_map, function (val, key) {
+				return (college_map[key] === selected_college);
+			});
+			var selected_major = create_major_selector(major_name_list, cs.filter_major);
+			cs.filter_major = selected_major;
+			var major_code = _.find(Object.keys(major_map), function (key) {
+				return major_map[key] === selected_major;
+			});
+
+			var option_list = [];
+			if (_.size(migrations.enrolled[major_code])) {
+				option_list.push('From Only');
+				if (_.size(migrations.graduation[major_code])) {
+					option_list.push('To Only');
+					option_list.push('Both From and To');
+				}
+			} else if (_.size(migrations.graduation[major_code])) {
+				option_list.push('To Only');
+			}
+			var selected_migrations = create_migrations_selector(option_list, cs.filter_migration);
+			cs.filter_migration = selected_migrations;
+
+			// use the new settings to redraw the chart
+			config_chart(college_map, major_map, migrations);
+		});
 	};
 
 	var init = function () {
