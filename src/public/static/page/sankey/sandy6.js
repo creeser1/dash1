@@ -9,7 +9,6 @@
 		var mapdest = {};
 		var j = 0;
 		var jj = 0;
-		//var last;
 		var otherlist = [];
 		var pivot;
 		var totalto = 0;
@@ -26,14 +25,12 @@
 				totalto += node.Students;
 				countto += 1;
 				if (countto === topten) {
-					//tenthto = countto;
 					thresholdto = Math.max(2, node.Students);
 				}
 			} else if (node.Source !== node.Destination) {
 				totalfrom += node.Students;
 				countfrom += 1;
 				if (countfrom === topten) {
-					//tenthfrom = countfrom;
 					thresholdfrom = Math.max(2, node.Students);
 				}
 			}
@@ -48,26 +45,36 @@
 		} else {
 			pivot = nodelist[0].Source;
 		}
+		var formatStudentPercent = function (total, count) {
+			var out = Math.round(count * 100.0 / total) + '%';
+			if ((count * 100.0 / total) <= 0.95) { // find out how close to 1% to call 1% or <1%
+				out = '< 1%';
+			}
+			return out;
+		};
 		var otherto = {'Source': 'Other', 'Destination': pivot, 'Students': 0, 'Formatted': '%', 'Flow': 'to'};
 		var otherfrom = {'Source': pivot, 'Destination': 'Other', 'Students': 0, 'Formatted': '%', 'Flow': 'from'};
 		nodelist.forEach(function (node) {
 			if (node.Flow === 'to' && (filter !== 'From Only' || node.Source === pivot)) {
 				if (node.Students >= thresholdto) {
-					node.Formatted = Math.round(node.Students * 100.0 / totalto) + '%';
-					if ((node.Students * 100.0 / totalto) <= 0.95) { // find out how close to 1% to call 1% or <1%
-						node.Formatted = '< 1%';
-					}
+					node.Formatted = formatStudentPercent(node.Students, totalto);
+					//node.Formatted = Math.round(node.Students * 100.0 / totalto) + '%';
+					//if ((node.Students * 100.0 / totalto) <= 0.95) { // find out how close to 1% to call 1% or <1%
+					//	node.Formatted = '< 1%';
+					//}
 					if (node.Source === pivot) {
-						var nf = Math.round(node.Students * 100.0 / totalfrom) + '%';
-						if ((node.Students * 100.0 / totalfrom) <= 0.95) { // find out how close to 1% to call 1% or <1%
-							nf = '< 1%';
-						}
-						node.Formatted += ',' + nf;
+						//var nf = Math.round(node.Students * 100.0 / totalfrom) + '%';
+						//if ((node.Students * 100.0 / totalfrom) <= 0.95) { // find out how close to 1% to call 1% or <1%
+						//	nf = '< 1%';
+						//}
+						//node.Formatted += ',' + nf;
+						node.Formatted += ',' + formatStudentPercent(node.Students, totalfrom);
 					}
 					otherlist.push(node);
 				} else {
 					otherto.Students += node.Students;
-					otherto.Formatted = Math.round(otherto.Students * 100.0 / totalto) + '%';
+					//otherto.Formatted = Math.round(otherto.Students * 100.0 / totalto) + '%';
+					otherto.Formatted = formatStudentPercent(otherto.Students, totalto);
 				}
 			}
 		});
@@ -77,14 +84,16 @@
 		nodelist.forEach(function (node) {
 			if (node.Flow === 'from' && filter !== 'To Only') {
 				if (node.Students >= thresholdfrom) {
-					node.Formatted = Math.round(node.Students * 100.0 / totalfrom) + '%';
-					if ((node.Students * 100.0 / totalfrom) <= 0.95) { // find out how close to 1% to call 1% or <1%
-						node.Formatted = '< 1%';
-					}
+					//node.Formatted = Math.round(node.Students * 100.0 / totalfrom) + '%';
+					//if ((node.Students * 100.0 / totalfrom) <= 0.95) { // find out how close to 1% to call 1% or <1%
+					//	node.Formatted = '< 1%';
+					//}
+					node.Formatted = formatStudentPercent(node.Students, totalfrom);
 					otherlist.push(node);
 				} else {
 					otherfrom.Students += node.Students;
-					otherfrom.Formatted = Math.round(otherfrom.Students * 100.0 / totalfrom) + '%';
+					//otherfrom.Formatted = Math.round(otherfrom.Students * 100.0 / totalfrom) + '%';
+					otherfrom.Formatted = formatStudentPercent(otherfrom.Students, totalfrom);
 				}
 			}
 		});
