@@ -361,7 +361,7 @@
 		});
 
 		// create the chart initially, using default filters
-		config_controls();
+		config_controls(cs);
 	};
 	init();
 }());
