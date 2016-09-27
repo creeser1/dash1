@@ -69,6 +69,7 @@
 		var base = chartconfig[1];
 		var totstudents;
 		var fromtoboth = 'both';
+		/*
 		switch (fromtoboth) {
 			case 'from':
 				totstudents = chartconfig[2];
@@ -79,10 +80,11 @@
 			default:
 				totstudents = chartconfig[4];
 		}
-
-		var margin = {top: 10, right: 30, bottom: 10, left: 30},
-			width = 1090 - margin.left - margin.right,
-			height = 320 + totstudents - margin.top - margin.bottom;
+		*/
+		totstudents = chartconfig[4];
+		var margin = {top: 10, right: 30, bottom: 10, left: 30};
+		var width = 1090 - margin.left - margin.right;
+		var height = 300 + totstudents / 100;
 
 		var formatNumber = d3.format(",.0f");	// zero decimal places
 		var format = function(d) {
@@ -126,9 +128,7 @@
 				return d3.rgb(c);
 			})
 			.on("mouseover", function (d) {
-				//console.log(d);
 				var c = color(d.target.name === base ? hasher(d.source.name, base) : hasher(d.target.name, base)); // by name hash
-				//console.log(c);
 				this.style.stroke = d3.rgb(c).darker(1);
 			})
 			.on("mouseout", function (d) {
