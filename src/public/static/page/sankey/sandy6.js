@@ -1,8 +1,6 @@
 (function () {
 	'use strict';
 
-	var datacache = {};
-
 	var ingest = function (filter, nodelist) {
 		var gnodes = [];
 		var glinks = [];
@@ -122,7 +120,7 @@
 		return [sankeydata, pivot, totalfrom, totalto, totalto + totalfrom];
 	};
 
-	var load_data = (function (config, callback) {
+	var load_data = (function () {
 		var datacache = {}; // in closure
 		return function (config, callback) {
 			if (datacache.hasOwnProperty(config.data_url)) {
