@@ -166,7 +166,7 @@
 
 	var update_subheader = function (cs, data) {
 		var map = {"ftf": "First-time Full-time Freshmen", "tr": "Transfer Students", "graduated": "Graduated", "enrolled": "Enrolled"};
-		var template = 'CSU Major Migration for all {type} Who {what} in {when}';
+		var template = 'CSU Major Migration for all {type} who {what} in {when}';
 		var type = map[data.enrollment_type];
 		var what = map[data.period_type];
 		var when = data.period;
