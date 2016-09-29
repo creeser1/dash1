@@ -9,8 +9,7 @@
 
 {% block subnav %}
 <div id="dotnav">
-<a class="navprev" href="#">&lt; How Quickly Do They Progress Toward Degree?</a>
-{% if page.dotnavprev|length > 0 %}
+{% if page.dotnavprev %}
 <a class="navprev" href="#">&lt; {{ page.dotnavprev }}</a>
 {% endif %}
 {% if page.dotnav|length > 0 %}
@@ -20,9 +19,8 @@
 {% endfor %}
 </ul>
 {% endif %}
-<a class="navnext" href="#">In Which Courses Do They Struggle? &gt;</a>
-{% if page.dotnavnext|length > 0 %}
-<a class="navnext" href="#">&lt; {{ page.dotnavnext }} &gt;</a>
+{% if page.dotnavnext %}
+<a class="navnext" href="#">{{ page.dotnavnext }} &gt;</a>
 {% endif %}
 </div>
 {% endblock %}
