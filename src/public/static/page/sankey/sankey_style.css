@@ -99,6 +99,7 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 
 #dotnav {
 	font-family:sans-serif;
+	font-size:10px;
 	position:relative;
 	display:inline-block;
 	width: 100%;
