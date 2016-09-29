@@ -166,7 +166,7 @@
 
 	var update_subheader = function (cs, data) {
 		var map = {"ftf": "First-time Full-time Freshmen", "tr": "Transfer Students", "graduated": "Graduated", "enrolled": "Enrolled"};
-		var template = 'CSU Major Migration for all {type} who {what} in {when}';
+		var template = 'CSU Major Migration for all {type} Who {what} in {when}';
 		var type = map[data.enrollment_type];
 		var what = map[data.period_type];
 		var when = data.period;
@@ -362,7 +362,8 @@
 			}
 			var selected_migrations = create_migrations_selector(option_list, cs.filter_migration);
 			cs.filter_migration = selected_migrations;
-
+			// from migrations dataset update the subheader with student type, period type, and years
+			update_subheader(cs, migrations);
 			// use the new settings to redraw the chart
 			config_chart(cs, college_map, major_map, migrations);
 		});
