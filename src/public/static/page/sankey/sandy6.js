@@ -164,6 +164,24 @@
 	************************************************************
 	*/
 
+	var update_subheader = function (cs, data) {
+		var map = {"ftf": "First-time Full-time Freshmen", "tr": "Transfer Students", "graduated": "Graduated", "enrolled": "Enrolled"};
+		var template = 'CSU Major Migration for all {type} who {what} in {when}';
+		var type = map[data.enrollment_type];
+		var what = map[data.period_type];
+		var when = data.period;
+		var parts = when.split(', ');
+		var whenstr = when;
+		if (parts.length > 2) {
+			whenstr = parts.slice(0,-1).join(', ');
+			whenstr += ', or ' + parts.slice(-1);
+		} else if (parts.length === 2) {
+			whenstr = parts.join(' or ');
+		}
+		template = template.replace('{type}', type).replace('{what}', what).replace('{when}', whenstr);
+		$('#contentsubheader').text(template);
+	}
+
 	var build_table = function (cs, data) {
 		var row_tpl = '\n\n<tr><td>{enrolled}</td><td>{graduated}</td><td>{count}</td></tr>';
 		var rows = [];		
