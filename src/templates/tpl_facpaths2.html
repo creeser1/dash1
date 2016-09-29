@@ -6,19 +6,24 @@
 {% block sitenav %}
 <div class="title-bar"><a href="/"><img src="/static/global/img/home-btn-faculty.png" alt="Home Button" /></a><h1>{{ page.title }}</h1></div>
 {% endblock %}
+
 {% block subnav %}
 <div id="dotnav">
 <a class="navprev" href="#">&lt; How Quickly Do They Progress Toward Degree?</a>
+{% if page.dotnavprev|length > 0 %}
+<a class="navprev" href="#">&lt; {{ page.dotnavprev }}</a>
+{% endif %}
+{% if page.dotnav|length > 0 %}
 <ul>
-<li><a href="#" title="Faculty Home"></a></li>
-<li><a href="#" title="Who Are My Students?"></a></li>
-<li><a class="dotprev" href="#" title="How Quickly Do They Progress Toward Degree?"></a></li>
-<li><a class="dotthis" href="#" title="What Paths Do They Follow?"></a></li>
-<li><a class="dotnext" href="#" title="In Which Courses Do They Struggle?"></a></li>
-<li><a href="#" title="Are There Achievement Gaps?"></a></li>
-<li><a href="#" title="What Actions Can I Take?"></a></li>
+{% for navdot in page.dotnav %}
+<li><a href="{{ navdot.href }}" title="{{ navdot.title}}">{{ navdot.text }}</a></li>
+{% endfor %}
 </ul>
+{% endif %}
 <a class="navnext" href="#">In Which Courses Do They Struggle? &gt;</a>
+{% if page.dotnavnext|length > 0 %}
+<a class="navnext" href="#">&lt; {{ page.dotnavnext }} &gt;</a>
+{% endif %}
 </div>
 {% endblock %}
 
