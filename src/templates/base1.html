@@ -17,11 +17,14 @@
 
 <section id="maincontent" class="container" role="main">
 
+{% block contentheader %}
+{% endblock %}
+
 {% block control %}
 	<!-- various controls go here -->
 {% endblock %}
 
-{% block contentheader %}
+{% block contentsubheader %}
 {% endblock %}
 
 {% if page.tabs|length > 0 %}
