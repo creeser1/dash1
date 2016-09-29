@@ -120,7 +120,7 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 #dotnav>.navprev {
 	position:absolute;
 	width:280px;
-	top:5px;
+	top:10px;
 	left:10px;
 }
 
@@ -129,7 +129,7 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 	width:280px;
 	text-align:right;
 	right:10px;
-	top:5px;
+	top:10px;
 }
 
 #dotnav li {
