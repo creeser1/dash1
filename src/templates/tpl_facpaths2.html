@@ -15,7 +15,7 @@
 {% if page.dotnav|length > 0 %}
 <ul>
 {% for navdot in page.dotnav %}
-<li><a{{ navdot.classname ? ' class="#{navdot.classname}"' }} href="{{ navdot.href }}" title="{{ navdot.title}}">{{ navdot.text }}</a></li>
+<li><a{{ navdot.classname ? ['class="', #{navdot.classname}, '"']|join('') }} href="{{ navdot.href }}" title="{{ navdot.title}}">{{ navdot.text }}</a></li>
 {% endfor %}
 </ul>
 {% endif %}
