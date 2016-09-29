@@ -99,7 +99,9 @@ select{margin:10px 10px 0}tbody tr td.nowrap{min-width:3em;text-align:right}.foo
 
 .content-subheader {
 	font-family:sans-serif;
-	font-size:16px;	
+	font-size:18px;
+	font-weight:600;
+	margin:5px 0;
 }
 
 #dotnav {
