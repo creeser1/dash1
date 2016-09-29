@@ -10,7 +10,7 @@
 {% block subnav %}
 <div id="dotnav">
 {% if page.dotnavprev %}
-<a class="navprev" href="#">&lt; {{ page.dotnavprev }}</a>
+<a class="navprev" href="{{ page.dotnavprev.href }}">&lt; {{ page.dotnavprev.text }}</a>
 {% endif %}
 {% if page.dotnav|length > 0 %}
 <ul>
@@ -20,7 +20,7 @@
 </ul>
 {% endif %}
 {% if page.dotnavnext %}
-<a class="navnext" href="#">{{ page.dotnavnext }} &gt;</a>
+<a class="navnext" href="{{ page.dotnavnext.href }}">{{ page.dotnavnext.text }} &gt;</a>
 {% endif %}
 </div>
 {% endblock %}
