@@ -25,7 +25,7 @@ $container['logger'] = function($c) {
 };
 
 $container['data'] = function ($container) {
-    $view = new \Slim\Views\Twig(__DIR__ . '../../data', [
+    $view = new \Slim\Views\Twig('../data', [
         'cache' => false /*'../cache'*/
     ]);
     $view->addExtension(new \Slim\Views\TwigExtension(
@@ -36,7 +36,7 @@ $container['data'] = function ($container) {
 };
 
 $container['view'] = function ($container) {
-    $view = new \Slim\Views\Twig(__DIR__ . '../../templates', [
+    $view = new \Slim\Views\Twig('../templates', [
         'cache' => false /*'../cache'*/
     ]);
     $view->addExtension(new \Slim\Views\TwigExtension(
