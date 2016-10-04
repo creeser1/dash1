@@ -65,6 +65,7 @@ class ComposerStaticInitc95bf4a2ce5b0e6571b795dc662f5e2d
         'Slim\\Views\\' => 
         array (
             0 => __DIR__ . '/..' . '/slim/php-view/src',
+            1 => __DIR__ . '/..' . '/slim/twig-view/src',
         ),
         'Slim\\' => 
         array (
@@ -93,6 +94,13 @@ class ComposerStaticInitc95bf4a2ce5b0e6571b795dc662f5e2d
     );
 
     public static $prefixesPsr0 = array (
+        'T' => 
+        array (
+            'Twig_' => 
+            array (
+                0 => __DIR__ . '/..' . '/twig/twig/lib',
+            ),
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 
